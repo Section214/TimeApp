@@ -20,7 +20,7 @@ if( ! defined( 'ABSPATH' ) ) exit;
  */
 function timeapp_install() {
     // Setup our new post types
-    //timeapp_register_post_types();
+    timeapp_register_post_types();
 
     // Clear permalinks
     flush_rewrite_rules();
