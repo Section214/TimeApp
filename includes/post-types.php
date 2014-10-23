@@ -174,3 +174,5 @@ function timeapp_cpt_layout() {
     return 1;
 }
 add_filter( 'get_user_option_screen_layout_play', 'timeapp_cpt_layout' );
+add_filter( 'get_user_option_screen_layout_purchaser', 'timeapp_cpt_layout' );
+add_filter( 'get_user_option_screen_layout_artist', 'timeapp_cpt_layout' );
