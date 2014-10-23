@@ -22,6 +22,7 @@ function timeapp_admin_scripts() {
     $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
     wp_enqueue_style( 'timeapp', TIMEAPP_URL . 'assets/css/admin' . $suffix . '.css', array(), TIMEAPP_VER );
+    wp_enqueue_script( 'timeapp', TIMEAPP_URL . 'assets/js/admin' . $suffix . '.js', array( 'jquery' ), TIMEAPP_VER );
 }
 add_action( 'admin_enqueue_scripts', 'timeapp_admin_scripts' );
 
