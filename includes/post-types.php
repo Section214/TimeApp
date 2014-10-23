@@ -165,3 +165,15 @@ function timeapp_updated_messages( $messages ) {
     return $messages;
 }
 add_filter( 'post_updated_messages', 'timeapp_updated_messages' );
+
+
+/**
+ * Enforce a single-column layout
+ *
+ * @since       1.0.0
+ * @return      int 1
+ */
+function timeapp_cpt_layout() {
+    return 1;
+}
+add_filter( 'get_user_option_screen_layout_play', 'timeapp_cpt_layout' );
