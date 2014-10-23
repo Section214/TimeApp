@@ -96,3 +96,13 @@
 .post-type-artist #edit-slug-box {
     display: none;
 }
+
+div#actions_top .button,
+div#actions_bottom .button {
+    margin-right: 10px;
+}
+
+div#actions_top div.inside,
+div#actions_bottom div.inside {
+    margin-top: 12px;
+}
