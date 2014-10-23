@@ -50,6 +50,7 @@
     content: "t";
     color: #999999;
     font: 400 16px/1 "timeapp";
+    vertical-align: middle;
 }
 .timeapp-icon-artist:before {
     content: "c";
@@ -59,10 +60,6 @@
 }
 .timeapp-icon-purchaser:before {
     content: "b";
-}
-
-.timeapp-logo {
-    padding: 4px 0 !important;
 }
 
 #menu-posts-play .wp-menu-image:before {
