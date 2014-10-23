@@ -90,3 +90,9 @@
     text-decoration: none;
     color: #a00;
 }
+
+.post-type-play #edit-slug-box,
+.post-type-purchaser #edit-slug-box,
+.post-type-artist #edit-slug-box {
+    display: none;
+}
