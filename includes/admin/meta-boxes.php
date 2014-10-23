@@ -18,7 +18,7 @@ if( ! defined( 'ABSPATH' ) ) exit;
  * @return      void
  */
 function timeapp_add_meta_boxes() {
-    //remove_meta_box( 'submitdiv', 'play', 'normal' );
+    remove_meta_box( 'submitdiv', 'play', 'normal' );
     remove_meta_box( 'submitdiv', 'purchaser', 'normal' );
     remove_meta_box( 'submitdiv', 'artist', 'normal' );
 
@@ -41,12 +41,10 @@ add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
  * @return      void
  */
 function timeapp_render_actions_meta_box() {
-    $delete_url = wp_nonce_url( admin_url( 'post.php?post=' . get_the_ID() . '&action=trash' ) );
-
     submit_button( __( 'Save Play', 'timeapp' ), 'primary', null, false );
     do_action( 'timeapp_meta_box_actions' );
 
-    echo '<div id="delete-action">';
-    echo '<a class="submitdelete" href="' . $delete_url . '">' . __( 'Move to Trash', 'timeapp' ) . '</a>';
+    echo '<div class="timeapp-action-delete">';
+    echo '<a class="submitdelete" href="' . get_delete_post_link() . '">' . __( 'Move to Trash', 'timeapp' ) . '</a>';
     echo '</div>';
 }

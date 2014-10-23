@@ -80,3 +80,13 @@
 
 /* Meta box styles
 -------------------------------------------------------------- */
+.timeapp-action-delete {
+    float: right;
+    vertical-align: middle;
+    line-height: 28px;
+}
+
+.timeapp-action-delete a {
+    text-decoration: none;
+    color: #a00;
+}
