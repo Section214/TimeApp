@@ -23,6 +23,13 @@ function timeapp_admin_scripts() {
 
     wp_enqueue_style( 'timeapp', TIMEAPP_URL . 'assets/css/admin' . $suffix . '.css', array(), TIMEAPP_VER );
     wp_enqueue_script( 'timeapp', TIMEAPP_URL . 'assets/js/admin' . $suffix . '.js', array( 'jquery' ), TIMEAPP_VER );
+    wp_localize_script( 'timeapp', 'timeapp_vars', array(
+        'required_fields'       => __( 'Please enter all required fields!', 'timeapp' )
+    ) );
+
+    wp_enqueue_style( 'thickbox' );
+    wp_enqueue_script( 'thickbox' );
+    wp_enqueue_script( 'media-upload' );
 }
 add_action( 'admin_enqueue_scripts', 'timeapp_admin_scripts' );
 
