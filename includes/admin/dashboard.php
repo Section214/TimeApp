@@ -12,24 +12,6 @@ if( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
- * Remove the default dashboard widgets
- *
- * @since       1.0.0
- * @global      array $wp_meta_boxes Registered meta boxes
- * @return      void
- */
-function timeapp_remove_dashboard_widgets() {
-    global $wp_meta_boxes;
-    
-    if( ! current_user_can( 'manage_options' ) ) {
-        unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity'] );
-        unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'] );
-    }
-}
-add_action( 'wp_dashboard_setup', 'timeapp_remove_dashboard_widgets' );
-
-
-/**
  * Remove builtin WordPress help tabs
  *
  * @since       1.0.0

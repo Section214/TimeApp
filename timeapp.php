@@ -123,6 +123,7 @@ if( ! class_exists( 'TimeApp' ) ) {
             require_once TIMEAPP_DIR . 'includes/admin/meta-boxes.php';
             require_once TIMEAPP_DIR . 'includes/admin/admin-bar.php';
             require_once TIMEAPP_DIR . 'includes/admin/dashboard.php';
+            require_once TIMEAPP_DIR . 'includes/admin/dashboard-widgets.php';
             require_once TIMEAPP_DIR . 'includes/install.php';
         }
 
