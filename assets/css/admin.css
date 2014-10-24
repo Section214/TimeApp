@@ -85,9 +85,51 @@
     margin-left: 3px;
 }
 
+.divclearable {
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+    position: relative;
+}
+
+.clearlink {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    cursor: pointer;
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    height: 12px;
+    width: 12px;
+    border: 0px solid;
+}
+
+.timeapp-clear {
+    clear: both;
+}
+
+.timeapp-half {
+    width: 50%;
+    float: left;
+}
+
 
 /* Custom field styles
 -------------------------------------------------------------- */
+.timeapp-datetime {
+    max-width: 100%;
+}
+
+.post-type-play textarea,
+.post-type-purchaser textarea,
+.post-type-artist textarea {
+    width: 500px;
+    max-width: 100%;
+}
 
 
 /* Meta box styles
