@@ -38,6 +38,7 @@ function timeapp_add_meta_boxes() {
     add_meta_box( 'calendar_info', __( 'Calendar Information', 'timeapp' ), 'timeapp_render_calendar_info_meta_box', 'play', 'normal', 'default' );
     add_meta_box( 'communications', __( 'Communications', 'timeapp' ), 'timeapp_render_communications_meta_box', 'play', 'normal', 'default' );
     add_meta_box( 'play_details', __( 'Play Details', 'timeapp' ), 'timeapp_render_play_details_meta_box', 'play', 'normal', 'default' );
+    add_meta_box( 'financials', __( 'Financials', 'timeapp' ), 'timeapp_render_financials_meta_box', 'play', 'normal', 'default' );
 
     // Purchaser post type
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'purchaser', 'normal', 'high' );
@@ -62,7 +63,7 @@ add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
 function timeapp_render_actions_meta_box() {
     $post_type = get_post_type();
 
-    submit_button( __( 'Save Play', 'timeapp' ), 'primary timeapp-save', null, false );
+    submit_button( __( 'Save Play', 'timeapp' ), 'primary timeapp-save', 'publish', false );
     do_action( 'timeapp_meta_box_' . $post_type . '_actions' );
 
     echo '<div class="timeapp-action-delete">';
@@ -209,15 +210,15 @@ function timeapp_render_play_details_meta_box() {
     // Status
     echo '<p>';
     echo '<strong><label for="_timeapp_status">' . __( 'Event Status', 'timeapp' ) . '</label></strong><br />';
-    echo '<select name="_timeapp_status" id="_timeapp_status">';
+    echo '<select class="timeapp-select2" name="_timeapp_status" id="_timeapp_status">';
     echo '<option value="hold"' . ( ! isset( $status ) || $status == 'hold' ? ' selected' : '' ) . '>' . __( 'Hold', 'timeapp' ) . '</option>';
     echo '<option value="contracted"' . ( $status == 'contracted' ? ' selected' : '' ) . '>' . __( 'Contracted', 'timeapp' ) . '</option>';
     echo '</select>';
 
     // Type
     echo '<p>';
-    echo '<strong><label for="_timeapp_type">' . __( 'Event Type', 'timeapp' ) . '</label></strong><br />';
-    echo '<select name="_timeapp_type" id="_timeapp_type">';
+    echo '<strong><label for="_timeapp_type">' . __( 'Event Type', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<select class="timeapp-select2" name="_timeapp_type" id="_timeapp_type">';
     echo '<option value="club"' . ( ! isset( $type ) || $type == 'club' ? ' selected' : '' ) . '>' . __( 'Club', 'timeapp' ) . '</option>';
     echo '<option value="event"' . ( $type == 'event' ? ' selected' : '' ) . '>' . __( 'Event', 'timeapp' ) . '</option>';
     echo '</select>';
@@ -225,14 +226,34 @@ function timeapp_render_play_details_meta_box() {
     // Agent
     echo '<p>';
     echo '<strong><label for="_timeapp_agent">' . __( 'Agent', 'timeapp' ) . '</label></strong><br />';
-    echo '<select name="_timeapp_agent" id="_timeapp_agent">';
+    echo '<select class="timeapp-select2" name="_timeapp_agent" id="_timeapp_agent">';
     echo '<option value="mfindling"' . ( ! isset( $agent ) || $agent == 'mfindling' ? ' selected' : '' ) . '>Mike Findling</option>';
     echo '<option value="chiggins"' . ( $agent == 'chiggins' ? ' selected' : '' ) . '>Chad Higgins</option>';
     echo '</select>';
 
     // Purchaser
+    echo '<p>';
+    echo '<strong><label for="_timeapp_purchaser">' . __( 'Purchaser', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<select class="timeapp-select2" name="_timeapp_purchaser" id="_timeapp_purchaser">';
+    
+    $purchasers = timeapp_get_purchasers();
+    foreach( $purchasers as $id => $name ) {
+        echo '<option value="' . $id . '"' . ( $purchaser == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+    }
+
+    echo '</select>';
 
     // Artist
+    echo '<p>';
+    echo '<strong><label for="_timeapp_artist">' . __( 'Artist', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<select class="timeapp-select2" name="_timeapp_artist" id="_artist">';
+    
+    $artists = timeapp_get_artists();
+    foreach( $artists as $id => $name ) {
+        echo '<option value="' . $id . '"' . ( $artist == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+    }
+
+    echo '</select>';
 
     // Artist approved
     echo '<p>';
@@ -254,6 +275,109 @@ function timeapp_render_play_details_meta_box() {
     echo '</p>';
 
     do_action( 'timeapp_play_details_fields', $post_id );
+}
+
+
+/**
+ * Render financials meta box
+ *
+ * @since       1.0.0
+ * @global      object $post The WordPress object for this post
+ * @return      void
+ */
+function timeapp_render_financials_meta_box() {
+    global $post;
+
+    $post_id        = $post->ID;
+    $guarantee      = get_post_meta( $post_id, '_timeapp_guarantee', true );
+    $bonus          = get_post_meta( $post_id, '_timeapp_bonus', true ) ? true : false;
+    $bonus_css      = ( $bonus ? '' : ' style="display: none;"' );
+    $bonus_details  = get_post_meta( $post_id, '_timeapp_bonus_details', true );
+    $deposit        = get_post_meta( $post_id, '_timeapp_deposit', true ) ? true : false;
+    $deposit_css    = ( $deposit ? '' : ' style="display: none;"' );
+    // Add deposit payments
+    $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? true : false;
+    $production_css = ( $production ? ' style="display: none;"' : '' );
+    $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
+    $date_paid      = get_post_meta( $post_id, '_timeapp_date_paid', true );
+    $split          = get_post_meta( $post_id, '_timeapp_split_comm', true ) ? true : false;
+    $split_css      = ( $split ? '' : ' style="display: none;"' );
+    $split_perc     = get_post_meta( $post_id, '_timeapp_split_perc', true );
+    $split_agent    = get_post_meta( $post_id, '_timeapp_split_agent', true );
+
+    // Gross guarantee
+    echo '<p>';
+    echo '<strong><label for="_timeapp_guarantee">' . __( 'Gross Guarantee', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_guarantee" id="_timeapp_guarantee" value="' . ( isset( $guarantee ) && ! empty( $guarantee ) ? $guarantee : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    // Performance bonus
+    echo '<p>';
+    echo '<strong><label for="_timeapp_bonus">' . __( 'Performance Bonus', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_bonus" id="_timeapp_bonus" value="1" ' . checked( true,  $bonus, false ) . ' />';
+    echo '<label for="_timeapp_bonus">' . __( 'Check is a performance bonus has been promised.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    // Bonus details
+    echo '<p' . $bonus_css . '>';
+    echo '<strong><label for="_timeapp_bonus_details">' . __( 'Bonus Details', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_bonus_details" id="_timeapp_bonus_details" value="' . ( isset( $bonus_details ) && ! empty( $bonus_details ) ? $bonus_details : '' ) . '" />';
+    echo '</p>';
+
+    // Deposit
+    echo '<p>';
+    echo '<strong><label for="_timeapp_deposit">' . __( 'Deposit', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_deposit" id="_timeapp_deposit" value="1" ' . checked( true,  $deposit, false ) . ' />';
+    echo '<label for="_timeapp_deposit">' . __( 'Check is a deposit has been made.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    // Add deposits
+
+    // Production provided
+    echo '<p>';
+    echo '<strong><label for="_timeapp_production">' . __( 'Production Provided', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_production" id="_timeapp_production" value="1" ' . checked( true,  $production, false ) . ' />';
+    echo '<label for="_timeapp_production">' . __( 'Check is a production has been provided.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    // Production cost
+    echo '<p' . $production_css . '>';
+    echo '<strong><label for="_timeapp_production_cost">' . __( 'Production Cost', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_production_cost" id="_timeapp_production_cost" value="' . ( isset( $production_cost ) && ! empty( $production_cost ) ? $production_cost : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    // Date paid
+    echo '<p>';
+    echo '<strong><label for="_timeapp_date_paid">' . __( 'Date Commission Paid to Time', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_date_paid" id="_timeapp_date_paid" value="' . $date_paid . '" />';
+    echo '</p>';
+
+    // Split commission
+    echo '<p>';
+    echo '<strong><label for="_timeapp_split_comm">' . __( 'Split Commission', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_split_comm" id="_timeapp_split_comm" value="1" ' . checked( true,  $split, false ) . ' />';
+    echo '<label for="_timeapp_split_comm">' . __( 'Check is commission is being split.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    echo '<div' . $split_css . '>';
+
+    // Split percentage
+    echo '<p>';
+    echo '<strong><label for="_timeapp_split_perc">' . __( 'Split Percentage', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_split_perc" id="_timeapp_split_perc" value="' . ( isset( $split_perc ) && ! empty( $split_perc ) ? $split_perc : '' ) . '" placeholder="' . __( '%', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    // Split Agent
+    echo '<p>';
+    echo '<strong><label for="_timeapp_split_agent">' . __( 'Split Agent', 'timeapp' ) . '</label></strong><br />';
+    echo '<select class="timeapp-select2" name="_timeapp_split_agent" id="_timeapp_split_agent">';
+    echo '<option value="mfindling"' . ( ! isset( $split_agent ) || $split_agent == 'mfindling' ? ' selected' : '' ) . '>Mike Findling</option>';
+    echo '<option value="chiggins"' . ( $split_agent == 'chiggins' ? ' selected' : '' ) . '>Chad Higgins</option>';
+    echo '</select>';
+
+    echo '</div>';
+
+    do_action( 'timeapp_financials_fields', $post_id );
 }
 
 
@@ -293,6 +417,25 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_promo_rcvd',
         '_timeapp_followed_up',
         '_timeapp_followup_notes',
+        '_timeapp_status',
+        '_timeapp_type',
+        '_timeapp_agent',
+        '_timeapp_purchaser',
+        '_timeapp_artist',
+        '_timeapp_approved',
+        '_timeapp_set_reqs',
+        '_timeapp_notes',
+        '_timeapp_guarantee',
+        '_timeapp_bonus',
+        '_timeapp_bonus_details',
+        '_timeapp_deposit',
+        // Add deposit payments
+        '_timeapp_production',
+        '_timeapp_production_cost',
+        '_timeapp_date_paid',
+        '_timeapp_split_comm',
+        '_timeapp_split_perc',
+        '_timeapp_split_agent'
     ) );
 
     foreach( $fields as $field ) {
@@ -397,7 +540,7 @@ function timeapp_render_venue_info_meta_box() {
     // State
     echo '<p>';
     echo '<strong><label for="_timeapp_state">' . __( 'State', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
-    echo '<select name="_timeapp_state" id="_state">';
+    echo '<select class="timeapp-select" name="_timeapp_state" id="_timeapp_state">';
     echo '<option value=""' .  ( ! isset( $state ) || $state == '' ? ' selected' : '' ) . '>' . __( 'Select State', 'timeapp' ) . '</option>';
     
     $states = timeapp_get_states();
@@ -526,7 +669,7 @@ function timeapp_render_artist_details_meta_box() {
     // Commission
     echo '<p>';
     echo '<strong><label for="_timeapp_commission">' . __( 'Commission %', 'timeapp' ) . '</label></strong><br />';
-    echo '<select name="_timeapp_commission" id="_timeapp_commission">';
+    echo '<select class="timeapp-select2" name="_timeapp_commission" id="_timeapp_commission">';
     echo '<option value="5"' . ( ! isset( $commission ) || $commission == '5' ? ' selected' : '' ) . '>' . __( '5%', 'timeapp' ) . '</option>';
     echo '<option value="10"' . ( $commission == '10' ? ' selected' : '' ) . '>' . __( '10%', 'timeapp' ) . '</option>';
     echo '<option value="15"' . ( $commission == '15' ? ' selected' : '' ) . '>' . __( '15%', 'timeapp' ) . '</option>';

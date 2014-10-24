@@ -130,3 +130,57 @@ function timeapp_get_states() {
 
     return $states;
 }
+
+
+/**
+ * Retrieves an array of purchasers
+ *
+ * @since       1.0.0
+ * @return      array $purchasers The array of purchasers
+ */
+function timeapp_get_purchasers() {
+    $all_purchasers = get_posts(
+        array(
+            'post_type'     => 'purchaser',
+            'posts_per_page'=> 999999,
+            'post_status'   => 'publish'
+        )
+    );
+
+    if( $all_purchasers ) {
+        foreach( $all_purchasers as $id => $data ) {
+            $purchasers[$id] = $data->post_title;
+        }
+    } else {
+        $purchasers[] = __( 'No purchasers defined!', 'timeapp' );
+    }
+
+    return $purchasers;
+}
+
+
+/**
+ * Retrieves an array of artists
+ *
+ * @since       1.0.0
+ * @return      array $artists The array of purchasers
+ */
+function timeapp_get_artists() {
+    $all_artists = get_posts(
+        array(
+            'post_type'     => 'artist',
+            'posts_per_page'=> 999999,
+            'post_status'   => 'publish'
+        )
+    );
+
+    if( $all_artists ) {
+        foreach( $all_artists as $id => $data ) {
+            $artists[$id] = $data->post_title;
+        }
+    } else {
+        $artists[] = __( 'No artists defined!', 'timeapp' );
+    }
+
+    return $artists;
+}
