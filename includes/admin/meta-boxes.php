@@ -296,6 +296,18 @@ function timeapp_render_financials_meta_box() {
     $deposit        = get_post_meta( $post_id, '_timeapp_deposit', true ) ? true : false;
     $deposit_css    = ( $deposit ? '' : ' style="display: none;"' );
     // Add deposit payments
+    $deposit1_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
+    $deposit1_date  = ( isset( $deposit1_date ) && ! empty( $deposit1_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit1_date ) ) : '' );
+    $deposit1_paid  = get_post_meta( $post_id, '_timeapp_deposit1_paid', true ) ? true : false;
+    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
+    $deposit2_date  = ( isset( $deposit2_date ) && ! empty( $deposit2_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit2_date ) ) : '' );
+    $deposit2_paid  = get_post_meta( $post_id, '_timeapp_deposit2_paid', true ) ? true : false;
+    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
+    $deposit3_date  = ( isset( $deposit3_date ) && ! empty( $deposit3_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit3_date ) ) : '' );
+    $deposit3_paid  = get_post_meta( $post_id, '_timeapp_deposit3_paid', true ) ? true : false;
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? true : false;
     $production_css = ( $production ? ' style="display: none;"' : '' );
     $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
@@ -327,11 +339,70 @@ function timeapp_render_financials_meta_box() {
     // Deposit
     echo '<p>';
     echo '<strong><label for="_timeapp_deposit">' . __( 'Deposit', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="checkbox" name="_timeapp_deposit" id="_timeapp_deposit" value="1" ' . checked( true,  $deposit, false ) . ' />';
+    echo '<input type="checkbox" name="_timeapp_deposit" id="_timeapp_deposit" value="1" ' . checked( true, $deposit, false ) . ' />';
     echo '<label for="_timeapp_deposit">' . __( 'Check if a deposit has been made.', 'timeapp' ) . '</label>';
     echo '</p>';
 
-    // Add deposits
+    echo '<div id="timeapp-deposits" ' . $deposit_css . '>';
+
+    // Deposit 1
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit1_amt">' . __( 'Amount', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" name="_timeapp_deposit1_amt" id="_timeapp_deposit1_amt" value="' . ( isset( $deposit1_amt ) && ! empty( $deposit1_amt ) ? $deposit1_amt : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit1_date">' . __( 'Due Date', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="timeapp-datetime" name="_timeapp_deposit1_date" id="_timeapp_deposit1_date" value="' . $deposit1_date . '" />';
+    echo '</p>';
+
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit1_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_deposit1_paid" id="_timeapp_deposit1_paid" value="1" ' . checked( true, $deposit1_paid, false ) . ' />';
+    echo '<label for="_timeapp_deposit1_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
+    echo '</p>';
+    
+    echo '<div class="timeapp-clear"></div>';
+
+    // Deposit 2
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit2_amt">' . __( 'Amount', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" name="_timeapp_deposit2_amt" id="_timeapp_deposit2_amt" value="' . ( isset( $deposit2_amt ) && ! empty( $deposit2_amt ) ? $deposit2_amt : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit2_date">' . __( 'Due Date', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="timeapp-datetime" name="_timeapp_deposit2_date" id="_timeapp_deposit2_date" value="' . $deposit2_date . '" />';
+    echo '</p>';
+    
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit2_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_deposit2_paid" id="_timeapp_deposit2_paid" value="1" ' . checked( true, $deposit2_paid, false ) . ' />';
+    echo '<label for="_timeapp_deposit2_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    echo '<div class="timeapp-clear"></div>';
+
+    // Deposit 3
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit3_amt">' . __( 'Amount', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" name="_timeapp_deposit3_amt" id="_timeapp_deposit3_amt" value="' . ( isset( $deposit3_amt ) && ! empty( $deposit3_amt ) ? $deposit3_amt : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit3_date">' . __( 'Due Date', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="timeapp-datetime" name="_timeapp_deposit3_date" id="_timeapp_deposit3_date" value="' . $deposit3_date . '" />';
+    echo '</p>';
+    
+    echo '<p class="timeapp-third">';
+    echo '<strong><label for="_timeapp_deposit3_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_deposit3_paid" id="_timeapp_deposit3_paid" value="1" ' . checked( true, $deposit3_paid, false ) . ' />';
+    echo '<label for="_timeapp_deposit3_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
+    echo '</p>';
+    
+    echo '<div class="timeapp-clear"></div>';
+
+    echo '</div>';
 
     // Production provided
     echo '<p>';
@@ -429,7 +500,15 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_bonus',
         '_timeapp_bonus_details',
         '_timeapp_deposit',
-        // Add deposit payments
+        '_timeapp_deposit1_amt',
+        '_timeapp_deposit1_date',
+        '_timeapp_deposit1_paid',
+        '_timeapp_deposit2_amt',
+        '_timeapp_deposit2_date',
+        '_timeapp_deposit2_paid',
+        '_timeapp_deposit3_amt',
+        '_timeapp_deposit3_date',
+        '_timeapp_deposit3_paid',
         '_timeapp_production',
         '_timeapp_production_cost',
         '_timeapp_date_paid',

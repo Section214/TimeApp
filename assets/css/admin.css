@@ -117,6 +117,19 @@
     float: left;
 }
 
+.timeapp-third {
+    width: 33%;
+    float: left;
+}
+
+#timeapp-deposits .timeapp-third {
+    width: auto;
+    margin-right: 10px;
+}
+
+#timeapp-deposits {
+    margin-left: 50px;
+}
 
 /* Custom field styles
 -------------------------------------------------------------- */
