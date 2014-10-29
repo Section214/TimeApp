@@ -289,10 +289,15 @@ function timeapp_follow_up_widget() {
         'numberposts'   => 999999,
         'post_status'   => 'publish',
         'meta_query'    => array(
+            'relation'      => 'AND',
             array(
                 'key'       => '_timeapp_end_date',
                 'value'     => $now,
                 'compare'   => '<'
+            ),
+            array(
+                'key'       => '_timeapp_followed_up',
+                'compare'   => 'NOT EXISTS'
             )
         )
     ) );
@@ -307,6 +312,7 @@ function timeapp_follow_up_widget() {
                     <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
                     <td class="timeapp-venue-title"><?php _e( 'Venue', 'timeapp' ); ?></td>
                     <td class="timeapp-date-title"><?php _e( 'Date', 'timeapp' ); ?></td>
+                    <td class="timeapp-follow-up-title"><?php _e( 'Followed Up?', 'timeapp' ); ?></td>
                 </tr>
             </thead>
             <tbody>
@@ -318,6 +324,7 @@ function timeapp_follow_up_widget() {
                         echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $play->ID ) . '">' . $play->post_title . '</a></td>';
                         echo '<td></td>';
                         echo '<td>' . $date . '</td>';
+                        echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followed_up', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_follow_up">' . __( 'Update', 'timeapp' ) . '</a></td>';
                         echo '</tr>';
                     }
                 ?>

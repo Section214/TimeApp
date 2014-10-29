@@ -211,3 +211,24 @@ function timeapp_get_agents() {
 
     return $agents;
 }
+
+
+/**
+ * Allow updating meta through the dashboard
+ *
+ * @since       1.0.0
+ * @return      void
+ */
+function timeapp_update_meta() {
+    // Don't process if nonce can't be verified
+    if( ! wp_verify_nonce( $_GET['update-nonce'], 'update-meta' ) ) return;
+
+    // Don't process if the current user shouldn't be editing this
+    if( ! isset( $_GET['type'] ) || ! isset( $_GET['id'] ) || ! current_user_can( 'edit_' . $_GET['type'], $_GET['id'] ) ) return;
+
+    // Don't process if no key or value is passed
+    if( ! isset( $_GET['key'] ) || ! isset( $_GET['value'] ) ) return;
+
+    update_post_meta( $_GET['id'], $_GET['key'], $_GET['value'] );
+}
+add_action( 'timeapp_update_meta', 'timeapp_update_meta' );
