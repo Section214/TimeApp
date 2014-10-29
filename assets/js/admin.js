@@ -74,4 +74,12 @@ jQuery(document).ready(function ($) {
             jQuery("input[name='_timeapp_production_cost']").closest('p').css('display', 'block');
         }
     });
+
+    jQuery("input[name='_timeapp_split_comm']").change(function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery("input[name='_timeapp_split_perc']").closest('div').css('display', 'block');
+        } else {
+            jQuery("input[name='_timeapp_split_perc']").closest('div').css('display', 'none');
+        }
+    });
 });
