@@ -19,10 +19,17 @@ if( ! defined( 'ABSPATH' ) ) exit;
  */
 function timeapp_admin_scripts() {
     // Use minified libraries if SCRIPT_DEBUG is turned off
-    $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+    $suffix     = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+    $ui_style   = ( get_user_option( 'admin_color' ) == 'classic' ) ? 'classic' : 'fresh';
     
     wp_enqueue_style( 'timeapp-select2', TIMEAPP_URL . 'assets/css/select2' . $suffix . '.css' );
     wp_enqueue_script( 'timeapp-select2', TIMEAPP_URL . 'assets/js/select2' . $suffix . '.js', array( 'jquery' ) );
+
+    wp_enqueue_style( 'jquery-ui-css', TIMEAPP_URL . 'assets/css/jquery-ui-' . $ui_style . $suffix . '.css' );
+
+    wp_enqueue_script( 'jquery-ui-datepicker' );
+    wp_enqueue_script( 'jquery-ui-slider' );
+    wp_enqueue_script( 'timeapp-timepicker', TIMEAPP_URL . 'assets/js/jquery-ui-timepicker-addon' . $suffix . '.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ) );
 
     wp_enqueue_style( 'timeapp', TIMEAPP_URL . 'assets/css/admin' . $suffix . '.css', array(), TIMEAPP_VER );
     wp_enqueue_script( 'timeapp', TIMEAPP_URL . 'assets/js/admin' . $suffix . '.js', array( 'jquery' ), TIMEAPP_VER );

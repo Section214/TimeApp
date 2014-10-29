@@ -2,8 +2,11 @@
 jQuery(document).ready(function ($) {
     'use strict';
 
-//        var dateFormat = 'mm/dd/yy';
-//            timeFormat: 'h:mm tt',
+    var dateFormat = 'mm/dd/yy';
+
+    jQuery('.timeapp-datetime').datetimepicker({
+        timeFormat: 'h:mm tt'
+    });
 
     jQuery('.timeapp-select2').select2();
 
