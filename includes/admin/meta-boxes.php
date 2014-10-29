@@ -483,7 +483,7 @@ function timeapp_save_play_meta_box( $post_id ) {
     // Don't process if this is a revision
     if( $post->post_type == 'revision' ) return $post_id;
 
-    // Don't process if the current user shouldn't be editing this product
+    // Don't process if the current user shouldn't be editing this
     if( ! current_user_can( 'edit_play', $post_id ) ) return $post_id;
 
     // The fields to save
@@ -670,7 +670,7 @@ function timeapp_save_purchaser_meta_box( $post_id ) {
     // Don't process if this is a revision
     if( $post->post_type == 'revision' ) return $post_id;
 
-    // Don't process if the current user shouldn't be editing this product
+    // Don't process if the current user shouldn't be editing this
     if( ! current_user_can( 'edit_purchaser', $post_id ) ) return $post_id;
 
     // The fields to save
@@ -798,7 +798,7 @@ function timeapp_save_artist_meta_box( $post_id ) {
     // Don't process if this is a revision
     if( $post->post_type == 'revision' ) return $post_id;
 
-    // Don't process if the current user shouldn't be editing this product
+    // Don't process if the current user shouldn't be editing this
     if( ! current_user_can( 'edit_artist', $post_id ) ) return $post_id;
 
     // The fields to save
