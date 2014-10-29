@@ -102,7 +102,7 @@ function timeapp_render_calendar_info_meta_box() {
     $start_date     = get_post_meta( $post_id, '_timeapp_start_date', true );
     $start_date     = ( isset( $start_date ) && ! empty( $start_date ) ? date( 'm/d/Y g:i a', strtotime( $start_date ) ) : '' );
     $end_date       = get_post_meta( $post_id, '_timeapp_end_date', true );
-    $end_date       = ( isset( $end_date ) && ! empty( $end_date ) ? date( 'g:i a', strtotime( $end_date ) ) : '' );
+    $end_date       = ( isset( $end_date ) && ! empty( $end_date ) ? date( 'm/d/Y g:i a', strtotime( $end_date ) ) : '' );
 
     // Start date
     echo '<p class="timeapp-half">';
@@ -348,7 +348,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_deposit">' . __( 'Deposit', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_deposit" id="_timeapp_deposit" value="1" ' . checked( true, $deposit, false ) . ' />';
-    echo '<label for="_timeapp_deposit">' . __( 'Check if a deposit has been made.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_deposit">' . __( 'Check if a deposit is required.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     echo '<div id="timeapp-deposits" ' . $deposit_css . '>';
@@ -722,7 +722,7 @@ function timeapp_render_artist_details_meta_box() {
     $promo_url      = get_post_meta( $post_id, '_timeapp_promo_url', true );
     $commission     = get_post_meta( $post_id, '_timeapp_commission', true );
     $rider          = get_post_meta( $post_id, '_timeapp_rider', true );
-
+    
     // Signer name
     echo '<p>';
     echo '<strong><label for="_timeapp_signer_name">' . __( 'Signer Name', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
@@ -763,11 +763,11 @@ function timeapp_render_artist_details_meta_box() {
     echo '</select>';
 
     // Rider
-//    echo '<p>';
-//    echo '<strong><label for="_timeapp_rider">' . __( 'Rider', 'timeapp' ) . '</label></strong><br />';
-//    echo '<input type="text" class="timeapp-upload-field regular-text" name="_timeapp_rider" id="_timeapp_rider" value="' . ( ! isset( $rider ) && ! empty( $rider ) ? $rider : '' ) . '" />';
-//    echo '<input type="button" class="button" name="_timeapp_rider_button" id="_timeapp_rider_button" value="' . __( 'Upload File', 'timeapp' ) . '" />';
-//    echo '</p>';
+    echo $rider;
+    echo '<p>';
+    echo '<strong><label for="_timeapp_rider">' . __( 'Rider', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="file" class="button" name="_timeapp_rider" id="_timeapp_rider" value="' . ( isset( $rider ) && ! empty( $rider ) ? $rider : '' ) . '" />';
+    echo '</p>';
 
     do_action( 'timeapp_artist_details_fields', $post_id );
 

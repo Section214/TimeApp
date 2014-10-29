@@ -198,3 +198,16 @@ div#actions_top div.inside,
 div#actions_bottom div.inside {
     margin-top: 12px;
 }
+
+
+/* Widget styles
+-------------------------------------------------------------- */
+.timeapp-dashboard-widget table {
+    width: 100%;
+}
+
+.timeapp-dashboard-widget table thead td {
+    border-bottom: 1px solid #ececec;
+    color: #777;
+    font-weight: bold;
+}
