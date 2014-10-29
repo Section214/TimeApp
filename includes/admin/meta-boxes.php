@@ -315,7 +315,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_bonus">' . __( 'Performance Bonus', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_bonus" id="_timeapp_bonus" value="1" ' . checked( true,  $bonus, false ) . ' />';
-    echo '<label for="_timeapp_bonus">' . __( 'Check is a performance bonus has been promised.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_bonus">' . __( 'Check if a performance bonus has been promised.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     // Bonus details
@@ -328,7 +328,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_deposit">' . __( 'Deposit', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_deposit" id="_timeapp_deposit" value="1" ' . checked( true,  $deposit, false ) . ' />';
-    echo '<label for="_timeapp_deposit">' . __( 'Check is a deposit has been made.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_deposit">' . __( 'Check if a deposit has been made.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     // Add deposits
@@ -337,7 +337,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_production">' . __( 'Production Provided', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_production" id="_timeapp_production" value="1" ' . checked( true,  $production, false ) . ' />';
-    echo '<label for="_timeapp_production">' . __( 'Check is a production has been provided.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_production">' . __( 'Check if a production has been provided.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     // Production cost
@@ -356,7 +356,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_split_comm">' . __( 'Split Commission', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_split_comm" id="_timeapp_split_comm" value="1" ' . checked( true,  $split, false ) . ' />';
-    echo '<label for="_timeapp_split_comm">' . __( 'Check is commission is being split.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_split_comm">' . __( 'Check if commission is being split.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     echo '<div' . $split_css . '>';
