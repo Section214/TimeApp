@@ -58,4 +58,20 @@ jQuery(document).ready(function ($) {
             alert(errMessage);
         }
     });
+
+    jQuery("input[name='_timeapp_bonus']").change(function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery("input[name='_timeapp_bonus_details']").closest('p').css('display', 'block');
+        } else {
+            jQuery("input[name='_timeapp_bonus_details']").closest('p').css('display', 'none');
+        }
+    });
+
+    jQuery("input[name='_timeapp_production']").change(function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery("input[name='_timeapp_production_cost']").closest('p').css('display', 'none');
+        } else {
+            jQuery("input[name='_timeapp_production_cost']").closest('p').css('display', 'block');
+        }
+    });
 });
