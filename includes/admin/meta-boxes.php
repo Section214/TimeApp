@@ -21,6 +21,7 @@ function timeapp_remove_meta_boxes() {
     remove_meta_box( 'submitdiv', 'play', 'normal' );
     remove_meta_box( 'submitdiv', 'purchaser', 'normal' );
     remove_meta_box( 'submitdiv', 'artist', 'normal' );
+    remove_meta_box( 'submitdiv', 'agent', 'normal' );
 }
 add_action( 'admin_init', 'timeapp_remove_meta_boxes' );
 
@@ -50,6 +51,9 @@ function timeapp_add_meta_boxes() {
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'artist', 'normal', 'high' );
     add_meta_box( 'actions_bottom', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'artist', 'normal', 'low' );
     add_meta_box( 'artist_details', __( 'Artist Details', 'timeapp' ), 'timeapp_render_artist_details_meta_box', 'artist', 'normal', 'default' );
+
+    // Agent post type
+    add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'agent', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
 
@@ -63,7 +67,7 @@ add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
 function timeapp_render_actions_meta_box() {
     $post_type = get_post_type();
 
-    submit_button( __( 'Save Play', 'timeapp' ), 'primary timeapp-save', 'publish', false );
+    submit_button( sprintf( __( 'Save %s', 'timeapp' ), ucwords( $post_type ) ), 'primary timeapp-save', 'publish', false );
     do_action( 'timeapp_meta_box_' . $post_type . '_actions' );
 
     echo '<div class="timeapp-action-delete">';
@@ -227,8 +231,12 @@ function timeapp_render_play_details_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_agent">' . __( 'Agent', 'timeapp' ) . '</label></strong><br />';
     echo '<select class="timeapp-select2" name="_timeapp_agent" id="_timeapp_agent">';
-    echo '<option value="mfindling"' . ( ! isset( $agent ) || $agent == 'mfindling' ? ' selected' : '' ) . '>Mike Findling</option>';
-    echo '<option value="chiggins"' . ( $agent == 'chiggins' ? ' selected' : '' ) . '>Chad Higgins</option>';
+
+    $agents = timeapp_get_agents();
+    foreach( $agents as $id => $name ) {
+        echo '<option value="' . $id  . '"' . ( $agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+    }
+
     echo '</select>';
 
     // Purchaser

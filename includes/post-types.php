@@ -100,6 +100,34 @@ function timeapp_register_post_types() {
     );
 
     register_post_type( 'artist', apply_filters( 'timeapp_artist_post_type_args', $args ) );
+
+
+    // Agents post type
+    $labels = apply_filters( 'timeapp_agents_labels', array(
+        'name'              => __( 'Agents', 'timeapp' ),
+        'singular_name'     => __( 'Agent', 'timeapp' ),
+        'add_new'           => __( 'Add New', 'timeapp' ),
+        'add_new_item'      => __( 'Add New Agent', 'timeapp' ),
+        'new_item'          => __( 'New Agent', 'timeapp' ),
+        'all_items'         => __( 'All Agents', 'timeapp' ),
+        'view_item'         => __( 'View Agent', 'timeapp' ),
+        'search_items'      => __( 'Search Agents', 'timeapp' ),
+        'not_found'         => __( 'No agents found', 'timeapp' ),
+        'not_found_in_trash'=> __( 'No agents found in Trash', 'timeapp' )
+    ) );
+
+    $args = array(
+        'labels'            => $labels,
+        'public'            => true,
+        'publicly_queryable'=> true,
+        'show_ui'           => true,
+        'show_in_menu'      => true,
+        'capability_type'   => 'agent',
+        'hierarchical'      => false,
+        'supports'          => apply_filters( 'timeapp_agent_supports', array( 'title' ) )
+    );
+
+    register_post_type( 'agent', apply_filters( 'timeapp_agent_post_type_args', $args ) );
 }
 add_action( 'init', 'timeapp_register_post_types', 1 );
 
@@ -120,6 +148,8 @@ function timeapp_enter_title_here( $title ) {
         $title = __( 'Enter purchaser name here', 'timeapp' );
     } elseif( $screen->post_type == 'artist' ) {
         $title = __( 'Enter artist name here', 'timeapp' );
+    } elseif( $screen->post_type == 'agent' ) {
+        $title = __( 'Enter agent name here', 'timeapp' );
     }
 
     return $title;
@@ -159,6 +189,14 @@ function timeapp_updated_messages( $messages ) {
         8 => __( 'Artist submitted.', 'timeapp' )
     );
 
+    $messages['agent'] = array(
+        1 => __( 'Agent updated.', 'timeapp' ),
+        4 => __( 'Agent updated.', 'timeapp' ),
+        6 => __( 'Agent published.', 'timeapp' ),
+        7 => __( 'Agent saved.', 'timeapp' ),
+        8 => __( 'Agent submitted.', 'timeapp' )
+    );
+
     return $messages;
 }
 add_filter( 'post_updated_messages', 'timeapp_updated_messages' );
@@ -176,3 +214,4 @@ function timeapp_cpt_layout() {
 add_filter( 'get_user_option_screen_layout_play', 'timeapp_cpt_layout' );
 add_filter( 'get_user_option_screen_layout_purchaser', 'timeapp_cpt_layout' );
 add_filter( 'get_user_option_screen_layout_artist', 'timeapp_cpt_layout' );
+add_filter( 'get_user_option_screen_layout_agent', 'timeapp_cpt_layout' );

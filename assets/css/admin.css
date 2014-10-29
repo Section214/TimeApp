@@ -80,6 +80,11 @@
     content: "c";
 }
 
+#menu-posts-agent .wp-menu-image:before {
+    font-family: "timeapp";
+    content: "d";
+}
+
 
 /* General styles
 -------------------------------------------------------------- */

@@ -75,7 +75,7 @@ if( ! class_exists( 'TimeApp_Roles' ) ) {
          */
         public function get_core_caps() {
             $capabilities       = array();
-            $capability_types   = array( 'play', 'purchaser', 'artist' );
+            $capability_types   = array( 'play', 'purchaser', 'artist', 'agent' );
 
             foreach( $capability_types as $capability_type ) {
                 $capabilities[$capability_type] = array(

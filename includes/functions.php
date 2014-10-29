@@ -163,7 +163,7 @@ function timeapp_get_purchasers() {
  * Retrieves an array of artists
  *
  * @since       1.0.0
- * @return      array $artists The array of purchasers
+ * @return      array $artists The array of artists
  */
 function timeapp_get_artists() {
     $all_artists = get_posts(
@@ -183,4 +183,31 @@ function timeapp_get_artists() {
     }
 
     return $artists;
+}
+
+
+/**
+ * Retrieves an array of agents
+ *
+ * @since       1.0.0
+ * @return      array $agents The array of agents
+ */
+function timeapp_get_agents() {
+    $all_agents = get_posts(
+        array(
+            'post_type'     => 'agent',
+            'posts_per_page'=> 999999,
+            'post_status'   => 'publish'
+        )
+    );
+
+    if( $all_agents ) {
+        foreach( $all_agents as $id => $data ) {
+            $agents[$id] = $data->post_title;
+        }
+    } else {
+        $agents[] = __( 'No agents defined!', 'timeapp' );
+    }
+
+    return $agents;
 }
