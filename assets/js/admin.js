@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
             jQuery("input[name='_timeapp_bonus_details']").closest('p').css('display', 'none');
         }
     });
-    
+
     jQuery("input[name='_timeapp_deposit']").change(function () {
         if (jQuery(this).is(':checked')) {
             jQuery("#timeapp-deposits").css('display', 'block');
