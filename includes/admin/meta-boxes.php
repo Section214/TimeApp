@@ -308,11 +308,11 @@ function timeapp_render_financials_meta_box() {
     $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
     $deposit1_date  = ( isset( $deposit1_date ) && ! empty( $deposit1_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit1_date ) ) : '' );
     $deposit1_paid  = get_post_meta( $post_id, '_timeapp_deposit1_paid', true ) ? true : false;
-    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit2_amt', true );
     $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
     $deposit2_date  = ( isset( $deposit2_date ) && ! empty( $deposit2_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit2_date ) ) : '' );
     $deposit2_paid  = get_post_meta( $post_id, '_timeapp_deposit2_paid', true ) ? true : false;
-    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit3_amt', true );
     $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
     $deposit3_date  = ( isset( $deposit3_date ) && ! empty( $deposit3_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit3_date ) ) : '' );
     $deposit3_paid  = get_post_meta( $post_id, '_timeapp_deposit3_paid', true ) ? true : false;
