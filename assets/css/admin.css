@@ -222,3 +222,16 @@ div#actions_bottom div.inside {
     color: #777;
     font-weight: bold;
 }
+
+.timeapp-dashboard-widget .timeapp-dashboard-notes {
+    display: block;
+    margin-top: 5px;
+}
+
+.timeapp-dashboard-widget .button {
+    float: right;
+}
+
+.timeapp-dashboard-widget textarea {
+    width: 100%;
+}
