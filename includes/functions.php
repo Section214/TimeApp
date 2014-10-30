@@ -149,7 +149,7 @@ function timeapp_get_purchasers() {
 
     if( $all_purchasers ) {
         foreach( $all_purchasers as $id => $data ) {
-            $purchasers[$id] = $data->post_title;
+            $purchasers[$data->ID] = $data->post_title;
         }
     } else {
         $purchasers[] = __( 'No purchasers defined!', 'timeapp' );
@@ -176,7 +176,7 @@ function timeapp_get_artists() {
 
     if( $all_artists ) {
         foreach( $all_artists as $id => $data ) {
-            $artists[$id] = $data->post_title;
+            $artists[$data->ID] = $data->post_title;
         }
     } else {
         $artists[] = __( 'No artists defined!', 'timeapp' );
@@ -203,7 +203,7 @@ function timeapp_get_agents() {
 
     if( $all_agents ) {
         foreach( $all_agents as $id => $data ) {
-            $agents[$id] = $data->post_title;
+            $agents[$data->ID] = $data->post_title;
         }
     } else {
         $agents[] = __( 'No agents defined!', 'timeapp' );
