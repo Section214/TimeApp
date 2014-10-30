@@ -83,7 +83,7 @@ function timeapp_render_actions_meta_box() {
  * @return      void
  */
 function timeapp_add_generate_pdf_button() {
-    echo '<a class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
+    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
 }
 add_action( 'timeapp_meta_box_play_actions', 'timeapp_add_generate_pdf_button' );
 
@@ -316,6 +316,7 @@ function timeapp_render_financials_meta_box() {
     $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
     $deposit3_date  = ( isset( $deposit3_date ) && ! empty( $deposit3_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit3_date ) ) : '' );
     $deposit3_paid  = get_post_meta( $post_id, '_timeapp_deposit3_paid', true ) ? true : false;
+    $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? true : false;
     $production_css = ( $production ? ' style="display: none;"' : '' );
     $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
@@ -412,6 +413,12 @@ function timeapp_render_financials_meta_box() {
 
     echo '</div>';
 
+    // Accommodations
+    echo '<p>';
+    echo '<strong><label for="_timeapp_accommodations">' . __( 'Accommodations', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_accommodations" id="_timeapp_accommodations" value="' . ( isset( $accommodations ) && ! empty( $accommodations ) ? $accommodations : '' ) . '" />';
+    echo '</p>';
+
     // Production provided
     echo '<p>';
     echo '<strong><label for="_timeapp_production">' . __( 'Production Provided', 'timeapp' ) . '</label></strong><br />';
@@ -427,7 +434,7 @@ function timeapp_render_financials_meta_box() {
 
     // Date paid
     echo '<p>';
-    echo '<strong><label for="_timeapp_date_paid">' . __( 'Date Commission Paid to Time', 'timeapp' ) . '</label></strong><br />';
+    echo '<strong><label for="_timeapp_date_paid">' . __( 'Date Commission Received', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_date_paid" id="_timeapp_date_paid" value="' . $date_paid . '" />';
     echo '</p>';
 
@@ -517,6 +524,7 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_deposit3_amt',
         '_timeapp_deposit3_date',
         '_timeapp_deposit3_paid',
+        '_timeapp_accommodations',
         '_timeapp_production',
         '_timeapp_production_cost',
         '_timeapp_date_paid',

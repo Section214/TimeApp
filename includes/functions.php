@@ -239,18 +239,91 @@ add_action( 'timeapp_update_meta', 'timeapp_update_meta' );
  *
  * @since       1.0.0
  * @param       string $price The unformatted price
+ * @param       bool $textualize Whether to return numerically or textually
  * @return      string $price The formatted price
  */
-function timeapp_format_price( $price ) {
+function timeapp_format_price( $price, $textualize = false ) {
     if( ! $price ) {
         $price = '0.00';
     }
 
-    if( $price[0] == '$' ) {
-        $price = substr( $price, 1 );
-    }
+    if( ! $textualize ) {
+        if( $price[0] == '$' ) {
+            $price = substr( $price, 1 );
+        }
 
-    $price = '$' . number_format( $price, 2 );
+        $price = '$' . number_format( $price, 2 );
+    } else {
+        $price = number_format( $price, 2, '.', '' );
+
+        list( $dollars, $cents ) = explode( '.', $price );
+
+        $textualizer = new TimeApp_Textualizer();
+        $dollars = $textualizer->textualize( $dollars );
+
+        $price = sprintf( __( '%s and %s/100 dollars - U.S.', 'timeapp' ), ucwords( $dollars ), $cents );
+    }
 
     return $price;
 }
+
+
+/**
+ * Generate and email contracts
+ *
+ * @since       1.0.0
+ * @return      void
+ */
+function timeapp_generate_pdf() {
+    // Don't process if nonce can't be verified
+    if( ! wp_verify_nonce( $_GET['pdf-nonce'], 'generate-pdf' ) ) return;
+
+    // Include the generator class
+    require_once TIMEAPP_DIR . 'includes/class.pdf-generator.php';
+
+    // Setup cache
+    $wp_upload_dir  = wp_upload_dir();
+    $cache_dir      = $wp_upload_dir['basedir'] . '/timeapp-cache/';
+
+    // Ensure that the cache directory is protected
+    if( get_transient( 'timeapp_check_protection_files' ) === false ) {
+        wp_mkdir_p( $cache_dir );
+
+        // Top level blank index.php
+        if( ! file_exists( $cache_dir . 'index.php' ) ) {
+            @file_put_contents( $cache_dir . 'index.php', '<?php' . PHP_EOL . '// Silence is golden.' );
+        }
+
+        // Top level .htaccess
+        $rules = "Options -Indexes";
+        if( file_exists( $cache_dir . '.htaccess' ) ) {
+            $contents = @file_get_contents( $cache_dir . '.htaccess' );
+
+            if( $contents !== $rules || ! $contents ) {
+                @file_put_contents( $cache_dir . '.htaccess', $rules );
+            }
+        } else {
+            @file_put_contents( $cache_dir . '.htaccess', $rules );
+        }
+
+        // Check daily
+        set_transient( 'timeapp_check_protection_files', true, 3600 * 24 );
+    }
+
+    $play       = get_post( $_GET['post'] );
+    $date       = date( 'm-d-Y' );
+    $filename   = $play->post_name . '-contract-' . $date . '.pdf';
+
+    // We don't store contracts!
+    if( file_exists( $cache_dir . $filename ) ) {
+        unlink( $cache_dir . $filename );
+    }
+
+    $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
+    $file->build();
+
+    echo '<a href="' . str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir ) . $filename . '">download</a>';
+
+    exit;
+}
+add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );

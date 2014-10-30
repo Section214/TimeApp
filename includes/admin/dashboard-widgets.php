@@ -324,6 +324,7 @@ function timeapp_follow_up_widget() {
             $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
             $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
             $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+            $follow_up_notes= get_post_meta( $play->ID, '_timeapp_followup_notes', true );
             $contact_name   = '';
 
             // Is a contact first name specified?
@@ -384,8 +385,16 @@ function timeapp_follow_up_widget() {
                         <td><?php echo $contact_phone; ?></td>
                     </tr>
                     <?php } ?>
+                    <tr class="timeapp-dashboard-notes">
+                        <td colspan="2"><?php _e( 'Notes', 'timeapp' ); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><textarea name="_timeapp_followup_notes" id="_timeapp_followup_notes_<?php echo $play->ID; ?>"><?php echo $follow_up_notes; ?></textarea></td>
+                    </tr>
                 </tbody>
             </table>
+            <a class="button button-secondary" href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followup_notes', 'value' => '' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_followup_notes_'<?php echo $play->ID; ?>"><?php _e( 'Mark as followed up', 'timeapp' ); ?></a>
+            <div class="timeapp-clear"></div>
             <?php
         }
     } else {
