@@ -199,6 +199,15 @@ div#actions_bottom div.inside {
     margin-top: 12px;
 }
 
+.post-type-play iframe {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.post-type-artist .button {
+    margin-right: 10px;
+}
+
 
 /* Widget styles
 -------------------------------------------------------------- */
@@ -234,4 +243,35 @@ div#actions_bottom div.inside {
 
 .timeapp-dashboard-widget textarea {
     width: 100%;
+}
+
+
+/* PDF preview styles
+-------------------------------------------------------------- */
+.timeapp-pdf-preview {
+    width: 100%;
+}
+
+.timeapp-pdf-preview-title {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 15px 0;
+}
+
+.timeapp-pdf-preview thead th {
+    font-weight: bold;
+}
+
+.timeapp-pdf-preview tbody tr td:first-child {
+    color: #777;
+    font-weight: bold;
+}
+
+#timeapp-pdf-preview .button {
+    margin-right: 15px;
+}
+
+.timeapp-colorbox-holder {
+    display: none;
 }

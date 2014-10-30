@@ -2,6 +2,20 @@
 jQuery(document).ready(function ($) {
     'use strict';
 
+    jQuery(function () {
+        if (jQuery('#_timeapp_rider').length > 0) {
+            jQuery('form').attr('enctype', 'multipart/form-data');
+        }
+    });
+
+    jQuery('.colorbox').colorbox({
+        inline: true,
+        href: "#timeapp-pdf-preview",
+        maxWidth: "650px",
+        maxHeight: "75%",
+        closeButton: false
+    });
+
     var dateFormat = 'mm/dd/yy';
 
     jQuery('.timeapp-datetime').datetimepicker({

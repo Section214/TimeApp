@@ -322,8 +322,61 @@ function timeapp_generate_pdf() {
     $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
     $file->build();
 
-    echo '<a href="' . str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir ) . $filename . '">download</a>';
+    // Send the email!
+    $to         = 'dgriffiths@ghost1227.com';
+    $subject    = __( 'Time Music Agency Contract', 'timeapp' );
+    $message    = 'test';
+    $headers[]  = 'From: Time Music Agency, Inc <test@test.com>';
+    $attachments= array(
+        $cache_dir . $filename
+    );
 
+    wp_mail( $to, $subject, $message, $headers, $attachments );
+
+    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'pdf-nonce' => null ) ) );
     exit;
 }
 add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );
+
+
+/**
+ * Download rider
+ *
+ * @since       1.0.0
+ * @return      void
+ */
+function timeapp_download_rider() {
+    $rider_url  = get_post_meta( $_GET['post'], '_timeapp_rider', true );
+    $rider_name = basename( $rider_url );
+
+    nocache_headers();
+    header( 'Robots: none' );
+    if( wp_is_mobile() ) {
+        header( 'Content-Type: application/octet-stream' );
+    } else {
+        header( 'Content-Type: application/force-download' );
+    }
+    header( 'Content-Disposition: attachment; filename="' . $rider_name . '"' );
+    header( 'Content-Transfer-Encoding: Binary' );
+
+    readfile( $rider_url );
+
+    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
+    exit;
+}
+add_action( 'timeapp_download_rider', 'timeapp_download_rider' );
+
+
+/**
+ * Remove rider
+ *
+ * @since       1.0.0
+ * @return      void
+ */
+function timeapp_remove_rider() {
+    delete_post_meta( $_GET['post'], '_timeapp_rider' );
+
+    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
+    exit;
+}
+add_action( 'timeapp_remove_rider', 'timeapp_remove_rider' );

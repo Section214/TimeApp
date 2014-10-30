@@ -77,15 +77,16 @@ function timeapp_render_actions_meta_box() {
 
 
 /**
- * Add Generate PDF button on 'play' post type
+ * Add Send PDF button on 'play' post type
  *
  * @since       1.0.0
  * @return      void
  */
-function timeapp_add_generate_pdf_button() {
-    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
+function timeapp_add_send_pdf_button() {
+//    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
+      echo '<a class="button button-secondary colorbox">' . __( 'Preview & Send PDF', 'timeapp' ) . '</a>';
 }
-add_action( 'timeapp_meta_box_play_actions', 'timeapp_add_generate_pdf_button' );
+add_action( 'timeapp_meta_box_play_actions', 'timeapp_add_send_pdf_button' );
 
 
 /**
@@ -468,6 +469,120 @@ function timeapp_render_financials_meta_box() {
 
 
 /**
+ * Colorbox holder
+ *
+ * @since       1.0.0
+ * @param       int $post_id The ID of this post
+ * @return      void
+ */
+function timeapp_colorbox_holder( $post_id ) {
+    echo '<div class="timeapp-colorbox-holder">';
+    echo '<div id="timeapp-pdf-preview">';
+
+    echo '<div class="timeapp-pdf-preview-title">' . __( 'Please review the following contract details.<br />If everything looks correct, hit the \'Send Email\' button at the bottom.', 'timeapp' ) . '</div>';
+
+    $textualizer    = new TimeApp_Textualizer();
+    $play           = get_post( $post_id );
+    $effective_date = date( 'F jS, Y', strtotime( $play->post_date ) );
+    $artist         = get_post_meta( $post_id, '_timeapp_artist', true );
+    $artist         = get_post( $artist );
+    $purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
+    $purchaser      = get_post( $purchaser );
+    $address        = get_post_meta( $purchaser->ID, '_timeapp_address', true );
+    $city           = get_post_meta( $purchaser->ID, '_timeapp_city', true );
+    $state          = get_post_meta( $purchaser->ID, '_timeapp_state', true );
+    $zip_code       = get_post_meta( $purchaser->ID, '_timeapp_zip', true );
+    $address        = $address . ', ' . $city . ', ' . $state . ' ' . $zip_code;
+    $address        = trim( $address );
+    $phone          = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+    $email          = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+    $start_date     = get_post_meta( $post_id, '_timeapp_start_date', true );
+    $end_date       = get_post_meta( $post_id, '_timeapp_end_date', true );
+    $compensation   = get_post_meta( $post_id, '_timeapp_guarantee', true );
+    $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
+    $deposit1_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
+    $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
+    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit2_amt', true );
+    $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
+    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit3_amt', true );
+    $balance        = $compensation - (int) $deposit1_amt - (int) $deposit2_amt - (int) $deposit3_amt;
+    $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
+    $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
+    $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
+    $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
+    $commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
+    ?>
+        <table class="timeapp-pdf-preview wp-list-table widefat fixed posts">
+            <thead>
+                <tr>
+                    <th><?php _e( 'Field', 'timeapp' ); ?></th>
+                    <th><?php _e( 'Value', 'timeapp' ); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php _e( 'Artist', 'timeapp' ); ?></td>
+                    <td><?php echo $artist->post_title; ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                    <td><?php echo $purchaser->post_title; ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Date(s) of Engagement', 'timeapp' ); ?></td>
+                    <td><?php echo $start_date . ' - ' . $end_date; ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Compensation', 'timeapp' ); ?></td>
+                    <td><?php echo timeapp_format_price( $compensation ); ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Deposit 1', 'timeapp' ); ?></td>
+                    <td><?php echo timeapp_format_price( $deposit1_amt ) . __( ' by ', 'timeapp' ) . $deposit1_date; ?></td>
+                </tr>
+                <?php if( $deposit2_amt && $deposit2_amt != '' ) { ?>
+                <tr>
+                    <td><?php _e( 'Deposit 2', 'timeapp' ); ?></td>
+                    <td><?php echo timeapp_format_price( $deposit2_amt ) . __( ' by ', 'timeapp' ) . $deposit2_date; ?></td>
+                </tr>
+                <?php } ?>
+                <?php if( $deposit3_amt && $deposit3_amt != '' ) { ?>
+                <tr>
+                    <td><?php _e( 'Deposit 3', 'timeapp' ); ?></td>
+                    <td><?php echo timeapp_format_price( $deposit3_amt ) . __( ' by ', 'timeapp' ) . $deposit3_date; ?></td>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <td><?php _e( 'Production', 'timeapp' ); ?></td>
+                    <td><?php echo $production; ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Additional Terms', 'timeapp' ); ?></td>
+                    <td><?php echo ( $notes ? $notes : __( 'None', 'timeapp' ) ); ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Accommodations', 'timeapp' ); ?></td>
+                    <td><?php echo ( $accommodations ? $accommodations : __( 'None', 'timeapp' ) ); ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Commission', 'timeapp' ); ?></td>
+                    <td><?php echo $commission . __( '%', 'timeapp' ); ?></td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    <?php
+
+    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-primary">' . __( 'Send Email', 'timeapp' ) . '</a>';
+    echo '<a onClick="jQuery.colorbox.close(); return false;" class="button button-secondary">' . __( 'Return to Editor', 'timeapp' ) . '</a>';
+
+    echo '</div>';
+    echo '</div>';
+}
+add_action( 'timeapp_financials_fields', 'timeapp_colorbox_holder' );
+
+
+/**
  * Save post meta when the save_post action is called
  *
  * @since       1.0.0
@@ -771,10 +886,14 @@ function timeapp_render_artist_details_meta_box() {
     echo '</select>';
 
     // Rider
-    echo $rider;
     echo '<p>';
     echo '<strong><label for="_timeapp_rider">' . __( 'Rider', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="file" class="button" name="_timeapp_rider" id="_timeapp_rider" value="' . ( isset( $rider ) && ! empty( $rider ) ? $rider : '' ) . '" />';
+    if( $rider ) {
+        echo '<a href="' . add_query_arg( array( 'timeapp-action' => 'download_rider' ) ) . '" class="button button-secondary">' . __( 'Download', 'timeapp' ) . '</a>';
+        echo '<a href="' . add_query_arg( array( 'timeapp-action' => 'remove_rider' ) ) . '" class="button button-secondary">' . __( 'Remove', 'timeapp' ) . '</a>';
+    } else {
+        echo '<input id="_timeapp_rider" name="_timeapp_rider" type="file" value="" size="25" />';
+    }
     echo '</p>';
 
     do_action( 'timeapp_artist_details_fields', $post_id );
@@ -817,8 +936,15 @@ function timeapp_save_artist_meta_box( $post_id ) {
         '_timeapp_artist_url',
         '_timeapp_promo_url',
         '_timeapp_commission',
-        '_timeapp_rider'
     ) );
+
+    if( ! empty( $_FILES ) && isset( $_FILES['_timeapp_rider'] ) ) {
+        $rider = wp_upload_bits( $_FILES['_timeapp_rider']['name'], null, file_get_contents( $_FILES['_timeapp_rider']['tmp_name'] ) );
+
+        if( $rider['error'] == false ) {
+            update_post_meta( $post_id, '_timeapp_rider', $rider['url'] );
+        }
+    }
 
     foreach( $fields as $field ) {
         if( isset( $_POST[$field] ) ) {

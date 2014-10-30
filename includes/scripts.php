@@ -36,8 +36,12 @@ function timeapp_admin_scripts() {
     wp_localize_script( 'timeapp', 'timeapp_vars', array(
         'required_fields'       => __( 'Please enter all required fields!', 'timeapp' ),
         'select_agent'          => __( 'Select an Agent', 'timeapp' ),
-        'select_purchaser'      => __( 'Select a Purchaser', 'timeapp' )
+        'select_purchaser'      => __( 'Select a Purchaser', 'timeapp' ),
+        'close_button'          => __( 'Exit Preview', 'timeapp' )
     ) );
+
+    wp_enqueue_style( 'colorbox', TIMEAPP_URL . 'assets/css/colorbox' . $suffix . '.css' );
+    wp_enqueue_script( 'colorbox', TIMEAPP_URL . 'assets/js/jquery.colorbox' . $suffix . '.js', array( 'jquery' ) );
 
     wp_enqueue_style( 'thickbox' );
     wp_enqueue_script( 'thickbox' );
