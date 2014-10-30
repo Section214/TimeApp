@@ -117,6 +117,7 @@ if( ! class_exists( 'TimeApp' ) ) {
          */
         private function includes() {
             require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
+            require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
             require_once TIMEAPP_DIR . 'includes/functions.php';
             require_once TIMEAPP_DIR . 'includes/scripts.php';
             require_once TIMEAPP_DIR . 'includes/post-types.php';
