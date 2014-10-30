@@ -313,6 +313,15 @@ function timeapp_follow_up_widget() {
         )
     ) );
 
+    // Quick hack to handle upating notes from the dashboard
+    if( isset( $_POST['timeapp_play_id'] ) ) {
+        if( isset( $_POST['_timeapp_followup_notes'] ) && $_POST['_timeapp_followup_notes'] != '' ) {
+            update_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes', $_POST['_timeapp_followup_notes'] );
+        } elseif( $_POST['_timeapp_followup_notes'] == '' ) {
+            delete_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes' );
+        }
+    }
+
     echo '<div class="timeapp-dashboard-widget">';
     
     if( $plays ) {
@@ -343,57 +352,60 @@ function timeapp_follow_up_widget() {
 
             // No contact name specified
             $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
-
             ?>
-            <table class="timeapp-follow-up-widget">
-                <thead>
-                    <tr>
-                        <td class="timeapp-play-title" colspan="2">
-                            <?php echo $play->post_title; ?>
-                            <span>
-                                <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
-                                &nbsp;&middot;&nbsp;
-                                <a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followed_up', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_follow_up"><?php _e( 'Mark as followed up', 'timeapp' ); ?></a>
-                            </span>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
-                        <td><?php echo $date; ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
-                        <td><?php echo $purchaser->post_title; ?></td>
-                    </tr>
-                    <?php if( $purchaser->post_title != $contact_name ) { ?>
-                    <tr>
-                        <td><?php _e( 'Contact', 'timeapp' ); ?></td>
-                        <td><?php echo $contact_name; ?></td>
-                    </tr>
-                    <?php } ?>
-                    <?php if( $contact_email ) { ?>
-                    <tr>
-                        <td><?php _e( 'Email', 'timeapp' ); ?></td>
-                        <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
-                    </tr>
-                    <?php } ?>
-                    <?php if( $contact_phone ) { ?>
-                    <tr>
-                        <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
-                        <td><?php echo $contact_phone; ?></td>
-                    </tr>
-                    <?php } ?>
-                    <tr class="timeapp-dashboard-notes">
-                        <td colspan="2"><?php _e( 'Notes', 'timeapp' ); ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><textarea name="_timeapp_followup_notes" id="_timeapp_followup_notes_<?php echo $play->ID; ?>"><?php echo $follow_up_notes; ?></textarea></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a class="button button-secondary" href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followup_notes', 'value' => '' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_followup_notes_'<?php echo $play->ID; ?>"><?php _e( 'Mark as followed up', 'timeapp' ); ?></a>
+            <form method="post">
+                <table class="timeapp-follow-up-widget">
+                    <thead>
+                        <tr>
+                            <td class="timeapp-play-title" colspan="2">
+                                <?php echo $play->post_title; ?>
+                                <span>
+                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
+                                    &nbsp;&middot;&nbsp;
+                                    <a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followed_up', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_follow_up"><?php _e( 'Mark as followed up', 'timeapp' ); ?></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
+                            <td><?php echo $date; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                            <td><?php echo $purchaser->post_title; ?></td>
+                        </tr>
+                        <?php if( $purchaser->post_title != $contact_name ) { ?>
+                        <tr>
+                            <td><?php _e( 'Contact', 'timeapp' ); ?></td>
+                            <td><?php echo $contact_name; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <?php if( $contact_email ) { ?>
+                        <tr>
+                            <td><?php _e( 'Email', 'timeapp' ); ?></td>
+                            <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <?php if( $contact_phone ) { ?>
+                        <tr>
+                            <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
+                            <td><?php echo $contact_phone; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <tr class="timeapp-dashboard-notes">
+                            <td colspan="2"><?php _e( 'Notes', 'timeapp' ); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><textarea name="_timeapp_followup_notes" id="_timeapp_followup_notes_<?php echo $play->ID; ?>"><?php echo $follow_up_notes; ?></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <input type="hidden" name="timeapp_play_id" value="<?php echo $play->ID; ?>" />
+                <?php submit_button(); ?>
+            </form>
             <div class="timeapp-clear"></div>
             <?php
         }

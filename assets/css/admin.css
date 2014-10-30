@@ -241,6 +241,10 @@ div#actions_bottom div.inside {
     float: right;
 }
 
+.timeapp-dashboard-widget .timeapp-clear {
+    height: 15px;
+}
+
 .timeapp-dashboard-widget textarea {
     width: 100%;
 }
