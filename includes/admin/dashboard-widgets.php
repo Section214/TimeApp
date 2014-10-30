@@ -94,18 +94,20 @@ function timeapp_upcoming_plays_widget() {
             <thead>
                 <tr>
                     <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
-                    <td class="timeapp-venue-title"><?php _e( 'Venue', 'timeapp' ); ?></td>
+                    <td class="timeapp-venue-title"><?php _e( 'Purchaser', 'timeapp' ); ?></td>
                     <td class="timeapp-date-title"><?php _e( 'Date', 'timeapp' ); ?></td>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     foreach( $plays as $id => $play ) {
-                        $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
+                        $date       = get_post_meta( $play->ID, '_timeapp_start_date', true );
+                        $purchaser  = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+                        $purchaser  = get_post( $purchaser );
 
                         echo '<tr>';
                         echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $play->ID ) . '">' . $play->post_title . '</a></td>';
-                        echo '<td></td>';
+                        echo '<td>' . $purchaser->post_title . '</td>';
                         echo '<td>' . $date . '</td>';
                         echo '</tr>';
                     }
@@ -228,38 +230,47 @@ function timeapp_past_due_deposits_widget() {
             <thead>
                 <tr>
                     <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
-                    <td class="timeapp-venue-title"><?php _e( 'Venue', 'timeapp' ); ?></td>
+                    <td class="timeapp-venue-title"><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                    <td class="timeapp-amount-title"><?php _e( 'Amount', 'timeapp' ); ?></td>
                     <td class="timeapp-date-title"><?php _e( 'Due Date', 'timeapp' ); ?></td>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     foreach( $deposits as $id => $deposit ) {
-                        $deposit1 = get_post_meta( $deposit->ID, '_timeapp_deposit1_date', true );
-                        $deposit2 = get_post_meta( $deposit->ID, '_timeapp_deposit2_date', true );
-                        $deposit3 = get_post_meta( $deposit->ID, '_timeapp_deposit3_date', true );
-
-                        if( $deposit1 && $deposit1 < $now ) {
+                        $deposit1_date  = get_post_meta( $deposit->ID, '_timeapp_deposit1_date', true );
+                        $deposit1_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit1_amt', true );
+                        $deposit2_date  = get_post_meta( $deposit->ID, '_timeapp_deposit2_date', true );
+                        $deposit2_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit2_amt', true );
+                        $deposit3_date  = get_post_meta( $deposit->ID, '_timeapp_deposit3_date', true );
+                        $deposit3_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit3_amt', true );
+                        $purchaser      = get_post_meta( $deposit->ID, '_timeapp_purchaser', true );
+                        $purchaser      = get_post( $purchaser );
+                        
+                        if( $deposit1_date && $deposit1_date < $now ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td></td>';
-                            echo '<td>' . $deposit1 . '</td>';
+                            echo '<td>' . $purchaser->post_title . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit1_amt ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit1_date ) ) . '</td>';
                             echo '</tr>';
                         }
                         
-                        if( $deposit2 && $deposit2 < $now ) {
+                        if( $deposit2_date && $deposit2_date < $now ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td></td>';
-                            echo '<td>' . $deposit2 . '</td>';
+                            echo '<td>' . $purchaser->post_title . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit2_amt ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit2_date ) ) . '</td>';
                             echo '</tr>';
                         }
                         
-                        if( $deposit3 && $deposit3 < $now ) {
+                        if( $deposit3_date && $deposit3_date < $now ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td></td>';
-                            echo '<td>' . $deposit3 . '</td>';
+                            echo '<td>' . $purchaser->post_title . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit3_amt ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit3_date ) ) . '</td>';
                             echo '</tr>';
                         }
                     }
@@ -305,32 +316,78 @@ function timeapp_follow_up_widget() {
     echo '<div class="timeapp-dashboard-widget">';
     
     if( $plays ) {
-        ?>
-        <table class="timeapp-follow-up-widget">
-            <thead>
-                <tr>
-                    <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
-                    <td class="timeapp-venue-title"><?php _e( 'Venue', 'timeapp' ); ?></td>
-                    <td class="timeapp-date-title"><?php _e( 'Date', 'timeapp' ); ?></td>
-                    <td class="timeapp-follow-up-title"><?php _e( 'Followed Up?', 'timeapp' ); ?></td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    foreach( $plays as $id => $play ) {
-                        $date = get_post_meta( $play->ID, '_timeapp_end_date', true );
+        foreach( $plays as $id => $play ) {
+            $date           = get_post_meta( $play->ID, '_timeapp_end_date', true );
+            $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+            $purchaser      = get_post( $purchaser );
+            $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+            $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
+            $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+            $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+            $contact_name   = '';
 
-                        echo '<tr>';
-                        echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $play->ID ) . '">' . $play->post_title . '</a></td>';
-                        echo '<td></td>';
-                        echo '<td>' . $date . '</td>';
-                        echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followed_up', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_follow_up">' . __( 'Update', 'timeapp' ) . '</a></td>';
-                        echo '</tr>';
-                    }
-                ?>
-            </tbody>
-        </table>
-        <?php
+            // Is a contact first name specified?
+            if( $contact_fname && $contact_fname != '' ) {
+                $contact_name .= $contact_fname;
+            }
+
+            // Is a contact last name specified?
+            if( $contact_lname && $contact_lname != '' ) {
+                if( $contact_name != '' ) {
+                    $contact_name .= ' ';
+                }
+
+                $contact_name .= $contact_lname;
+            }
+
+            // No contact name specified
+            $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
+
+            ?>
+            <table class="timeapp-follow-up-widget">
+                <thead>
+                    <tr>
+                        <td class="timeapp-play-title" colspan="2">
+                            <?php echo $play->post_title; ?>
+                            <span>
+                                <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
+                                &nbsp;&middot;&nbsp;
+                                <a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_followed_up', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_follow_up"><?php _e( 'Mark as followed up', 'timeapp' ); ?></a>
+                            </span>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
+                        <td><?php echo $date; ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                        <td><?php echo $purchaser->post_title; ?></td>
+                    </tr>
+                    <?php if( $purchaser->post_title != $contact_name ) { ?>
+                    <tr>
+                        <td><?php _e( 'Contact', 'timeapp' ); ?></td>
+                        <td><?php echo $contact_name; ?></td>
+                    </tr>
+                    <?php } ?>
+                    <?php if( $contact_email ) { ?>
+                    <tr>
+                        <td><?php _e( 'Email', 'timeapp' ); ?></td>
+                        <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
+                    </tr>
+                    <?php } ?>
+                    <?php if( $contact_phone ) { ?>
+                    <tr>
+                        <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
+                        <td><?php echo $contact_phone; ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php
+        }
     } else {
         _e( 'No plays require following up!', 'timeapp' );
     }

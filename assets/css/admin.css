@@ -211,3 +211,14 @@ div#actions_bottom div.inside {
     color: #777;
     font-weight: bold;
 }
+
+.timeapp-dashboard-widget table thead td span {
+    font-size: .8em;
+    float: right;
+}
+
+.timeapp-dashboard-widget table.timeapp-follow-up-widget tbody tr td:first-child {
+    padding-left: 15px;
+    color: #777;
+    font-weight: bold;
+}
