@@ -232,3 +232,25 @@ function timeapp_update_meta() {
     update_post_meta( $_GET['id'], $_GET['key'], $_GET['value'] );
 }
 add_action( 'timeapp_update_meta', 'timeapp_update_meta' );
+
+
+/**
+ * Sanitize and format prices
+ *
+ * @since       1.0.0
+ * @param       string $price The unformatted price
+ * @return      string $price The formatted price
+ */
+function timeapp_format_price( $price ) {
+    if( ! $price ) {
+        $price = '0.00';
+    }
+
+    if( $price[0] == '$' ) {
+        $price = substr( $price, 1 );
+    }
+
+    $price = '$' . number_format( $price, 2 );
+
+    return $price;
+}
