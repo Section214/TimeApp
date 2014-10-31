@@ -322,6 +322,11 @@ function timeapp_generate_pdf() {
     $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
     $file->build();
 
+    // Get rider
+    $artist     = get_post_meta( $play->ID, '_timeapp_artist', true );
+    $artist     = get_post( $artist );
+    $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
+
     // Send the email!
     $to         = 'dgriffiths@ghost1227.com';
     $subject    = __( 'Time Music Agency Contract', 'timeapp' );
@@ -330,6 +335,11 @@ function timeapp_generate_pdf() {
     $attachments= array(
         $cache_dir . $filename
     );
+
+    if( $rider_url ) {
+        $rider_url      = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $rider_url );
+        $attachments[]  = $rider_url;
+    }
 
     wp_mail( $to, $subject, $message, $headers, $attachments );
 
