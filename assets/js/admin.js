@@ -32,12 +32,12 @@ jQuery(document).ready(function ($) {
         placeholder: timeapp_vars.select_purchaser
     });
 
-    jQuery('.post-type-agent .timeapp-save').click(function () {
+    jQuery('.post-type-agent .timeapp-save').click(function (e) {
         e.preventDefault();
         jQuery('#publish').click();
     });
 
-    jQuery('.post-type-play .timeapp-save').click(function () {
+    jQuery('.post-type-play .timeapp-save').click(function (e) {
         var startDate, endDate, eventType, purchaser, artist, errMessage;
 
         startDate = jQuery("input[name='_timeapp_start_date']").val();
@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
         jQuery('#publish').click();
     });
 
-    jQuery('.post-type-purchaser .timeapp-save').click(function () {
+    jQuery('.post-type-purchaser .timeapp-save').click(function (e) {
         var firstName, lastName, email, address, city, state, errMessage;
 
         firstName = jQuery("input[name='_timeapp_first_name']").val();
@@ -74,7 +74,7 @@ jQuery(document).ready(function ($) {
         jQuery('#publish').click();
     });
 
-    jQuery('.post-type-artist .timeapp-save').click(function () {
+    jQuery('.post-type-artist .timeapp-save').click(function (e) {
         var signerName, artistEmail, taxID, errMessage;
 
         signerName = jQuery("input[name='_timeapp_signer_name']").val();
