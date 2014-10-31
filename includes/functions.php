@@ -325,7 +325,7 @@ function timeapp_generate_pdf() {
     // Get rider
     $artist     = get_post_meta( $play->ID, '_timeapp_artist', true );
     $artist     = get_post( $artist );
-    $purchaser  = get_post_meta( $play->ID, '_timeapp_email', true );
+    $purchaser  = get_post_meta( $play->ID, '_timeapp_purchaser', true );
     $purchaser  = get_post( $purchaser );
     $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
     $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
