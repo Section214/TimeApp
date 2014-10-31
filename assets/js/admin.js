@@ -32,6 +32,11 @@ jQuery(document).ready(function ($) {
         placeholder: timeapp_vars.select_purchaser
     });
 
+    jQuery('.post-type-agent .timeapp-save').click(function () {
+        e.preventDefault();
+        jQuery('#publish').click();
+    });
+
     jQuery('.post-type-play .timeapp-save').click(function () {
         var startDate, endDate, eventType, purchaser, artist, errMessage;
 
@@ -45,6 +50,9 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
+        
+        e.preventDefault();
+        jQuery('#publish').click();
     });
 
     jQuery('.post-type-purchaser .timeapp-save').click(function () {
@@ -61,6 +69,9 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
+        
+        e.preventDefault();
+        jQuery('#publish').click();
     });
 
     jQuery('.post-type-artist .timeapp-save').click(function () {
@@ -74,6 +85,9 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
+        
+        e.preventDefault();
+        jQuery('#publish').click();
     });
 
     jQuery("input[name='_timeapp_bonus']").change(function () {

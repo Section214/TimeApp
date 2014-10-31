@@ -12,21 +12,6 @@ if( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
- * Remove the default submit meta box
- *
- * @since       1.0.0
- * @return      void
- */
-function timeapp_remove_meta_boxes() {
-    remove_meta_box( 'submitdiv', 'play', 'normal' );
-    remove_meta_box( 'submitdiv', 'purchaser', 'normal' );
-    remove_meta_box( 'submitdiv', 'artist', 'normal' );
-    remove_meta_box( 'submitdiv', 'agent', 'normal' );
-}
-add_action( 'admin_init', 'timeapp_remove_meta_boxes' );
-
-
-/**
  * Register new metaboxes
  *
  * @since       1.0.0
@@ -67,7 +52,8 @@ add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
 function timeapp_render_actions_meta_box() {
     $post_type = get_post_type();
 
-    submit_button( sprintf( __( 'Save %s', 'timeapp' ), ucwords( $post_type ) ), 'primary timeapp-save', 'publish', false );
+    echo '<a class="button button-primary timeapp-save">' . sprintf( __( 'Save %s', 'timeapp' ), ucwords( $post_type ) ) . '</a>';
+//    submit_button( sprintf( __( 'Save %s', 'timeapp' ), ucwords( $post_type ) ), 'primary timeapp-save', 'publish', false );
     do_action( 'timeapp_meta_box_' . $post_type . '_actions' );
 
     echo '<div class="timeapp-action-delete">';

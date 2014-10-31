@@ -185,7 +185,15 @@
 
 .post-type-play #edit-slug-box,
 .post-type-purchaser #edit-slug-box,
-.post-type-artist #edit-slug-box {
+.post-type-artist #edit-slug-box,
+.post-type-agent #edit-slug-box {
+    display: none;
+}
+
+.post-type-play #submitdiv,
+.post-type-purchaser #submitdiv,
+.post-type-artist #submitdiv,
+.post-type-agent #submitdiv {
     display: none;
 }
 
