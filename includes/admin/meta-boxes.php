@@ -488,6 +488,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $artist         = get_post( $artist );
     $purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
     $purchaser      = get_post( $purchaser );
+    $purchaser_email= get_post_meta( $purchaser->ID, '_timeapp_email', true );
     $address        = get_post_meta( $purchaser->ID, '_timeapp_address', true );
     $city           = get_post_meta( $purchaser->ID, '_timeapp_city', true );
     $state          = get_post_meta( $purchaser->ID, '_timeapp_state', true );
@@ -510,7 +511,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
-    $commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
+    //$commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
     ?>
         <table class="timeapp-pdf-preview wp-list-table widefat fixed posts">
             <thead>
@@ -526,7 +527,7 @@ function timeapp_colorbox_holder( $post_id ) {
                 </tr>
                 <tr>
                     <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
-                    <td><?php echo $purchaser->post_title; ?></td>
+                    <td><?php echo $purchaser->post_title . ' &lt;' . $purchaser_email . '&gt;'; ?></td>
                 </tr>
                 <tr>
                     <td><?php _e( 'Date(s) of Engagement', 'timeapp' ); ?></td>
@@ -563,10 +564,6 @@ function timeapp_colorbox_holder( $post_id ) {
                 <tr>
                     <td><?php _e( 'Accommodations', 'timeapp' ); ?></td>
                     <td><?php echo ( $accommodations ? $accommodations : __( 'None', 'timeapp' ) ); ?></td>
-                </tr>
-                <tr>
-                    <td><?php _e( 'Commission', 'timeapp' ); ?></td>
-                    <td><?php echo $commission . __( '%', 'timeapp' ); ?></td>
                 </tr>
             </tbody>
         </table>

@@ -330,7 +330,7 @@ function timeapp_generate_pdf() {
     // Send the email!
     $to         = 'dgriffiths@ghost1227.com';
     $subject    = __( 'Time Music Agency Contract', 'timeapp' );
-    $message    = 'test';
+    $message    = timeapp_get_email_content( $play->ID );
     $headers[]  = 'From: Time Music Agency, Inc <test@test.com>';
     $attachments= array(
         $cache_dir . $filename
@@ -347,6 +347,36 @@ function timeapp_generate_pdf() {
     exit;
 }
 add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );
+
+
+/**
+ * Retrieve email content
+ *
+ * @since       1.0.0
+ * @param       int $id The ID of a given play
+ * @return      string $message The email content
+ */
+function timeapp_get_email_content( $id ) {
+    $purchaser  = get_post_meta( $id, '_timeapp_purchaser', true );
+    $purchaser  = get_post( $purchaser );
+    $artist     = get_post_meta( $id, '_timeapp_artist', true );
+    $artist     = get_post( $artist );
+
+    $first_name = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+    $artist_name= get_post_meta( $artist->ID, '_timeapp_signer_name', true );
+
+    $message    = ucwords( $first_name ) . ',' . "\n";
+    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), $artist_name ) . "\n\n";
+    $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
+    $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
+    $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
+    $message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+    $message   .= __( '952-448-4202', 'timeapp' );
+
+    $message    = apply_filters( 'timeapp_email_content', $message );
+
+    return $message;
+}
 
 
 /**
