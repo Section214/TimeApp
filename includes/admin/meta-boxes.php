@@ -472,9 +472,12 @@ function timeapp_colorbox_holder( $post_id ) {
     $effective_date = date( 'F jS, Y', strtotime( $play->post_date ) );
     $artist         = get_post_meta( $post_id, '_timeapp_artist', true );
     $artist         = get_post( $artist );
+    $artist_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
+    $artist_email   = ( $artist_email ? $artist_email : __( 'No email specified', 'timeapp' ) );
     $purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
     $purchaser      = get_post( $purchaser );
     $purchaser_email= get_post_meta( $purchaser->ID, '_timeapp_email', true );
+    $purchaser_email= ( $purchaser_email ? $purchaser_email : __( 'No email specified', 'timeapp' ) );
     $address        = get_post_meta( $purchaser->ID, '_timeapp_address', true );
     $city           = get_post_meta( $purchaser->ID, '_timeapp_city', true );
     $state          = get_post_meta( $purchaser->ID, '_timeapp_state', true );
@@ -509,7 +512,7 @@ function timeapp_colorbox_holder( $post_id ) {
             <tbody>
                 <tr>
                     <td><?php _e( 'Artist', 'timeapp' ); ?></td>
-                    <td><?php echo $artist->post_title; ?></td>
+                    <td><?php echo $artist->post_title . ' &lt;' . $artist_email . '&gt;'; ?></td>
                 </tr>
                 <tr>
                     <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>

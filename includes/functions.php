@@ -329,12 +329,18 @@ function timeapp_generate_pdf() {
     $purchaser  = get_post( $purchaser );
     $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
     $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+    $cc_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
 
     // Send the email!
     $to         = $email;
     $subject    = __( 'Time Music Agency Contract', 'timeapp' );
     $message    = timeapp_get_email_content( $play->ID );
     $headers[]  = 'From: Time Music Agency, Inc <contracts@timemusicagency.com>';
+
+    if( $cc_email ) {
+        $headers[] = 'Cc: ' . $cc_email;
+    }
+
     $attachments= array(
         $cache_dir . $filename
     );
