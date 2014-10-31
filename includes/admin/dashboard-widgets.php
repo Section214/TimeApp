@@ -275,6 +275,8 @@ function timeapp_follow_up_widget() {
             $date           = get_post_meta( $play->ID, '_timeapp_end_date', true );
             $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
             $purchaser      = get_post( $purchaser );
+            $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
+            $artist         = get_post( $artist );
             $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
             $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
             $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
@@ -317,6 +319,10 @@ function timeapp_follow_up_widget() {
                         <tr>
                             <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
                             <td><?php echo $date; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e( 'Artist', 'timeapp' ); ?></td>
+                            <td><?php echo $artist->post_title; ?></td>
                         </tr>
                         <tr>
                             <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
