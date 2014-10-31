@@ -334,7 +334,7 @@ function timeapp_generate_pdf() {
     $to         = $email;
     $subject    = __( 'Time Music Agency Contract', 'timeapp' );
     $message    = timeapp_get_email_content( $play->ID );
-    $headers[]  = 'From: Time Music Agency, Inc <test@test.com>';
+    $headers[]  = 'From: Time Music Agency, Inc <contracts@timemusicagency.com>';
     $attachments= array(
         $cache_dir . $filename
     );
