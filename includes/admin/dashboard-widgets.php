@@ -130,95 +130,50 @@ function timeapp_upcoming_plays_widget() {
  * @return      void
  */
 function timeapp_past_due_deposits_widget() {
-    $now    = date( 'm/d/Y g:i a', time() );
-
-    $deposit1 = get_posts( array(
+    $now        = date( 'm/d/Y g:i a', time() );
+    $deposits   = array();
+    $plays      = get_posts( array(
         'post_type'     => 'play',
         'numberposts'   => 999999,
-        'post_status'   => 'publish',
-        'meta_query'    => array(
-            'relation'      => 'AND',
-            array(
-                'key'       => '_timeapp_deposit',
-                'compare'   => 'EXISTS',
-            ),
-            array(
-                'key'       => '_timeapp_deposit1_date',
-                'value'     => $now,
-                'compare'   => '<'
-            ),
-            array(
-                'key'       => '_timeapp_deposit1_date',
-                'value'     => '',
-                'compare'   => '!='
-            ),
-            array(
-                'key'       => '_timeapp_deposit1_paid',
-                'compare'   => 'NOT EXISTS'
-            )
-        )
-    ) );
-    
-    $deposit2 = get_posts( array(
-        'post_type'     => 'play',
-        'numberposts'   => 999999,
-        'post_status'   => 'publish',
-        'meta_query'    => array(
-            'relation'      => 'AND',
-            array(
-                'key'       => '_timeapp_deposit',
-                'compare'   => 'EXISTS'
-            ),
-            array(
-                'key'       => '_timeapp_deposit2_date',
-                'value'     => $now,
-                'compare'   => '<'
-            ),
-            array(
-                'key'       => '_timeapp_deposit2_date',
-                'value'     => '',
-                'compare'   => '!='
-            ),
-            array(
-                'key'       => '_timeapp_deposit2_paid',
-                'compare'   => 'NOT EXISTS'
-            )
-        )
-    ) );
-    
-    $deposit3 = get_posts( array(
-        'post_type'     => 'play',
-        'numberposts'   => 999999,
-        'post_status'   => 'publish',
-        'meta_query'    => array(
-            'relation'      => 'AND',
-            array(
-                'key'       => '_timeapp_deposit',
-                'compare'   => 'EXISTS'
-            ),
-            array(
-                'key'       => '_timeapp_deposit3_date',
-                'value'     => $now,
-                'compare'   => '<'
-            ),
-            array(
-                'key'       => '_timeapp_deposit3_date',
-                'value'     => '',
-                'compare'   => '!='
-            ),
-            array(
-                'key'       => '_timeapp_deposit3_paid',
-                'compare'   => 'NOT EXISTS'
-            )
-        )
+        'post_status'   => 'publish'
     ) );
 
-    $all_deposits   = array_merge( $deposit1, $deposit2, $deposit3 );
-    $deposits       = array();
+    foreach( $plays as $id => $play ) {
+        $has_deposits = get_post_meta( $play->ID, '_timeapp_deposit', true ) ? true : false;
 
-    foreach( $all_deposits as $id => $deposit ) {
-        if( ! array_key_exists( $deposit->ID, $all_deposits ) ) {
-            $deposits[$deposit->ID] = $deposit;
+        if( $has_deposits ) {
+            $deposit1_date  = get_post_meta( $play->ID, '_timeapp_deposit1_date', true );
+            $deposit1_paid  = get_post_meta( $play->ID, '_timeapp_deposit1_paid', true );
+            $deposit1_amt   = get_post_meta( $play->ID, '_timeapp_deposit1_amt', true );
+            $deposit2_date  = get_post_meta( $play->ID, '_timeapp_deposit2_date', true );
+            $deposit2_paid  = get_post_meta( $play->ID, '_timeapp_deposit2_paid', true );
+            $deposit2_amt   = get_post_meta( $play->ID, '_timeapp_deposit2_amt', true );
+            $deposit3_date  = get_post_meta( $play->ID, '_timeapp_deposit3_date', true );
+            $deposit3_paid  = get_post_meta( $play->ID, '_timeapp_deposit3_paid', true );
+            $deposit3_amt   = get_post_meta( $play->ID, '_timeapp_deposit3_amt', true );
+            $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+            $purchaser      = get_post( $purchaser );
+
+            if( $deposit1_date && $deposit1_date < $now && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
+                $deposits[$play->ID][1]['title']        = $play->post_title;
+                $deposits[$play->ID][1]['date']         = $deposit1_date;
+                $deposits[$play->ID][1]['amt']          = $deposit1_amt;
+                $deposits[$play->ID][1]['purchaser']    = $purchaser->post_title;
+            }
+
+            if( $deposit2_date && $deposit2_date < $now && ( ! $deposit2_paid || $deposit2_paid == '' ) ) {
+                $deposits[$play->ID][2]['title']        = $play->post_title;
+                $deposits[$play->ID][2]['date']         = $deposit2_date;
+                $deposits[$play->ID][2]['amt']          = $deposit2_amt;
+                $deposits[$play->ID][2]['purchaser']    = $purchaser->post_title;
+            }
+
+            if( $deposit3_date && $deposit3_date < $now && ( ! $deposit3_paid || $deposit3_paid == '' ) ) {
+                $deposits[$play->ID][3]['title']        = $play->post_title;
+                $deposits[$play->ID][3]['date']         = $deposit3_date;
+                $deposits[$play->ID][3]['amt']          = $deposit3_amt;
+                $deposits[$play->ID][3]['purchaser']    = $purchaser->post_title;
+            }
         }
     }
 
@@ -238,39 +193,30 @@ function timeapp_past_due_deposits_widget() {
             <tbody>
                 <?php
                     foreach( $deposits as $id => $deposit ) {
-                        $deposit1_date  = get_post_meta( $deposit->ID, '_timeapp_deposit1_date', true );
-                        $deposit1_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit1_amt', true );
-                        $deposit2_date  = get_post_meta( $deposit->ID, '_timeapp_deposit2_date', true );
-                        $deposit2_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit2_amt', true );
-                        $deposit3_date  = get_post_meta( $deposit->ID, '_timeapp_deposit3_date', true );
-                        $deposit3_amt   = get_post_meta( $deposit->ID, '_timeapp_deposit3_amt', true );
-                        $purchaser      = get_post_meta( $deposit->ID, '_timeapp_purchaser', true );
-                        $purchaser      = get_post( $purchaser );
-                        
-                        if( $deposit1_date && $deposit1_date < $now ) {
+                        if( array_key_exists( '1', $deposit ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td>' . $purchaser->post_title . '</td>';
-                            echo '<td>' . timeapp_format_price( $deposit1_amt ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit1_date ) ) . '</td>';
+                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[1]['title'] . '</a></td>';
+                            echo '<td>' . $deposit[1]['purchaser'] . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit[1]['amt'] ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[1]['date'] ) ) . '</td>';
                             echo '</tr>';
                         }
                         
-                        if( $deposit2_date && $deposit2_date < $now ) {
+                        if( array_key_exists( '2', $deposit ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td>' . $purchaser->post_title . '</td>';
-                            echo '<td>' . timeapp_format_price( $deposit2_amt ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit2_date ) ) . '</td>';
+                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[2]['title'] . '</a></td>';
+                            echo '<td>' . $deposit[2]['purchaser'] . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit[2]['amt'] ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[2]['date'] ) ) . '</td>';
                             echo '</tr>';
                         }
                         
-                        if( $deposit3_date && $deposit3_date < $now ) {
+                        if( array_key_exists( '3', $deposit ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $deposit->ID ) . '">' . $deposit->post_title . '</a></td>';
-                            echo '<td>' . $purchaser->post_title . '</td>';
-                            echo '<td>' . timeapp_format_price( $deposit3_amt ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit3_date ) ) . '</td>';
+                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[3]['title'] . '</a></td>';
+                            echo '<td>' . $deposit[3]['purchaser'] . '</td>';
+                            echo '<td>' . timeapp_format_price( $deposit[3]['amt'] ) . '</td>';
+                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[3]['date'] ) ) . '</td>';
                             echo '</tr>';
                         }
                     }
