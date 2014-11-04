@@ -869,6 +869,7 @@ function timeapp_render_artist_details_meta_box() {
     echo '<option value="5"' . ( ! isset( $commission ) || $commission == '5' ? ' selected' : '' ) . '>' . __( '5%', 'timeapp' ) . '</option>';
     echo '<option value="10"' . ( $commission == '10' ? ' selected' : '' ) . '>' . __( '10%', 'timeapp' ) . '</option>';
     echo '<option value="15"' . ( $commission == '15' ? ' selected' : '' ) . '>' . __( '15%', 'timeapp' ) . '</option>';
+    echo '<option value="20"' . ( $commission == '20' ? ' selected' : '' ) . '>' . __( '20%', 'timeapp' ) . '</option>';
     echo '</select>';
 
     // Rider
