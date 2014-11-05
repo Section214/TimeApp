@@ -66,6 +66,7 @@ class TimeApp_Generate_PDF {
         $address        = trim( $address );
         $phone          = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
         $email          = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+        $website        = get_post_meta( $purchaser->ID, '_timeapp_venue_url', true );
         $start_date     = get_post_meta( $this->id, '_timeapp_start_date', true );
         $end_date       = get_post_meta( $this->id, '_timeapp_end_date', true );
         $compensation   = get_post_meta( $this->id, '_timeapp_guarantee', true );
@@ -81,7 +82,23 @@ class TimeApp_Generate_PDF {
         $notes          = get_post_meta( $this->id, '_timeapp_notes', true );
         $accommodations = get_post_meta( $this->id, '_timeapp_accommodations', true );
         $commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
+        $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+        $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
+        $contact_name   = '';
 
+        // Is a contact first name specified?
+        if( $contact_fname && $contact_fname != '' ) {
+            $contact_name .= $contact_fname;
+        }
+
+        // Is a contact last name specified?
+        if( $contact_lname && $contact_lname != '' ) {
+            if( $contact_name != '' ) {
+                $contact_name .= ' ';
+            }
+
+            $contact_name .= $contact_lname;
+        }
 
         $this->pdf->SetMargins( 14, 14 );
         $this->pdf->SetAutoPageBreak( true, 18 );
@@ -362,13 +379,16 @@ class TimeApp_Generate_PDF {
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->Cell( 0, 12 * $point, 'By:' );
-
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'By:', 0, 1 );
+
+        $this->pdf->Cell( 0, 12 * $point, ( $contact_name != '' && $contact_name != $purchaser->post_title ? $contact_name . ', ' : '' ) . $purchaser->post_title );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Mike Finding, CEO Time Music Agency', 0, 1 );
+
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'a/o', 0, 1 );
+
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Chad Higgins, CFO Time Music Agency', 0, 1 );
 
@@ -381,26 +401,28 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Address:' );
+        $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'c/o Time Music Agency', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Phone:' );
+        $this->pdf->Cell( 0, 12 * $point, $address );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'PO Box 353', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Email:' );
+        $this->pdf->Cell( 0, 12 * $point, $city . ', ' . $state . ( $zip && $zip != '' ? ' ' . $zip : '' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Long Lake, MN 55356', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Fax:', 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Website:' );
+        $this->pdf->Cell( 0, 12 * $point, 'Office: ' . ( $phone && $phone != '' ? $phone : '' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Office: (952) 448-4202', 0, 1 );
 
+        $this->pdf->Cell( 0, 12 * $point, ( $website && $website != '' ? $website : 'Website:' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Fax:     (952) 368-7281', 0, 1 );
+        
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'www.timemusicagency.com', 0, 1 );
 
