@@ -194,9 +194,13 @@ function timeapp_render_play_details_meta_box() {
     $agent          = get_post_meta( $post_id, '_timeapp_agent', true );
     $purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
     $artist         = get_post_meta( $post_id, '_timeapp_artist', true );
+    $artist         = get_post( $artist );
+    $contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
+    $contract_terms = ( $contract_terms && $contract_terms != '' ? $contract_terms . ' ' . __( 'has', 'timeapp' ) : __( 'contract terms have', 'timeapp' ) );
     $approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
     $set_reqs       = get_post_meta( $post_id, '_timeapp_set_reqs', true );
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
+    
 
     // Status
     echo '<p>';
@@ -221,7 +225,7 @@ function timeapp_render_play_details_meta_box() {
 
     $agents = timeapp_get_agents();
     foreach( $agents as $id => $name ) {
-        echo '<option value="' . $id  . '"' . ( $agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+        echo '<option value="' . $id  . '"' . ( $agent->ID == $id ? ' selected' : '' ) . '>' . $name . '</option>';
     }
 
     echo '</select>';
@@ -250,11 +254,11 @@ function timeapp_render_play_details_meta_box() {
 
     echo '</select>';
 
-    // Artist approved
+    // Contract approved
     echo '<p>';
     echo '<strong><label for="_timeapp_approved">' . __( 'Approved?', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_approved" id="_timeapp_approved" value="1" ' . checked( true,  $approved, false ) . ' />';
-    echo '<label for="_timeapp_approved">' . __( 'Check when rider has been approved.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_approved">' . sprintf( __( 'Check when %s been approved.', 'timeapp' ), $contract_terms ) . '</label>';
     echo '</p>';
 
     // Set requirements
@@ -474,6 +478,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $artist         = get_post( $artist );
     $artist_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
     $artist_email   = ( $artist_email ? $artist_email : __( 'No email specified', 'timeapp' ) );
+    $contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
     $purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
     $purchaser      = get_post( $purchaser );
     $purchaser_email= get_post_meta( $purchaser->ID, '_timeapp_email', true );
@@ -501,9 +506,12 @@ function timeapp_colorbox_holder( $post_id ) {
     $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
+    $contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
     $set_reqs       = get_post_meta( $post_id, '_timeapp_set_reqs', true );
+    $approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
     $date           = '';
+    $terms          = '';
     
     // Setup the date
     if( $start_date && $start_date != '' ) {
@@ -517,6 +525,21 @@ function timeapp_colorbox_holder( $post_id ) {
 
         $date .= $end_date;
     }
+
+    // Setup the terms
+    if( $approved && $contract_terms && $contract_terms != '' ) {
+        $terms .= $contract_terms;
+    }
+
+    if( $notes && $notes != '' ) {
+        if( $terms != '' ) {
+            $terms .= '<br />';
+        }
+
+        $terms .= $notes;
+    }
+
+    $terms .= ( $terms != '' ? '<br />' : '' ) . sprintf( __( 'See attached "%s RIDER"', 'timeapp' ), strtoupper( $artist->post_title ) );
     ?>
         <table class="timeapp-pdf-preview wp-list-table widefat fixed posts">
             <thead>
@@ -574,10 +597,12 @@ function timeapp_colorbox_holder( $post_id ) {
                     <td><?php _e( 'Production', 'timeapp' ); ?></td>
                     <td><?php echo $production; ?></td>
                 </tr>
-                <tr>
-                    <td><?php _e( 'Additional Terms', 'timeapp' ); ?></td>
-                    <td><?php echo ( $notes ? $notes : __( 'None', 'timeapp' ) ); ?></td>
-                </tr>
+                <?php if( $terms && $terms != '' ) { ?>
+                    <tr>
+                        <td><?php _e( 'Additional Terms', 'timeapp' ); ?></td>
+                        <td><?php echo $terms; ?></td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td><?php _e( 'Accommodations', 'timeapp' ); ?></td>
                     <td><?php echo ( $accommodations ? $accommodations : __( 'None', 'timeapp' ) ); ?></td>
@@ -858,6 +883,7 @@ function timeapp_render_artist_details_meta_box() {
     $artist_url     = get_post_meta( $post_id, '_timeapp_artist_url', true );
     $promo_url      = get_post_meta( $post_id, '_timeapp_promo_url', true );
     $commission     = get_post_meta( $post_id, '_timeapp_commission', true );
+    $contract_terms = get_post_meta( $post_id, '_timeapp_contract_terms', true );
     $rider          = get_post_meta( $post_id, '_timeapp_rider', true );
     
     // Signer name
@@ -899,6 +925,12 @@ function timeapp_render_artist_details_meta_box() {
     echo '<option value="15"' . ( $commission == '15' ? ' selected' : '' ) . '>' . __( '15%', 'timeapp' ) . '</option>';
     echo '<option value="20"' . ( $commission == '20' ? ' selected' : '' ) . '>' . __( '20%', 'timeapp' ) . '</option>';
     echo '</select>';
+
+    // Contract Terms
+    echo '<p>';
+    echo '<strong><label for="_timeapp_contract_terms">' . __( 'Contract Terms', 'timeapp' ) . '</label></strong><br />';
+    echo '<textarea cols="30" rows="5" name="_timeapp_contract_terms" id="_timeapp_contract_terms">' . $contract_terms . '</textarea>';
+    echo '</p>';
 
     // Rider
     echo '<p>';
@@ -951,6 +983,7 @@ function timeapp_save_artist_meta_box( $post_id ) {
         '_timeapp_artist_url',
         '_timeapp_promo_url',
         '_timeapp_commission',
+        '_timeapp_contract_terms'
     ) );
 
     if( ! empty( $_FILES ) && isset( $_FILES['_timeapp_rider'] ) ) {

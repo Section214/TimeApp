@@ -82,6 +82,8 @@ class TimeApp_Generate_PDF {
         $production_cost= get_post_meta( $this->id, '_timeapp_production_cost', true );
         $production     = get_post_meta( $this->id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
         $notes          = get_post_meta( $this->id, '_timeapp_notes', true );
+        $approved       = get_post_meta( $this->id, '_timeapp_approved', true ) ? true : false;
+        $contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
         $accommodations = get_post_meta( $this->id, '_timeapp_accommodations', true );
         $commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
         $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
@@ -89,6 +91,7 @@ class TimeApp_Generate_PDF {
         $set_reqs       = get_post_meta( $this->id, '_timeapp_set_reqs', true );
         $contact_name   = '';
         $date           = '';
+        $terms          = '';
 
         // Is a contact first name specified?
         if( $contact_fname && $contact_fname != '' ) {
@@ -116,6 +119,21 @@ class TimeApp_Generate_PDF {
 
             $date .= $end_date;
         }
+
+        // Setup the terms
+        if( $approved && $contract_terms && $contract_terms != '' ) {
+            $terms .= $contract_terms;
+        }
+
+        if( $notes && $notes != '' ) {
+            if( $terms != '' ) {
+                $terms .= "\n";
+            }
+
+            $terms .= $notes;
+        }
+
+        $terms .= ( $terms != '' ? "\n" : '' ) . sprintf( __( 'See attached "%s RIDER"', 'timeapp' ), strtoupper( $artist->post_title ) );
 
         $this->pdf->SetMargins( 14, 14 );
         $this->pdf->SetAutoPageBreak( true, 18 );
@@ -230,7 +248,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '7. Additional Terms:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, ( $notes ? $notes : 'None' ), 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, $terms, 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
