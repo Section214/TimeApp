@@ -322,6 +322,12 @@ function timeapp_generate_pdf() {
     $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
     $file->build();
 
+    if( TIMEAPP_DEBUG ) {
+        $url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
+        wp_safe_redirect( $url );
+        exit;
+    }
+
     // Get rider
     $artist     = get_post_meta( $play->ID, '_timeapp_artist', true );
     $artist     = get_post( $artist );
@@ -330,8 +336,8 @@ function timeapp_generate_pdf() {
     $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
     $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
     $cc_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
-    $start_date     = get_post_meta( $play->ID, '_timeapp_start_date', true );
-    $start_date     = ( isset( $start_date ) && ! empty( $start_date ) ? date( 'm/d/Y g:i a', strtotime( $start_date ) ) : '' );
+    $start_date = get_post_meta( $play->ID, '_timeapp_start_date', true );
+    $start_date = ( isset( $start_date ) && ! empty( $start_date ) ? date( 'm/d/Y g:i a', strtotime( $start_date ) ) : '' );
 
     // Send the email!
     $to         = $email;
