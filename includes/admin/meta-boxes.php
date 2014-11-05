@@ -249,7 +249,7 @@ function timeapp_render_play_details_meta_box() {
     
     $artists = timeapp_get_artists();
     foreach( $artists as $id => $name ) {
-        echo '<option value="' . $id . '"' . ( $artist == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+        echo '<option value="' . $id . '"' . ( $artist->ID == $id ? ' selected' : '' ) . '>' . $name . '</option>';
     }
 
     echo '</select>';
