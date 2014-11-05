@@ -410,7 +410,7 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_production">' . __( 'Production Provided', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_production" id="_timeapp_production" value="1" ' . checked( true,  $production, false ) . ' />';
-    echo '<label for="_timeapp_production">' . __( 'Check if a production has been provided.', 'timeapp' ) . '</label>';
+    echo '<label for="_timeapp_production">' . __( 'Check if purchaser is providing production.', 'timeapp' ) . '</label>';
     echo '</p>';
 
     // Production cost
