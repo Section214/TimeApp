@@ -237,7 +237,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '8. Accommodations:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, ( $accommodations ? $accommodations : 'None' ), 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, ( $accommodations ? $accommodations : 'N/A' ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
