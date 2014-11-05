@@ -225,7 +225,7 @@ function timeapp_render_play_details_meta_box() {
 
     $agents = timeapp_get_agents();
     foreach( $agents as $id => $name ) {
-        echo '<option value="' . $id  . '"' . ( $agent->ID == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+        echo '<option value="' . $id  . '"' . ( $agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
     }
 
     echo '</select>';
