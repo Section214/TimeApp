@@ -448,8 +448,12 @@ function timeapp_render_financials_meta_box() {
     echo '<p>';
     echo '<strong><label for="_timeapp_split_agent">' . __( 'Split Agent', 'timeapp' ) . '</label></strong><br />';
     echo '<select class="timeapp-select2" name="_timeapp_split_agent" id="_timeapp_split_agent">';
-    echo '<option value="mfindling"' . ( ! isset( $split_agent ) || $split_agent == 'mfindling' ? ' selected' : '' ) . '>Mike Findling</option>';
-    echo '<option value="chiggins"' . ( $split_agent == 'chiggins' ? ' selected' : '' ) . '>Chad Higgins</option>';
+    
+    $agents = timeapp_get_agents();
+    foreach( $agents as $id => $name ) {
+        echo '<option value="' . $id  . '"' . ( $split_agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
+    }
+    
     echo '</select>';
 
     echo '</div>';
