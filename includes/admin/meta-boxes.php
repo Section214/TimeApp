@@ -22,9 +22,9 @@ function timeapp_add_meta_boxes() {
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'play', 'normal', 'high' );
     add_meta_box( 'actions_bottom', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'play', 'normal', 'low' );
     add_meta_box( 'calendar_info', __( 'Calendar Information', 'timeapp' ), 'timeapp_render_calendar_info_meta_box', 'play', 'normal', 'default' );
-    add_meta_box( 'communications', __( 'Communications', 'timeapp' ), 'timeapp_render_communications_meta_box', 'play', 'normal', 'default' );
     add_meta_box( 'play_details', __( 'Play Details', 'timeapp' ), 'timeapp_render_play_details_meta_box', 'play', 'normal', 'default' );
     add_meta_box( 'financials', __( 'Financials', 'timeapp' ), 'timeapp_render_financials_meta_box', 'play', 'normal', 'default' );
+    add_meta_box( 'communications', __( 'Communications', 'timeapp' ), 'timeapp_render_communications_meta_box', 'play', 'normal', 'default' );
 
     // Purchaser post type
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'purchaser', 'normal', 'high' );
