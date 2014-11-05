@@ -489,6 +489,8 @@ function timeapp_colorbox_holder( $post_id ) {
     $start_date     = get_post_meta( $post_id, '_timeapp_start_date', true );
     $end_date       = get_post_meta( $post_id, '_timeapp_end_date', true );
     $compensation   = get_post_meta( $post_id, '_timeapp_guarantee', true );
+    $bonus          = get_post_meta( $post_id, '_timeapp_bonus', true ) ? true : false;
+    $bonus_details  = get_post_meta( $post_id, '_timeapp_bonus_details', true );
     $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
     $deposit1_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
     $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
@@ -526,6 +528,12 @@ function timeapp_colorbox_holder( $post_id ) {
                     <td><?php _e( 'Compensation', 'timeapp' ); ?></td>
                     <td><?php echo timeapp_format_price( $compensation ); ?></td>
                 </tr>
+                <?php if( $bonus && $bonus_details && $bonus_details != '' ) { ?>
+                    <tr>
+                        <td><?php _e( 'Bonus Details', 'timeapp' ); ?></td>
+                        <td><?php echo $bonus_details; ?></td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td><?php _e( 'Deposit 1', 'timeapp' ); ?></td>
                     <td><?php echo timeapp_format_price( $deposit1_amt ) . __( ' by ', 'timeapp' ) . $deposit1_date; ?></td>

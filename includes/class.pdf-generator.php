@@ -70,6 +70,8 @@ class TimeApp_Generate_PDF {
         $start_date     = get_post_meta( $this->id, '_timeapp_start_date', true );
         $end_date       = get_post_meta( $this->id, '_timeapp_end_date', true );
         $compensation   = get_post_meta( $this->id, '_timeapp_guarantee', true );
+        $bonus          = get_post_meta( $this->id, '_timeapp_bonus', true ) ? true : false;
+        $bonus_details  = get_post_meta( $this->id, '_timeapp_bonus_details', true );
         $deposit1_date  = get_post_meta( $this->id, '_timeapp_deposit1_date', true );
         $deposit1_amt   = get_post_meta( $this->id, '_timeapp_deposit1_amt', true );
         $deposit2_date  = get_post_meta( $this->id, '_timeapp_deposit2_date', true );
@@ -161,7 +163,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '4. Compensation Agreed Upon:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, timeapp_format_price( $compensation ) . ' (' . timeapp_format_price( $compensation, true ) . ')', 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, timeapp_format_price( $compensation ) . ' (' . timeapp_format_price( $compensation, true ) . ')' . ( $bonus && $bonus_details && $bonus_details != '' ? "\n" . 'or ' . $bonus_details . ', whichever is greater' : '' ) , 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
