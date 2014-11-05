@@ -86,7 +86,9 @@ class TimeApp_Generate_PDF {
         $commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
         $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
         $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
+        $set_reqs       = get_post_meta( $this->id, '_timeapp_set_reqs', true );
         $contact_name   = '';
+        $date           = '';
 
         // Is a contact first name specified?
         if( $contact_fname && $contact_fname != '' ) {
@@ -100,6 +102,19 @@ class TimeApp_Generate_PDF {
             }
 
             $contact_name .= $contact_lname;
+        }
+
+        // Setup the date
+        if( $start_date && $start_date != '' ) {
+            $date .= $start_date;
+        }
+
+        if( $end_date && $end_date != '' ) {
+            if( $date != '' ) {
+                $date .= ' - ';
+            }
+
+            $date .= $end_date;
         }
 
         $this->pdf->SetMargins( 14, 14 );
@@ -156,7 +171,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '3. Date(s) of Engagement:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->Cell( 0, 12 * $point, $start_date . ' - ' . $end_date, 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, $date . ( $set_reqs && $set_reqs != '' ? "\n" . $set_reqs : '' ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 

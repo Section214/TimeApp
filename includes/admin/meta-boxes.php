@@ -502,7 +502,21 @@ function timeapp_colorbox_holder( $post_id ) {
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
-    //$commission     = get_post_meta( $artist->ID, '_timeapp_commission', true );
+    $set_reqs       = get_post_meta( $post_id, '_timeapp_set_reqs', true );
+    $date           = '';
+    
+    // Setup the date
+    if( $start_date && $start_date != '' ) {
+        $date .= $start_date;
+    }
+
+    if( $end_date && $end_date != '' ) {
+        if( $date != '' ) {
+            $date .= ' - ';
+        }
+
+        $date .= $end_date;
+    }
     ?>
         <table class="timeapp-pdf-preview wp-list-table widefat fixed posts">
             <thead>
@@ -522,8 +536,14 @@ function timeapp_colorbox_holder( $post_id ) {
                 </tr>
                 <tr>
                     <td><?php _e( 'Date(s) of Engagement', 'timeapp' ); ?></td>
-                    <td><?php echo $start_date . ' - ' . $end_date; ?></td>
+                    <td><?php echo $date; ?></td>
                 </tr>
+                <?php if( $set_reqs && $set_reqs != '' ) { ?>
+                    <tr>
+                        <td><?php _e( 'Set Requirements', 'timeapp' ); ?></td>
+                        <td><?php echo $set_reqs; ?></td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td><?php _e( 'Compensation', 'timeapp' ); ?></td>
                     <td><?php echo timeapp_format_price( $compensation ); ?></td>
