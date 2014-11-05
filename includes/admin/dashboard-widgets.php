@@ -130,7 +130,7 @@ function timeapp_upcoming_plays_widget() {
  * @return      void
  */
 function timeapp_past_due_deposits_widget() {
-    $now        = date( 'm/d/Y g:i a', time() );
+    $now        = date( 'Ymd', time() );
     $deposits   = array();
     $plays      = get_posts( array(
         'post_type'     => 'play',
@@ -154,21 +154,21 @@ function timeapp_past_due_deposits_widget() {
             $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
             $purchaser      = get_post( $purchaser );
 
-            if( $deposit1_date && $deposit1_date < $now && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
+            if( $deposit1_date && date( 'Ymd', strtotime( $deposit1_date ) ) < $now && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
                 $deposits[$play->ID][1]['title']        = $play->post_title;
                 $deposits[$play->ID][1]['date']         = $deposit1_date;
                 $deposits[$play->ID][1]['amt']          = $deposit1_amt;
                 $deposits[$play->ID][1]['purchaser']    = $purchaser->post_title;
             }
 
-            if( $deposit2_date && $deposit2_date < $now && ( ! $deposit2_paid || $deposit2_paid == '' ) ) {
+            if( $deposit2_date && date( 'Ymd', strtotime( $deposit2_date ) ) < $now && ( ! $deposit2_paid || $deposit2_paid == '' ) ) {
                 $deposits[$play->ID][2]['title']        = $play->post_title;
                 $deposits[$play->ID][2]['date']         = $deposit2_date;
                 $deposits[$play->ID][2]['amt']          = $deposit2_amt;
                 $deposits[$play->ID][2]['purchaser']    = $purchaser->post_title;
             }
 
-            if( $deposit3_date && $deposit3_date < $now && ( ! $deposit3_paid || $deposit3_paid == '' ) ) {
+            if( $deposit3_date && date( 'Ymd', strtotime( $deposit3_date ) ) < $now && ( ! $deposit3_paid || $deposit3_paid == '' ) ) {
                 $deposits[$play->ID][3]['title']        = $play->post_title;
                 $deposits[$play->ID][3]['date']         = $deposit3_date;
                 $deposits[$play->ID][3]['amt']          = $deposit3_amt;
