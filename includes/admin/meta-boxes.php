@@ -801,7 +801,7 @@ function timeapp_render_venue_info_meta_box() {
 
     // Zip Code
     echo '<p>';
-    echo '<strong><label for="_timeapp_zip">' . __( 'Zip Code', 'timeapp' ) . '</label></strong><br />';
+    echo '<strong><label for="_timeapp_zip">' . __( 'Zip Code', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
     echo '<input type="text" class="regular-text" name="_timeapp_zip" id="_timeapp_zip" value="' . ( isset( $zip ) && ! empty( $zip ) ? $zip : '' ) . '" />';
     echo '</p>';
     

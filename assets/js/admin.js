@@ -56,7 +56,7 @@ jQuery(document).ready(function ($) {
     });
 
     jQuery('.post-type-purchaser .timeapp-save').click(function (e) {
-        var firstName, lastName, email, address, city, state, errMessage;
+        var firstName, lastName, email, address, city, state, zip, errMessage;
 
         firstName = jQuery("input[name='_timeapp_first_name']").val();
         lastName = jQuery("input[name='_timeapp_last_name']").val();
@@ -64,8 +64,9 @@ jQuery(document).ready(function ($) {
         address = jQuery("input[name='_timeapp_address']").val();
         city = jQuery("input[name='_timeapp_city']").val();
         state = jQuery("select[name='_timeapp_state'] option:selected").val();
+        zip = jQuery("input[name='_timeapp_zip']").val();
 
-        if (firstName === '' || lastName === '' || email === '' || address === '' || city === '' || state === '') {
+        if (firstName === '' || lastName === '' || email === '' || address === '' || city === '' || state === '' || zip === '') {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
@@ -122,3 +123,4 @@ jQuery(document).ready(function ($) {
         }
     });
 });
+
