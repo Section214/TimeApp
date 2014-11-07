@@ -8,6 +8,18 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    jQuery('.post-type-play input').change(function () {
+        jQuery('.colorbox').css('display', 'none');
+    });
+
+    jQuery('.post-type-play select').change(function () {
+        jQuery('.colorbox').css('display', 'none');
+    });
+
+    jQuery('.post-type-play textarea').change(function () {
+        jQuery('.colorbox').css('display', 'none');
+    });
+
     jQuery('.colorbox').colorbox({
         inline: true,
         href: "#timeapp-pdf-preview",
@@ -35,6 +47,7 @@ jQuery(document).ready(function ($) {
     jQuery('.post-type-agent .timeapp-save').click(function (e) {
         e.preventDefault();
         jQuery('#publish').click();
+        jQuery('.colorbox').css('display', 'inline-block');
     });
 
     jQuery('.post-type-play .timeapp-save').click(function (e) {
