@@ -514,6 +514,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
     $set_reqs       = get_post_meta( $post_id, '_timeapp_set_reqs', true );
     $approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
+    $tax_id         = get_post_meta( $artist->ID,'_timeapp_tax_id', true );
     $date           = '';
     $terms          = '';
     
@@ -556,6 +557,10 @@ function timeapp_colorbox_holder( $post_id ) {
                 <tr>
                     <td><?php _e( 'Artist', 'timeapp' ); ?></td>
                     <td><?php echo $artist->post_title . ' &lt;' . $artist_email . '&gt;'; ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Tax ID', 'timeapp' ); ?></td>
+                    <td><?php echo $tax_id; ?></td>
                 </tr>
                 <tr>
                     <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>

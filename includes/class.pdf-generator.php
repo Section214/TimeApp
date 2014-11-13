@@ -89,6 +89,7 @@ class TimeApp_Generate_PDF {
         $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
         $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
         $set_reqs       = get_post_meta( $this->id, '_timeapp_set_reqs', true );
+        $tax_id         = get_post_meta( $artist->ID, '_timeapp_tax_id', true );
         $contact_name   = '';
         $date           = '';
         $terms          = '';
@@ -391,7 +392,7 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->SetX( 115 );
 
-        $this->pdf->Cell( 0, 12 * $point, 'For ARTIST, LLC - Tax ID#: 27-1530759', 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, 'For ARTIST, LLC - Tax ID#: ' . $tax_id, 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
