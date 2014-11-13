@@ -2,6 +2,13 @@
 jQuery(document).ready(function ($) {
     'use strict';
 
+    jQuery('.post-type-play #title').attr('disabled', 'disabled');
+    jQuery('.post-type-play #title').attr('readonly', 'readonly');
+    
+    if (jQuery('.post-type-play #title').val() === '') {
+        jQuery('.post-type-play #title').val(timeapp_vars.title_placeholder);
+    }
+
     jQuery(function () {
         if (jQuery('#_timeapp_rider').length > 0) {
             jQuery('form').attr('enctype', 'multipart/form-data');

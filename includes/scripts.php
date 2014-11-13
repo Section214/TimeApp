@@ -37,7 +37,8 @@ function timeapp_admin_scripts() {
         'required_fields'       => __( 'Please enter all required fields!', 'timeapp' ),
         'select_agent'          => __( 'Select an Agent', 'timeapp' ),
         'select_purchaser'      => __( 'Select a Purchaser', 'timeapp' ),
-        'close_button'          => __( 'Exit Preview', 'timeapp' )
+        'close_button'          => __( 'Exit Preview', 'timeapp' ),
+        'title_placeholder'     => __( 'Play title will be generated on save', 'timeapp' )
     ) );
 
     wp_enqueue_style( 'colorbox', TIMEAPP_URL . 'assets/css/colorbox' . $suffix . '.css' );

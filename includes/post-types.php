@@ -147,7 +147,7 @@ function timeapp_enter_title_here( $title ) {
     $screen = get_current_screen();
 
     if( $screen->post_type == 'play' ) {
-        $title = __( 'Enter play title here', 'timeapp' );
+        $title = __( 'Play title will be generated on save', 'timeapp' );
     } elseif( $screen->post_type == 'purchaser' ) {
         $title = __( 'Enter purchaser name here', 'timeapp' );
     } elseif( $screen->post_type == 'artist' ) {

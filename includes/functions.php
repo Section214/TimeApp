@@ -436,3 +436,29 @@ function timeapp_remove_rider() {
     exit;
 }
 add_action( 'timeapp_remove_rider', 'timeapp_remove_rider' );
+
+
+/**
+ * Override post title on play post type
+ *
+ * @since       1.0.7
+ * @param       string $post_title The current post title
+ * @return      string $post_title The new post title
+ */
+function timeapp_update_play_title( $post_title ) {
+    if( isset( $_POST['post_type'] ) && $_POST['post_type'] == 'play' ) {
+        $artist = get_post( $_POST['_timeapp_artist'] );
+        $artist = $artist->post_title;
+
+        $purchaser = get_post( $_POST['_timeapp_purchaser'] );
+        $purchaser = $purchaser->post_title;
+
+        $date = $_POST['_timeapp_start_date'];
+        $date = date( 'm-d-Y', strtotime( $date ) );
+
+        $post_title = $artist . '@' . $purchaser . ' - ' . $date;
+    }
+
+    return $post_title;
+}
+add_filter( 'title_save_pre', 'timeapp_update_play_title' );
