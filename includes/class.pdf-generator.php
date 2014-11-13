@@ -392,7 +392,7 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->SetX( 115 );
 
-        $this->pdf->Cell( 0, 12 * $point, 'For ARTIST, LLC - Tax ID#: ' . $tax_id, 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, 'For ARTIST - Tax ID#: ' . $tax_id, 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
