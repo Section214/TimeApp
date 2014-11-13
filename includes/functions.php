@@ -380,10 +380,9 @@ function timeapp_get_email_content( $id ) {
     $artist     = get_post( $artist );
 
     $first_name = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
-    $artist_name= get_post_meta( $artist->ID, '_timeapp_signer_name', true );
 
     $message    = ucwords( $first_name ) . ',' . "\n";
-    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), $artist_name ) . "\n\n";
+    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), $artist->post_title ) . "\n\n";
     $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
     $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
     $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
