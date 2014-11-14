@@ -30,6 +30,7 @@ function timeapp_add_meta_boxes() {
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'purchaser', 'normal', 'high' );
     add_meta_box( 'actions_bottom', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'purchaser', 'normal', 'low' );
     add_meta_box( 'contact_info', __( 'Contact Information', 'timeapp' ), 'timeapp_render_contact_info_meta_box', 'purchaser', 'normal', 'default' );
+    add_meta_box( 'contract_signatory', __( 'Contract Signatory', 'timeapp' ), 'timeapp_render_contract_signatory_meta_box', 'purchaser', 'normal', 'default' );
     add_meta_box( 'venue_info', __( 'Venue Information', 'timeapp' ), 'timeapp_render_venue_info_meta_box', 'purchaser', 'normal', 'default' );
 
     // Artist post type
@@ -729,6 +730,7 @@ function timeapp_render_contact_info_meta_box() {
     $last_name      = get_post_meta( $post_id, '_timeapp_last_name', true );
     $email          = get_post_meta( $post_id, '_timeapp_email', true );
     $phone_number   = get_post_meta( $post_id, '_timeapp_phone_number', true );
+    $signatory      = get_post_meta( $post_id, '_timeapp_signatory', true ) ? true : false;
 
     // First name
     echo '<p>';
@@ -753,10 +755,47 @@ function timeapp_render_contact_info_meta_box() {
     echo '<strong><label for="_timeapp_phone_number">' . __( 'Phone Number', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="text" class="regular-text" name="_timeapp_phone_number" id="_timeapp_phone_number" value="' . ( isset( $phone_number ) && ! empty( $phone_number ) ? $phone_number : '' ) . '" />';
     echo '</p>';
+
+    // Different signatory?
+    echo '<p>';
+    echo '<strong><label for="_timeapp_signatory">' . __( 'Different Signatory?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_signatory" id="_timeapp_signatory" value="1" ' . checked( true,  $signatory, false ) . ' />';
+    echo '<label for="_timeapp_signatory">' . __( 'Check if Contract Signatory is different than Contact.', 'timeapp' ) . '</label>';
+    echo '</p>';
     
     do_action( 'timeapp_contact_info_fields', $post_id );
 
     wp_nonce_field( basename( __FILE__ ), 'timeapp_purchaser_nonce' );
+}
+
+
+/**
+ * Render contract signatory meta box
+ *
+ * @since       1.0.9
+ * @global      object $post The WordPress object for this post
+ * @return      void
+ */
+function timeapp_render_contract_signatory_meta_box() {
+    global $post;
+
+    $post_id        = $post->ID;
+    $first_name     = get_post_meta( $post_id, '_timeapp_signatory_first_name', true );
+    $last_name      = get_post_meta( $post_id, '_timeapp_signatory_last_name', true );
+
+    // First name
+    echo '<p>';
+    echo '<strong><label for="_timeapp_signatory_first_name">' . __( 'First Name', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_signatory_first_name" id="_timeapp_signatory_first_name" value="' . ( isset( $first_name ) && ! empty( $first_name ) ? $first_name : '' ) . '" />';
+    echo '</p>';
+    
+    // Last name
+    echo '<p>';
+    echo '<strong><label for="_timeapp_signatory_last_name">' . __( 'Last Name', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_signatory_last_name" id="_timeapp_signatory_last_name" value="' . ( isset( $last_name ) && ! empty( $last_name ) ? $last_name : '' ) . '" />';
+    echo '</p>';
+    
+    do_action( 'timeapp_contract_signatory_fields', $post_id );
 }
 
 
@@ -850,6 +889,9 @@ function timeapp_save_purchaser_meta_box( $post_id ) {
         '_timeapp_last_name',
         '_timeapp_email',
         '_timeapp_phone_number',
+        '_timeapp_signatory',
+        '_timeapp_signatory_first_name',
+        '_timeapp_signatory_last_name',
         '_timeapp_venue_url',
         '_timeapp_address',
         '_timeapp_city',

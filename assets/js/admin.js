@@ -142,5 +142,19 @@ jQuery(document).ready(function ($) {
             jQuery("input[name='_timeapp_split_perc']").closest('div').css('display', 'none');
         }
     });
+
+    jQuery("input[name='_timeapp_signatory']").change(function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery("#contract_signatory").css('display', 'block');
+        } else {
+            jQuery("#contract_signatory").css('display', 'none');
+        }
+    });
+
+    if (jQuery("input[name='_timeapp_signatory']").is(':checked')) {
+        jQuery("#contract_signatory").css('display', 'block');
+    } else {
+        jQuery("#contract_signatory").css('display', 'none');
+    }
 });
 
