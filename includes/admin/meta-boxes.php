@@ -513,19 +513,36 @@ function timeapp_colorbox_holder( $post_id ) {
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
     $contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
+    $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+    $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
     $set_reqs       = get_post_meta( $post_id, '_timeapp_set_reqs', true );
     $approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
     $tax_id         = get_post_meta( $artist->ID,'_timeapp_tax_id', true );
     $signatory      = get_post_meta( $purchaser->ID, '_timeapp_signatory', true ) ? true : false;
+    $contact_name   = '';
+
+    // Is a contact first name specified?
+    if( $contact_fname && $contact_fname != '' ) {
+        $contact_name .= $contact_fname;
+    }
+
+    // Is a contact last name specified?
+    if( $contact_lname && $contact_lname != '' ) {
+        if( $contact_name != '' ) {
+            $contact_name .= ' ';
+        }
+
+        $contact_name .= $contact_lname;
+    }
 
     if( $signatory ) {
         $purchaser_fname = get_post_meta( $purchaser->ID, '_timeapp_signatory_first_name', true );
         $purchaser_lname = get_post_meta( $purchaser->ID, '_timeapp_signatory_last_name', true );
 
-        $purchaser_name = $purchaser_fname . ( $purchaser_lname ? ' ' . $purchaser_lname : '' );
-    } else {
-        $purchaser_name = $purchaser->post_title;
+        $contact_name = $purchaser_fname . ( $purchaser_lname ? ' ' . $purchaser_lname : '' );
     }
+    
+    $contact_name = ( $contact_name != $purchaser->post_title ? $contact_name . ', ' . $purchaser->post_title : $contact_name );
 
     $date           = '';
     $terms          = '';
@@ -576,7 +593,7 @@ function timeapp_colorbox_holder( $post_id ) {
                 </tr>
                 <tr>
                     <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
-                    <td><?php echo $purchaser_name . ' &lt;' . $purchaser_email . '&gt;'; ?></td>
+                    <td><?php echo $contact_name . ' &lt;' . $purchaser_email . '&gt;'; ?></td>
                 </tr>
                 <tr>
                     <td><?php _e( 'Date(s) of Engagement', 'timeapp' ); ?></td>
