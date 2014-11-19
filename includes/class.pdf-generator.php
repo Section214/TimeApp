@@ -214,11 +214,13 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '5. Payment:', 0, 1 );
 
-        $this->pdf->Cell( 15, 12 * $point, '5a.' );
-        $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable earnest money deposit in the amount of ' . timeapp_format_price( $deposit1_amt ) . ' made payable to Time Music Agency is due with signed contract;', 0, 1 );
+        if( $deposit1_amt && $deposit1_amt != '' ) {
+            $this->pdf->Cell( 15, 12 * $point, '5a.' );
+            $this->pdf->SetFont( 'Times', '', 12 );
+            $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable earnest money deposit in the amount of ' . timeapp_format_price( $deposit1_amt ) . ' made payable to Time Music Agency is due by ' . date( 'F jS, Y', strtotime( $deposit1_date ) ) . ';', 0, 1 );
 
-        $last = 'b';
+            $last = 'b';
+        }
 
         if( $deposit2_amt && $deposit2_amt != '' ) {
             $this->pdf->SetFont( 'Times', 'B', 12 );
