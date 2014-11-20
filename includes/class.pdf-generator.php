@@ -62,8 +62,8 @@ class TimeApp_Generate_PDF {
         $city           = get_post_meta( $purchaser->ID, '_timeapp_city', true );
         $state          = get_post_meta( $purchaser->ID, '_timeapp_state', true );
         $zip_code       = get_post_meta( $purchaser->ID, '_timeapp_zip', true );
-        $address        = $address . ', ' . $city . ', ' . $state . ' ' . $zip_code;
-        $address        = trim( $address );
+        $full_address   = $address . ', ' . $city . ', ' . $state . ' ' . $zip_code;
+        $full_address   = trim( $full_address );
         $phone          = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
         $email          = get_post_meta( $purchaser->ID, '_timeapp_email', true );
         $website        = get_post_meta( $purchaser->ID, '_timeapp_venue_url', true );
@@ -175,7 +175,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, '    This Musical Performance Services Agreement (hereafter referred to as "Contract" or "Agreement") is entered into and agreed by the parties as bearing an effective date of ' . $effective_date . ' notwithstanding that either party may have laid hand and signed below on a date that varies from the effective date, by and between the person/s or entity/ies listed as "Purchaser" in paragraph 2 below (hereafter referred to as "Purchaser") with operating address, phone and e-mail of: ' . $address . ' / ' . $phone . ' / ' . $email . ' and ARTIST as represented by Time Music Agency, Inc, its sole authorized management company and agent, (hereafter referred to as "Artist" or "ARTIST" and, when applicable, "Time Music Agency, Inc,").' );
+        $this->pdf->MultiCell( 0, 12 * $point, '    This Musical Performance Services Agreement (hereafter referred to as "Contract" or "Agreement") is entered into and agreed by the parties as bearing an effective date of ' . $effective_date . ' notwithstanding that either party may have laid hand and signed below on a date that varies from the effective date, by and between the person/s or entity/ies listed as "Purchaser" in paragraph 2 below (hereafter referred to as "Purchaser") with operating address, phone and e-mail of: ' . $full_address . ( isset( $phone ) && $phone != '' ? ' / ' . $phone : '' ) . ' / ' . $email . ' and ARTIST as represented by Time Music Agency, Inc, its sole authorized management company and agent, (hereafter referred to as "Artist" or "ARTIST" and, when applicable, "Time Music Agency, Inc,").' );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
@@ -193,7 +193,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '2. Purchaser: ' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title, 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, $purchaser->post_title . "\n" . $address . "\n" . $city . ', ' . $state . ' ' . $zip_code, 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
@@ -213,6 +213,8 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '5. Payment:', 0, 1 );
+
+        $last = 'a';
 
         if( $deposit1_amt && $deposit1_amt != '' ) {
             $this->pdf->Cell( 15, 12 * $point, '5a.' );
@@ -457,7 +459,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'PO Box 353', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $city . ', ' . $state . ( $zip && $zip != '' ? ' ' . $zip : '' ) );
+        $this->pdf->Cell( 0, 12 * $point, $city . ', ' . $state . ( $zip_code && $zip_code != '' ? ' ' . $zip_code : '' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Long Lake, MN 55356', 0, 1 );
 
