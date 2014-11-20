@@ -116,7 +116,7 @@ class TimeApp_Generate_PDF {
             $contact_name = $purchaser_fname . ( $purchaser_lname ? ' ' . $purchaser_lname : '' );
         }
         
-        $contact_name = ( $contact_name != $purchaser->post_title ? $contact_name . ', ' . $purchaser->post_title : $contact_name );
+        $contact_title = ( $contact_name != $purchaser->post_title ? $contact_name . ', ' . $purchaser->post_title : $contact_name );
 
         // Setup the date
         if( $start_date && $start_date != '' ) {
@@ -436,6 +436,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Mike Finding, CEO Time Music Agency', 0, 1 );
 
+        $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'a/o', 0, 1 );
 
@@ -454,7 +455,7 @@ class TimeApp_Generate_PDF {
         $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'c/o Time Music Agency', 0, 1 );
-
+    
         $this->pdf->Cell( 0, 12 * $point, $address );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'PO Box 353', 0, 1 );
