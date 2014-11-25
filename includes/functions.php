@@ -190,23 +190,55 @@ function timeapp_get_artists() {
  * Retrieves an array of agents
  *
  * @since       1.0.0
+ * @param       string $type The type of agent to display
  * @return      array $agents The array of agents
  */
-function timeapp_get_agents() {
-    $all_agents = get_posts(
-        array(
-            'post_type'     => 'agent',
-            'posts_per_page'=> 999999,
-            'post_status'   => 'publish'
-        )
+function timeapp_get_agents( $type = null ) {
+    $args = array(
+        'post_type'     => 'agent',
+        'posts_per_page'=> 999999,
+        'post_status'   => 'publish'
     );
+
+    $meta   = array();
+    $label  = '';
+
+    if( $type == 'internal' ) {
+        $meta = array(
+            'meta_query'    => array(
+                'relation'  => 'AND',
+                array(
+                    'key'       => '_timeapp_internal_agent',
+                    'compare'   => 'EXISTS'
+                )
+            )
+        );
+
+        $label = __( ' internal', 'timeapp' );
+    } else if( $type == 'external' ) {
+        $meta = array(
+            'meta_query'    => array(
+                'relation'  => 'AND',
+                array(
+                    'key'       => '_timeapp_internal_agent',
+                    'compare'   => 'NOT EXISTS'
+                )
+            )
+        );
+
+        $label = __( ' external', 'timeapp' );
+    }
+
+    $args = array_merge( $args, $meta );
+
+    $all_agents = get_posts( $args );
 
     if( $all_agents ) {
         foreach( $all_agents as $id => $data ) {
             $agents[$data->ID] = $data->post_title;
         }
     } else {
-        $agents[] = __( 'No agents defined!', 'timeapp' );
+        $agents[] = sprintf( __( 'No%s agents defined!', 'timeapp' ), $label );
     }
 
     return $agents;

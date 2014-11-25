@@ -379,7 +379,7 @@ function timeapp_follow_up_widget() {
 /**
  * Render Commissions Due widget
  *
- * @since       1.0.0
+ * @since       1.1.0
  * @return      void
  */
 function timeapp_commissions_due_widget() {

@@ -40,6 +40,7 @@ function timeapp_add_meta_boxes() {
 
     // Agent post type
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'agent', 'normal', 'high' );
+    add_meta_box( 'agent_details', __( 'Agent Details', 'timeapp' ), 'timeapp_render_agent_details_meta_box', 'agent', 'normal', 'default' );
 }
 add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
 
@@ -224,7 +225,7 @@ function timeapp_render_play_details_meta_box() {
     echo '<strong><label for="_timeapp_agent">' . __( 'Agent', 'timeapp' ) . '</label></strong><br />';
     echo '<select class="timeapp-select2" name="_timeapp_agent" id="_timeapp_agent">';
 
-    $agents = timeapp_get_agents();
+    $agents = timeapp_get_agents( 'internal' );
     foreach( $agents as $id => $name ) {
         echo '<option value="' . $id  . '"' . ( $agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
     }
@@ -450,7 +451,7 @@ function timeapp_render_financials_meta_box() {
     echo '<strong><label for="_timeapp_split_agent">' . __( 'Split Agent', 'timeapp' ) . '</label></strong><br />';
     echo '<select class="timeapp-select2" name="_timeapp_split_agent" id="_timeapp_split_agent">';
     
-    $agents = timeapp_get_agents();
+    $agents = timeapp_get_agents( 'external' );
     foreach( $agents as $id => $name ) {
         echo '<option value="' . $id  . '"' . ( $split_agent == $id ? ' selected' : '' ) . '>' . $name . '</option>';
     }
@@ -1089,3 +1090,78 @@ function timeapp_save_artist_meta_box( $post_id ) {
     }
 }
 add_action( 'save_post', 'timeapp_save_artist_meta_box' );
+
+
+/**
+ * Render agent details meta box
+ *
+ * @since       1.1.0
+ * @global      object $post The WordPress object for this post
+ * @return      void
+ */
+function timeapp_render_agent_details_meta_box() {
+    global $post;
+
+    $post_id        = $post->ID;
+    $signer_name    = get_post_meta( $post_id, '_timeapp_internal_agent', true );
+
+    // Is agent internal?
+    echo '<p>';
+    echo '<strong><label for="_timeapp_internal_agent">' . __( 'Internal Agent?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_internal_agent" id="_timeapp_internal_agent" value="1" ' . checked( true,  $signer_name, false ) . ' />';
+    echo '<label for="_timeapp_internal_agent">' . __( 'Check if agent is an internal agent.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
+    do_action( 'timeapp_agent_details_fields', $post_id );
+
+    wp_nonce_field( basename( __FILE__ ), 'timeapp_agent_nonce' );
+}
+
+
+/**
+ * Save post meta when the save_post action is called
+ *
+ * @since       1.1.0
+ * @param       int $post_id The ID of the post we are saving
+ * @global      object $post The WordPress object for this post
+ * @return      void
+ */
+function timeapp_save_agent_meta_box( $post_id ) {
+    global $post;
+
+    // Bail if this isn't the agent post type
+    if( ! isset( $post->post_type ) || $post->post_type != 'agent' ) return $post_id;
+
+    // Don't process if nonce can't be validated
+    if( ! isset( $_POST['timeapp_agent_nonce'] ) || ! wp_verify_nonce( $_POST['timeapp_agent_nonce'], basename( __FILE__ ) ) ) return $post_id;
+    
+    // Don't process if this is an autosave
+    if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || isset( $_REQUEST['bulk_edit'] ) ) return $post_id;
+
+    // Don't process if this is a revision
+    if( $post->post_type == 'revision' ) return $post_id;
+
+    // Don't process if the current user shouldn't be editing this
+    if( ! current_user_can( 'edit_agent', $post_id ) ) return $post_id;
+
+    // The fields to save
+    $fields = apply_filters( 'timeapp_agent_fields_save', array(
+        '_timeapp_internal_agent'
+    ) );
+
+    foreach( $fields as $field ) {
+        if( isset( $_POST[$field] ) ) {
+            if( is_string( $_POST[$field] ) ) {
+                $new = esc_attr( $_POST[$field] );
+            } else {
+                $new = $_POST[$field];
+            }
+
+            $new = apply_filters( 'timeapp_agent_save_' . $field, $new );
+            update_post_meta( $post_id, $field, $new );
+        } else {
+            delete_post_meta( $post_id, $field );
+        }
+    }
+}
+add_action( 'save_post', 'timeapp_save_agent_meta_box' );
