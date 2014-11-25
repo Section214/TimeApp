@@ -191,7 +191,6 @@ function timeapp_past_due_deposits_widget() {
             <thead>
                 <tr>
                     <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
-                    <td class="timeapp-venue-title"><?php _e( 'Purchaser', 'timeapp' ); ?></td>
                     <td class="timeapp-amount-title"><?php _e( 'Amount', 'timeapp' ); ?></td>
                     <td class="timeapp-date-title"><?php _e( 'Due Date', 'timeapp' ); ?></td>
                 </tr>
@@ -202,7 +201,6 @@ function timeapp_past_due_deposits_widget() {
                         if( array_key_exists( '1', $deposit ) ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[1]['title'] . '</a></td>';
-                            echo '<td>' . $deposit[1]['purchaser'] . '</td>';
                             echo '<td>' . timeapp_format_price( $deposit[1]['amt'] ) . '</td>';
                             echo '<td>' . date( 'm/d/Y', strtotime( $deposit[1]['date'] ) ) . '</td>';
                             echo '</tr>';
@@ -211,7 +209,6 @@ function timeapp_past_due_deposits_widget() {
                         if( array_key_exists( '2', $deposit ) ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[2]['title'] . '</a></td>';
-                            echo '<td>' . $deposit[2]['purchaser'] . '</td>';
                             echo '<td>' . timeapp_format_price( $deposit[2]['amt'] ) . '</td>';
                             echo '<td>' . date( 'm/d/Y', strtotime( $deposit[2]['date'] ) ) . '</td>';
                             echo '</tr>';
@@ -220,7 +217,6 @@ function timeapp_past_due_deposits_widget() {
                         if( array_key_exists( '3', $deposit ) ) {
                             echo '<tr>';
                             echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[3]['title'] . '</a></td>';
-                            echo '<td>' . $deposit[3]['purchaser'] . '</td>';
                             echo '<td>' . timeapp_format_price( $deposit[3]['amt'] ) . '</td>';
                             echo '<td>' . date( 'm/d/Y', strtotime( $deposit[3]['date'] ) ) . '</td>';
                             echo '</tr>';
