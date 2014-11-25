@@ -53,6 +53,12 @@ function timeapp_register_dashboard_widgets() {
         __( 'Follow Up', 'timeapp' ),
         'timeapp_follow_up_widget'
     );
+
+    wp_add_dashboard_widget(
+        'timeapp_commissions_due',
+        __( 'Commissions Due', 'timeapp' ),
+        'timeapp_commissions_due_widget'
+    );
 }
 add_action( 'wp_dashboard_setup', 'timeapp_register_dashboard_widgets', 10 );
 
@@ -237,6 +243,15 @@ function timeapp_past_due_deposits_widget() {
 function timeapp_follow_up_widget() {
     $now    = date( 'Ymd', time() );
     
+    // Quick hack to handle upating notes from the dashboard
+    if( isset( $_POST['timeapp_play_id'] ) ) {
+        if( isset( $_POST['_timeapp_followup_notes'] ) && $_POST['_timeapp_followup_notes'] != '' ) {
+            update_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes', $_POST['_timeapp_followup_notes'] );
+        } elseif( isset( $_POST['_timeapp_followup_notes'] ) && $_POST['_timeapp_followup_notes'] == '' ) {
+            delete_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes' );
+        }
+    }
+
     $plays = get_posts( array(
         'post_type'     => 'play',
         'numberposts'   => 999999,
@@ -250,17 +265,8 @@ function timeapp_follow_up_widget() {
         )
     ) );
 
-    // Quick hack to handle upating notes from the dashboard
-    if( isset( $_POST['timeapp_play_id'] ) ) {
-        if( isset( $_POST['_timeapp_followup_notes'] ) && $_POST['_timeapp_followup_notes'] != '' ) {
-            update_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes', $_POST['_timeapp_followup_notes'] );
-        } elseif( $_POST['_timeapp_followup_notes'] == '' ) {
-            delete_post_meta( $_POST['timeapp_play_id'], '_timeapp_followup_notes' );
-        }
-    }
-
     foreach( $plays as $key => $play ) {
-        $date = get_post_meta( $play->ID, '_timeapp_end_date', true );
+        $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
 
         if( date( 'Ymd', strtotime( $date ) ) >= $now ) {
             unset( $plays[$key] );
@@ -271,7 +277,7 @@ function timeapp_follow_up_widget() {
     
     if( $plays ) {
         foreach( $plays as $id => $play ) {
-            $date           = get_post_meta( $play->ID, '_timeapp_end_date', true );
+            $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
 
             $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
             $purchaser      = get_post( $purchaser );
@@ -363,6 +369,142 @@ function timeapp_follow_up_widget() {
         }
     } else {
         _e( 'No plays require following up!', 'timeapp' );
+    }
+
+    echo '</div>';
+}
+
+
+/**
+ * Render Commissions Due widget
+ *
+ * @since       1.0.0
+ * @return      void
+ */
+function timeapp_commissions_due_widget() {
+    $now    = date( 'Ymd', time() );
+    
+    // Quick hack to handle upating notes from the dashboard
+    if( isset( $_POST['timeapp_play_id'] ) ) {
+        if( isset( $_POST['_timeapp_date_paid'] ) && $_POST['_timeapp_date_paid'] != '' ) {
+            update_post_meta( $_POST['timeapp_play_id'], '_timeapp_date_paid', $_POST['_timeapp_date_paid'] );
+        }
+    }
+
+    $plays = get_posts( array(
+        'post_type'     => 'play',
+        'numberposts'   => 999999,
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            'relation'      => 'AND',
+            array(
+                'key'       => '_timeapp_date_paid',
+                'value'     => '',
+                'compare'   => '='
+            )
+        )
+    ) );
+
+    foreach( $plays as $key => $play ) {
+        $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
+
+        if( date( 'Ymd', strtotime( $date ) ) >= $now ) {
+            unset( $plays[$key] );
+        }
+    }
+
+    echo '<div class="timeapp-dashboard-widget">';
+    
+    if( $plays ) {
+        foreach( $plays as $id => $play ) {
+            $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
+
+            $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+            $purchaser      = get_post( $purchaser );
+            $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
+            $artist         = get_post( $artist );
+            $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+            $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
+            $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+            $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+            $commission_rcvd= get_post_meta( $play->ID, '_timeapp_date_paid', true );
+            $contact_name   = '';
+
+            // Is a contact first name specified?
+            if( $contact_fname && $contact_fname != '' ) {
+                $contact_name .= $contact_fname;
+            }
+
+            // Is a contact last name specified?
+            if( $contact_lname && $contact_lname != '' ) {
+                if( $contact_name != '' ) {
+                    $contact_name .= ' ';
+                }
+
+                $contact_name .= $contact_lname;
+            }
+
+            // No contact name specified
+            $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
+            ?>
+            <form method="post">
+                <table class="timeapp-follow-up-widget">
+                    <thead>
+                        <tr>
+                            <td class="timeapp-play-title" colspan="2">
+                                <?php echo $play->post_title; ?>
+                                <span>
+                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
+                            <td><?php echo $date; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e( 'Artist', 'timeapp' ); ?></td>
+                            <td><?php echo $artist->post_title; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                            <td><?php echo $purchaser->post_title; ?></td>
+                        </tr>
+                        <?php if( $purchaser->post_title != $contact_name ) { ?>
+                        <tr>
+                            <td><?php _e( 'Contact', 'timeapp' ); ?></td>
+                            <td><?php echo $contact_name; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <?php if( $contact_email ) { ?>
+                        <tr>
+                            <td><?php _e( 'Email', 'timeapp' ); ?></td>
+                            <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <?php if( $contact_phone ) { ?>
+                        <tr>
+                            <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
+                            <td><?php echo $contact_phone; ?></td>
+                        </tr>
+                        <?php } ?>
+                        <tr class="timeapp-date-paid">
+                            <td><?php _e( 'Date Paid', 'timeapp' ); ?></td>
+                            <td><input type="text" id="_timeapp_date_paid" name="_timeapp_date_paid" class="regular-text timeapp-datetime" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <input type="hidden" name="timeapp_play_id" value="<?php echo $play->ID; ?>" />
+                <?php submit_button(); ?>
+            </form>
+            <div class="timeapp-clear"></div>
+            <?php
+        }
+    } else {
+        echo '<i class="dashicons dashicons-smiley"></i> ' . __( 'Congratulations! You have reached eternal bliss... Nobody owes you any money!', 'timeapp' );
     }
 
     echo '</div>';
