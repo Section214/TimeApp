@@ -161,24 +161,23 @@ function timeapp_past_due_deposits_widget() {
             $purchaser      = get_post( $purchaser );
 
             if( $deposit1_date && date( 'Ymd', strtotime( $deposit1_date ) ) < $now && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
-                $deposits[$play->ID][1]['title']        = $play->post_title;
-                $deposits[$play->ID][1]['date']         = $deposit1_date;
-                $deposits[$play->ID][1]['amt']          = $deposit1_amt;
-                $deposits[$play->ID][1]['purchaser']    = $purchaser->post_title;
+                $deposits[$play->ID]['deposit'][1]['date']         = $deposit1_date;
+                $deposits[$play->ID]['deposit'][1]['amt']          = $deposit1_amt;
             }
 
             if( $deposit2_date && date( 'Ymd', strtotime( $deposit2_date ) ) < $now && ( ! $deposit2_paid || $deposit2_paid == '' ) ) {
-                $deposits[$play->ID][2]['title']        = $play->post_title;
-                $deposits[$play->ID][2]['date']         = $deposit2_date;
-                $deposits[$play->ID][2]['amt']          = $deposit2_amt;
-                $deposits[$play->ID][2]['purchaser']    = $purchaser->post_title;
+                $deposits[$play->ID]['deposit'][2]['date']         = $deposit2_date;
+                $deposits[$play->ID]['deposit'][2]['amt']          = $deposit2_amt;
             }
 
             if( $deposit3_date && date( 'Ymd', strtotime( $deposit3_date ) ) < $now && ( ! $deposit3_paid || $deposit3_paid == '' ) ) {
-                $deposits[$play->ID][3]['title']        = $play->post_title;
-                $deposits[$play->ID][3]['date']         = $deposit3_date;
-                $deposits[$play->ID][3]['amt']          = $deposit3_amt;
-                $deposits[$play->ID][3]['purchaser']    = $purchaser->post_title;
+                $deposits[$play->ID]['deposit'][3]['date']         = $deposit3_date;
+                $deposits[$play->ID]['deposit'][3]['amt']          = $deposit3_amt;
+            }
+
+            if( isset( $deposits[$play->ID] ) ) {
+                $deposits[$play->ID]['title']        = $play->post_title;
+                $deposits[$play->ID]['purchaser']    = $purchaser->post_title;
             }
         }
     }
@@ -186,46 +185,48 @@ function timeapp_past_due_deposits_widget() {
     echo '<div class="timeapp-dashboard-widget">';
 
     if( $deposits ) {
+        foreach( $deposits as $id => $play ) {
         ?>
-        <table class="timeapp-past-due-deposits-widget">
-            <thead>
-                <tr>
-                    <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
-                    <td class="timeapp-amount-title"><?php _e( 'Amount', 'timeapp' ); ?></td>
-                    <td class="timeapp-date-title"><?php _e( 'Due Date', 'timeapp' ); ?></td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    foreach( $deposits as $id => $deposit ) {
-                        if( array_key_exists( '1', $deposit ) ) {
+            <form method="post">
+                <table class="timeapp-past-due-deposits-widget">
+                    <thead>
+                        <tr>
+                            <td class="timeapp-play-title" colspan="3">
+                                <?php echo $play['title']; ?>
+                                <span>
+                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $id ); ?>"><?php _e( 'Edit', 'timeapp' ); ?></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if( isset( $play['deposit'][1] ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[1]['title'] . '</a></td>';
-                            echo '<td>' . timeapp_format_price( $deposit[1]['amt'] ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[1]['date'] ) ) . '</td>';
+                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][1]['date'] ) ) ) . '</td>';
+                            echo '<td>' . timeapp_format_price( $play['deposit'][1]['amt'] ) . '</td>';
+                            echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit1_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
                             echo '</tr>';
                         }
-                        
-                        if( array_key_exists( '2', $deposit ) ) {
+                        if( isset( $play['deposit'][2] ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[2]['title'] . '</a></td>';
-                            echo '<td>' . timeapp_format_price( $deposit[2]['amt'] ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[2]['date'] ) ) . '</td>';
+                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][2]['date'] ) ) ) . '</td>';
+                            echo '<td>' . timeapp_format_price( $play['deposit'][2]['amt'] ) . '</td>';
+                            echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit2_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
                             echo '</tr>';
                         }
-                        
-                        if( array_key_exists( '3', $deposit ) ) {
+                        if( isset( $play['deposit'][3] ) ) {
                             echo '<tr>';
-                            echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $id ) . '">' . $deposit[3]['title'] . '</a></td>';
-                            echo '<td>' . timeapp_format_price( $deposit[3]['amt'] ) . '</td>';
-                            echo '<td>' . date( 'm/d/Y', strtotime( $deposit[3]['date'] ) ) . '</td>';
+                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][3]['date'] ) ) ) . '</td>';
+                            echo '<td>' . timeapp_format_price( $play['deposit'][3]['amt'] ) . '</td>';
+                            echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit3_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
                             echo '</tr>';
                         }
-                    }
-                ?>
-            </tbody>
-        </table>
+                        ?>
+                    </tbody>
+            </table>
         <?php
+        }
     } else {
         _e( 'No past due deposits found!', 'timeapp' );
     }

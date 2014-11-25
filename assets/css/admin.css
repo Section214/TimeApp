@@ -240,6 +240,21 @@ div#actions_bottom div.inside {
     font-weight: bold;
 }
 
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:first-child {
+    padding-left: 15px;
+    color: #777;
+    font-weight: bold;
+}
+
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:last-child {
+    width: 82px;
+    text-align: right;
+}
+
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget {
+    margin-bottom: 10px;
+}
+
 .timeapp-dashboard-widget .timeapp-dashboard-notes {
     display: block;
     margin-top: 5px;
