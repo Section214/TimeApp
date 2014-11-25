@@ -98,19 +98,23 @@ function timeapp_upcoming_plays_widget() {
                     <td class="timeapp-play-title"><?php _e( 'Play', 'timeapp' ); ?></td>
                     <td class="timeapp-venue-title"><?php _e( 'Purchaser', 'timeapp' ); ?></td>
                     <td class="timeapp-date-title"><?php _e( 'Date', 'timeapp' ); ?></td>
+                    <td class="timeapp-edit-title"></td>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     foreach( $plays as $id => $play ) {
                         $date       = get_post_meta( $play->ID, '_timeapp_start_date', true );
+                        $artist     = get_post_meta( $play->ID, '_timeapp_artist', true );
+                        $artist     = get_post( $artist );
                         $purchaser  = get_post_meta( $play->ID, '_timeapp_purchaser', true );
                         $purchaser  = get_post( $purchaser );
 
                         echo '<tr>';
-                        echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $play->ID ) . '">' . $play->post_title . '</a></td>';
+                        echo '<td>' . $artist->post_title . '</td>';
                         echo '<td>' . $purchaser->post_title . '</td>';
                         echo '<td>' . $date . '</td>';
+                        echo '<td><a href="' . admin_url( 'post.php?action=edit&post=' . $play->ID ) . '">' . __( 'Edit', 'timeapp' ) . '</a></td>';
                         echo '</tr>';
                     }
                 ?>
