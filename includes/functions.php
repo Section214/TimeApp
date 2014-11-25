@@ -39,6 +39,30 @@ add_filter( 'login_redirect', 'timeapp_default_page' );
 
 
 /**
+ * Change the login image URL
+ *
+ * @since       1.1.0
+ * @return      null
+ */
+function timeapp_login_header_url() {
+    return null;
+}
+add_filter( 'login_headerurl', 'timeapp_login_header_url' );
+
+
+/**
+ * Change the login image alt text
+ *
+ * @since       1.1.0
+ * @return      null
+ */
+function timeapp_login_header_title() {
+    return null;
+}
+add_filter( 'login_headertitle', 'timeapp_login_header_title' );
+
+
+/**
  * Rewrite the 'Powered by WordPress' footer text
  *
  * @since       1.0.0
