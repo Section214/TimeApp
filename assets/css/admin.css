@@ -236,13 +236,15 @@ div#actions_bottom div.inside {
 
 .timeapp-dashboard-widget table.timeapp-follow-up-widget tbody tr td:first-child,
 .timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:first-child,
-.timeapp-dashboard-widget table.timeapp-commissions-due-widget tbody tr td:first-child {
+.timeapp-dashboard-widget table.timeapp-commissions-due-widget tbody tr td:first-child,
+.timeapp-dashboard-widget table.timeapp-split-commissions-widget tbody tr td:first-child {
     padding-left: 15px;
     color: #777;
     font-weight: bold;
 }
 
-.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:last-child {
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:last-child,
+.timeapp-dashboard-widget table.timeapp-split-commissions-widget tbody tr td:last-child {
     width: 82px;
     text-align: right;
 }

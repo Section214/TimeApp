@@ -59,6 +59,12 @@ function timeapp_register_dashboard_widgets() {
         __( 'Commissions Due', 'timeapp' ),
         'timeapp_commissions_due_widget'
     );
+
+    wp_add_dashboard_widget(
+        'timeapp_split_commissions',
+        __( 'Split Commissions', 'timeapp' ),
+        'timeapp_split_commissions_widget'
+    );
 }
 add_action( 'wp_dashboard_setup', 'timeapp_register_dashboard_widgets', 10 );
 
@@ -519,6 +525,86 @@ function timeapp_commissions_due_widget() {
         }
     } else {
         echo '<i class="dashicons dashicons-smiley"></i> ' . __( 'Congratulations! You have reached eternal bliss... Nobody owes you any money!', 'timeapp' );
+    }
+
+    echo '</div>';
+}
+
+
+/**
+ * Render Split Commissions widget
+ *
+ * @since       1.1.1
+ * @return      void
+ */
+function timeapp_split_commissions_widget() {
+    $now        = date( 'Ymd', time() );
+    $plays      = get_posts( array(
+        'post_type'     => 'play',
+        'numberposts'   => 999999,
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            'relation'      => 'AND',
+            array(
+                'key'       => '_timeapp_split_comm',
+                'compare'   => 'EXISTS'
+            ),
+            array(
+                'key'       => '_timeapp_split_paid',
+                'compare'   => 'NOT EXISTS'
+            )
+        )
+    ) );
+    
+    foreach( $plays as $key => $play ) {
+        $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
+
+        if( date( 'Ymd', strtotime( $date ) ) >= $now ) {
+            unset( $plays[$key] );
+        }
+    }
+
+    echo '<div class="timeapp-dashboard-widget">';
+
+    if( $plays ) {
+        foreach( $plays as $id => $play ) {
+            $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+            $purchaser      = get_post( $purchaser );
+            $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
+            $artist         = get_post( $artist );
+            $agent          = get_post_meta( $play->ID, '_timeapp_split_agent', true );
+            $agent          = get_post( $agent );
+            $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
+            $production     = get_post_meta( $play->ID, '_timeapp_production', true );
+            $production_cost= ( ! $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
+            $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
+            $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
+            $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
+            ?>
+            <form method="post">
+                <table class="timeapp-split-commissions-widget">
+                    <thead>
+                        <tr>
+                            <td class="timeapp-play-title" colspan="3">
+                                <?php echo $play->post_title; ?>
+                                <span>
+                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $id ); ?>"><?php _e( 'Edit', 'timeapp' ); ?></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td><?php echo $agent->post_title; ?></td>
+                            <td><?php echo timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate, true ); ?></td>
+                            <td><a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_split_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_split_commissions"><?php _e( 'Mark as paid', 'timeapp' ); ?></a></td>
+                    <tbody>
+
+                    </tbody>
+            </table>
+            <?php
+        }
+    } else {
+        _e( 'No unpaid split commissions found!', 'timeapp' );
     }
 
     echo '</div>';

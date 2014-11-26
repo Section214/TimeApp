@@ -529,9 +529,10 @@ add_filter( 'title_save_pre', 'timeapp_update_play_title' );
  * @param       mixed string $production The production cost | false
  * @param       int $rate The artist commission
  * @param       mixed string $split The split commission rate | false
+ * @param       bool $show_split True to show split commission, false otherwise
  * @return      string $commission The calculated commission
  */
-function timeapp_get_commission( $guarantee = 0, $production = false, $rate, $split = false ) {
+function timeapp_get_commission( $guarantee = 0, $production = false, $rate, $split = false, $show_split = false ) {
     $values = array(
         'guarantee' => $guarantee,
         'production'=> $production,
@@ -558,7 +559,13 @@ function timeapp_get_commission( $guarantee = 0, $production = false, $rate, $sp
 
     // Maybe mod split
     if( $values['split'] ) {
-        $commission = $commission * ( (float) str_replace( '%', '', $values['split'] ) / 100 );
+        if( $show_split ) {
+            $split = (float) str_replace( '%', '', $values['split'] ) / 100;
+        } else {
+            $split = ( 1 -(float) str_replace( '%', '', $values['split'] ) / 100 );
+        }
+
+        $commission = $commission * $split;
     }
 
     return timeapp_format_price( $commission );

@@ -318,6 +318,7 @@ function timeapp_render_financials_meta_box() {
     $split_css      = ( $split ? '' : ' style="display: none;"' );
     $split_perc     = get_post_meta( $post_id, '_timeapp_split_perc', true );
     $split_agent    = get_post_meta( $post_id, '_timeapp_split_agent', true );
+    $split_paid     = get_post_meta( $post_id, '_timeapp_split_paid', true );
 
     // Gross guarantee
     echo '<p>';
@@ -440,12 +441,6 @@ function timeapp_render_financials_meta_box() {
 
     echo '<div' . $split_css . '>';
 
-    // Split percentage
-    echo '<p>';
-    echo '<strong><label for="_timeapp_split_perc">' . __( 'Split Percentage', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" class="regular-text" name="_timeapp_split_perc" id="_timeapp_split_perc" value="' . ( isset( $split_perc ) && ! empty( $split_perc ) ? $split_perc : '' ) . '" placeholder="' . __( '%', 'timeapp' ) . '" />';
-    echo '</p>';
-
     // Split Agent
     echo '<p>';
     echo '<strong><label for="_timeapp_split_agent">' . __( 'Split Agent', 'timeapp' ) . '</label></strong><br />';
@@ -457,6 +452,19 @@ function timeapp_render_financials_meta_box() {
     }
     
     echo '</select>';
+
+    // Split percentage
+    echo '<p>';
+    echo '<strong><label for="_timeapp_split_perc">' . __( 'Percentage Paid to Agent', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_split_perc" id="_timeapp_split_perc" value="' . ( isset( $split_perc ) && ! empty( $split_perc ) ? $split_perc : '50' ) . '" placeholder="' . __( '%', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    // Split paid?
+    echo '<p>';
+    echo '<strong><label for="_timeapp_split_paid">' . __( 'Split Commission Paid?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_split_paid" id="_timeapp_split_paid" value="1" ' . checked( true, $split_paid, false ) . ' />';
+    echo '<label for="_timeapp_split_paid">' . __( 'Check if the split commission has been paid.', 'timeapp' ) . '</label>';
+    echo '</p>';
 
     echo '</div>';
 
@@ -723,7 +731,8 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_date_paid',
         '_timeapp_split_comm',
         '_timeapp_split_perc',
-        '_timeapp_split_agent'
+        '_timeapp_split_agent',
+        '_timeapp_split_paid'
     ) );
 
     foreach( $fields as $field ) {
