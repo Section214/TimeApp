@@ -234,13 +234,9 @@ div#actions_bottom div.inside {
     float: right;
 }
 
-.timeapp-dashboard-widget table.timeapp-follow-up-widget tbody tr td:first-child {
-    padding-left: 15px;
-    color: #777;
-    font-weight: bold;
-}
-
-.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:first-child {
+.timeapp-dashboard-widget table.timeapp-follow-up-widget tbody tr td:first-child,
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:first-child,
+.timeapp-dashboard-widget table.timeapp-commissions-due-widget tbody tr td:first-child {
     padding-left: 15px;
     color: #777;
     font-weight: bold;
@@ -251,7 +247,8 @@ div#actions_bottom div.inside {
     text-align: right;
 }
 
-.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget {
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget,
+.timeapp-dashboard-widget table.timeapp-commissions-due-widget {
     margin-bottom: 10px;
 }
 

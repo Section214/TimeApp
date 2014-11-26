@@ -519,3 +519,47 @@ function timeapp_update_play_title( $post_title ) {
     return $post_title;
 }
 add_filter( 'title_save_pre', 'timeapp_update_play_title' );
+
+
+/**
+ * Calculate commission for a given play
+ *
+ * @since       1.1.1
+ * @param       string $guarantee The guarantee value
+ * @param       mixed string $production The production cost | false
+ * @param       int $rate The artist commission
+ * @param       mixed string $split The split commission rate | false
+ * @return      string $commission The calculated commission
+ */
+function timeapp_get_commission( $guarantee = 0, $production = false, $rate, $split = false ) {
+    $values = array(
+        'guarantee' => $guarantee,
+        'production'=> $production,
+        'rate'      => $rate,
+        'split'     => $split
+    );
+
+    // Strip dollar signs
+    foreach( $values as $id => $value ) {
+        if( $value && $value[0] == '$' ) {
+            $values[$id] = substr( $value, 1 );
+        }
+    }
+
+    $commission = $values['guarantee'];
+
+    // Maybe subtract production
+    if( $values['production'] ) {
+        $commission = $commission - $production;
+    }
+
+    // Mod rate
+    $commission = $commission * ( (float) str_replace( '%', '', $values['rate'] ) / 100 );
+
+    // Maybe mod split
+    if( $values['split'] ) {
+        $commission = $commission * ( (float) str_replace( '%', '', $values['split'] ) / 100 );
+    }
+
+    return timeapp_format_price( $commission );
+}

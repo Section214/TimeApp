@@ -428,6 +428,12 @@ function timeapp_commissions_due_widget() {
             $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
             $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
             $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+            $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
+            $production     = get_post_meta( $play->ID, '_timeapp_production', true );
+            $production_cost= ( $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
+            $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
+            $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
+            $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
             $commission_rcvd= get_post_meta( $play->ID, '_timeapp_date_paid', true );
             $contact_name   = '';
 
@@ -447,9 +453,12 @@ function timeapp_commissions_due_widget() {
 
             // No contact name specified
             $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
+
+            $commission = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
+
             ?>
             <form method="post">
-                <table class="timeapp-follow-up-widget">
+                <table class="timeapp-commissions-due-widget">
                     <thead>
                         <tr>
                             <td class="timeapp-play-title" colspan="2">
@@ -468,6 +477,10 @@ function timeapp_commissions_due_widget() {
                         <tr>
                             <td><?php _e( 'Artist', 'timeapp' ); ?></td>
                             <td><?php echo $artist->post_title; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e( 'Commission', 'timeapp' ); ?></td>
+                            <td><?php echo $commission; ?></td>
                         </tr>
                         <tr>
                             <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
@@ -493,7 +506,7 @@ function timeapp_commissions_due_widget() {
                         <?php } ?>
                         <tr class="timeapp-date-paid">
                             <td><?php _e( 'Date Paid', 'timeapp' ); ?></td>
-                            <td><input type="text" id="_timeapp_date_paid" name="_timeapp_date_paid" class="regular-text timeapp-datetime" /></td>
+                            <td><input type="text" id="_timeapp_date_paid" name="_timeapp_date_paid" class="widefat timeapp-datetime" /></td>
                         </tr>
                     </tbody>
                 </table>
