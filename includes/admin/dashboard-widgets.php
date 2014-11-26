@@ -430,7 +430,7 @@ function timeapp_commissions_due_widget() {
             $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
             $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
             $production     = get_post_meta( $play->ID, '_timeapp_production', true );
-            $production_cost= ( $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
+            $production_cost= ( ! $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
             $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
             $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
             $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
