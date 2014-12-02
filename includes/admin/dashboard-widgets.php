@@ -391,7 +391,7 @@ function timeapp_follow_up_widget() {
 function timeapp_commissions_due_widget() {
     $now    = date( 'Ymd', time() );
     
-    // Quick hack to handle upating notes from the dashboard
+    // Quick hack to handle upating commissions from the dashboard
     if( isset( $_POST['timeapp_play_id'] ) ) {
         if( isset( $_POST['_timeapp_date_paid'] ) && $_POST['_timeapp_date_paid'] != '' ) {
             update_post_meta( $_POST['timeapp_play_id'], '_timeapp_date_paid', $_POST['_timeapp_date_paid'] );
@@ -512,7 +512,7 @@ function timeapp_commissions_due_widget() {
                         <?php } ?>
                         <tr class="timeapp-date-paid">
                             <td><?php _e( 'Date Paid', 'timeapp' ); ?></td>
-                            <td><input type="text" id="_timeapp_date_paid" name="_timeapp_date_paid" class="widefat timeapp-datetime" /></td>
+                            <td><input type="text" id="_timeapp_date_paid_<?php echo $play->ID; ?>" name="_timeapp_date_paid" class="widefat timeapp-datetime" /></td>
                         </tr>
                     </tbody>
                 </table>
