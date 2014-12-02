@@ -588,7 +588,7 @@ function timeapp_split_commissions_widget() {
                             <td class="timeapp-play-title" colspan="3">
                                 <?php echo $play->post_title; ?>
                                 <span>
-                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $id ); ?>"><?php _e( 'Edit', 'timeapp' ); ?></a>
+                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><?php _e( 'Edit', 'timeapp' ); ?></a>
                                 </span>
                             </td>
                         </tr>
@@ -596,7 +596,7 @@ function timeapp_split_commissions_widget() {
                         <tr>
                             <td><?php echo $agent->post_title; ?></td>
                             <td><?php echo timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate, true ); ?></td>
-                            <td><a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_split_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_split_commissions"><?php _e( 'Mark as paid', 'timeapp' ); ?></a></td>
+                            <td><a href="<?php echo wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $play->ID, 'key' => '_timeapp_split_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ); ?>#timeapp_split_commissions"><?php _e( 'Mark as paid', 'timeapp' ); ?></a></td>
                     <tbody>
 
                     </tbody>
