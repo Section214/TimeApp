@@ -190,6 +190,8 @@ function timeapp_get_purchasers() {
  * @return      array $artists The array of artists
  */
 function timeapp_get_artists() {
+    global $wp_query;
+    
     $all_artists = get_posts(
         array(
             'post_type'     => 'artist',
@@ -197,7 +199,7 @@ function timeapp_get_artists() {
             'post_status'   => 'publish'
         )
     );
-
+    
     if( $all_artists ) {
         foreach( $all_artists as $id => $data ) {
             $artists[$data->ID] = $data->post_title;
@@ -266,6 +268,43 @@ function timeapp_get_agents( $type = null ) {
     }
 
     return $agents;
+}
+
+
+/**
+ * Get months array for start dates
+ *
+ * @since       1.1.4
+ * @return      mixed bool false|array $months The months array
+ */
+function timeapp_get_months() {
+    $args = array(
+        'post_type'     => 'play',
+        'posts_per_page'=> 999999,
+        'post_status'   => 'publish',
+    );
+
+    $all_plays  = get_posts( $args );
+    $months     = array();
+
+    if( $all_plays ) {
+        foreach( $all_plays as $id => $data ) {
+            $date       = get_post_meta( $data->ID, '_timeapp_start_date', true );
+            $text_date  = date( 'F Y', strtotime( $date ) );
+            $short_date = date( 'm-Y', strtotime( $date ) );
+
+            if( ! array_key_exists( $short_date, $months ) ) {
+                $months[$short_date] = $text_date;
+            }
+        }
+
+        $months = array_unique( $months );
+        ksort( $months );
+    } else {
+        $months = false;
+    }
+
+    return $months;
 }
 
 
