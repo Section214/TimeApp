@@ -54,6 +54,12 @@ function timeapp_remove_date_filter( $dates ) {
 add_filter( 'months_dropdown_results', 'timeapp_remove_date_filter', 99 );
 
 
+/**
+ * Add play custom filters to play CPT 
+ *
+ * @since       1.2.0
+ * @return      void
+ */
 function timeapp_filter_columns() {
     global $typenow, $wpdb, $wp_locale;
     
@@ -96,6 +102,13 @@ function timeapp_filter_columns() {
 add_action( 'restrict_manage_posts', 'timeapp_filter_columns' );
 
 
+/**
+ * Process filters for play CPT
+ *
+ * @since       1.2.0
+ * @param       object $query The WordPress query object
+ * @return      object $query The modified query object
+ */
 function timeapp_filter_query( $query ) {
     global $typenow, $pagenow;
 

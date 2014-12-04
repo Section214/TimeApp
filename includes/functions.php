@@ -274,7 +274,7 @@ function timeapp_get_agents( $type = null ) {
 /**
  * Get months array for start dates
  *
- * @since       1.1.4
+ * @since       1.2.0
  * @return      mixed bool false|array $months The months array
  */
 function timeapp_get_months() {
