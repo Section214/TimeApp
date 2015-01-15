@@ -303,9 +303,9 @@ class TimeApp_Generate_PDF {
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
-        $this->pdf->Cell( 65, 12 * $point, '13. PREMITS/LICENSES:', 0, 1 );
+        $this->pdf->Cell( 65, 12 * $point, '13. PERMITS/LICENSES:', 0, 1 );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, 'Purchaser will secure and furnish all necessary permits and licenses necessary to schedule, implement and clear the ARTIST performance, including but not limited to, performing rights organizations specifically, ASCAP, BMI. SESAC, SoundExchange and any other similar or related organization clearing public performance rights; Federal, state, county, city and related governments including their agents, agencies and assigns; the landowner/s, or agents and assigns thereof, on whose land the ARTIST performance will take place.', 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, 'Purchaser will secure and furnish all necessary permits and licenses necessary to schedule, implement and clear the ARTIST performance, including but not limited to, performing rights organizations specifically, ASCAP, BMI, SESAC, SoundExchange and any other similar or related organization clearing public performance rights; Federal, state, county, city and related governments including their agents, agencies and assigns; the landowner/s, or agents and assigns thereof, on whose land the ARTIST performance will take place.', 0, 1 );
  
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
