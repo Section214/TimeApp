@@ -3,7 +3,7 @@
  * Plugin Name:     TimeApp
  * Plugin URI:      http://ingroupconsulting.com/
  * Description:     Time Management's internal workflow tool
- * Version:         1.2.1
+ * Version:         1.2.2
  * Author:          Kiko Doran
  * Author URI:      http://ingroupconsulting.com/
  * Text Domain:     timeapp
