@@ -130,8 +130,6 @@ function timeapp_render_communications_meta_box() {
     $contract_rcvd  = ( isset( $contract_rcvd ) && ! empty( $contract_rcvd ) ? date( 'm/d/Y g:i a', strtotime( $contract_rcvd ) ) : '' );
     $promo_sent     = get_post_meta( $post_id, '_timeapp_promo_sent', true );
     $promo_sent     = ( isset( $promo_sent ) && ! empty( $promo_sent ) ? date( 'm/d/Y g:i a', strtotime( $promo_sent ) ) : '' );
-    $promo_rcvd     = get_post_meta( $post_id, '_timeapp_promo_rcvd', true );
-    $promo_rcvd     = ( isset( $promo_rcvd ) && ! empty( $promo_rcvd ) ? date( 'm/d/Y g:i a', strtotime( $promo_rcvd ) ) : '' );
     $followed_up    = get_post_meta( $post_id, '_timeapp_followed_up', true ) ? true : false;
     $followup_notes = get_post_meta( $post_id, '_timeapp_followup_notes', true );
 
@@ -153,12 +151,6 @@ function timeapp_render_communications_meta_box() {
     echo '<p class="timeapp-half">';
     echo '<strong><label for="_timeapp_promo_sent">' . __( 'Promo Sent', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_promo_sent" id="_timeapp_promo_sent" value="' . $promo_sent . '" />';
-    echo '</p>';
-
-    // Promo received
-    echo '<p class="timeapp-half">';
-    echo '<strong><label for="_timeapp_promo_rcvd">' . __( 'Promo Received', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_promo_rcvd" id="_timeapp_promo_rcvd" value="' . $promo_rcvd . '" />';
     echo '</p>';
 
     // Followed up
@@ -701,7 +693,6 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_contract_sent',
         '_timeapp_contract_rcvd',
         '_timeapp_promo_sent',
-        '_timeapp_promo_rcvd',
         '_timeapp_followed_up',
         '_timeapp_followup_notes',
         '_timeapp_status',
