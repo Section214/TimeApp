@@ -88,7 +88,7 @@ if( ! class_exists( 'TimeApp_Roles' ) ) {
                     "edit_others_{$capability_type}s",
                     "publish_{$capability_type}s",
                     "read_private_{$capability_type}s",
-                    "delete{$capability_type}s",
+                    "delete_{$capability_type}s",
                     "delete_private_{$capability_type}s",
                     "delete_published_{$capability_type}s",
                     "delete_others_{$capability_type}s"
