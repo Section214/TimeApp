@@ -59,6 +59,8 @@ function timeapp_render_actions_meta_box() {
     do_action( 'timeapp_meta_box_' . $post_type . '_actions' );
 
     echo '<div class="timeapp-action-delete">';
+    echo '<a class="submitdelete" href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'cancel_play' ) ), 'cancel-play', 'cancel-play' ) . '">' . __( 'Cancel Play', 'timeapp' ) . '</a>';
+    echo '&nbsp;&middot;&nbsp;';
     echo '<a class="submitdelete" href="' . get_delete_post_link() . '">' . __( 'Move to Trash', 'timeapp' ) . '</a>';
     echo '</div>';
 }
@@ -72,7 +74,7 @@ function timeapp_render_actions_meta_box() {
  */
 function timeapp_add_send_pdf_button() {
 //    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
-      echo '<a class="button button-secondary colorbox">' . __( 'Preview & Send PDF', 'timeapp' ) . '</a>';
+    echo '<a class="button button-secondary colorbox">' . __( 'Preview & Send PDF', 'timeapp' ) . '</a>';
 }
 add_action( 'timeapp_meta_box_play_actions', 'timeapp_add_send_pdf_button' );
 
