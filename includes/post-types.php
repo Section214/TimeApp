@@ -40,6 +40,7 @@ function timeapp_register_post_types() {
         'show_ui'           => true,
         'show_in_menu'      => true,
         'capability_type'   => 'play',
+        'map_meta_cap'      => true,
         'hierarchical'      => false,
         'supports'          => apply_filters( 'timeapp_play_supports', array( 'title' ) )
     );
@@ -69,6 +70,7 @@ function timeapp_register_post_types() {
         'show_ui'           => true,
         'show_in_menu'      => true,
         'capability_type'   => 'purchaser',
+        'map_meta_cap'      => true,
         'hierarchical'      => false,
         'supports'          => apply_filters( 'timeapp_purchaser_supports', array( 'title' ) )
     );
@@ -98,6 +100,7 @@ function timeapp_register_post_types() {
         'show_ui'           => true,
         'show_in_menu'      => true,
         'capability_type'   => 'artist',
+        'map_meta_cap'      => true,
         'hierarchical'      => false,
         'supports'          => apply_filters( 'timeapp_artist_supports', array( 'title' ) )
     );
@@ -127,6 +130,7 @@ function timeapp_register_post_types() {
         'show_ui'           => true,
         'show_in_menu'      => true,
         'capability_type'   => 'agent',
+        'map_meta_cap'      => true,
         'hierarchical'      => false,
         'supports'          => apply_filters( 'timeapp_agent_supports', array( 'title' ) )
     );
