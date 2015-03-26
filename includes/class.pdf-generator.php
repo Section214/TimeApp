@@ -74,11 +74,7 @@ class TimeApp_Generate_PDF {
         $bonus_details  = get_post_meta( $this->id, '_timeapp_bonus_details', true );
         $deposit1_date  = get_post_meta( $this->id, '_timeapp_deposit1_date', true );
         $deposit1_amt   = get_post_meta( $this->id, '_timeapp_deposit1_amt', true );
-        $deposit2_date  = get_post_meta( $this->id, '_timeapp_deposit2_date', true );
-        $deposit2_amt   = get_post_meta( $this->id, '_timeapp_deposit2_amt', true );
-        $deposit3_date  = get_post_meta( $this->id, '_timeapp_deposit3_date', true );
-        $deposit3_amt   = get_post_meta( $this->id, '_timeapp_deposit3_amt', true );
-        $balance        = $compensation - (int) $deposit1_amt - (int) $deposit2_amt - (int) $deposit3_amt;
+        $balance        = $compensation - (int) $deposit1_amt;
         $production_cost= get_post_meta( $this->id, '_timeapp_production_cost', true );
         $production     = get_post_meta( $this->id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
         $notes          = get_post_meta( $this->id, '_timeapp_notes', true );
@@ -222,24 +218,6 @@ class TimeApp_Generate_PDF {
             $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable earnest money deposit in the amount of ' . timeapp_format_price( $deposit1_amt ) . ' made payable to Time Music Agency is due by ' . date( 'F jS, Y', strtotime( $deposit1_date ) ) . ';', 0, 1 );
 
             $last = 'b';
-        }
-
-        if( $deposit2_amt && $deposit2_amt != '' ) {
-            $this->pdf->SetFont( 'Times', 'B', 12 );
-            $this->pdf->Cell( 15, 12 * $point, '5b.' );
-            $this->pdf->SetFont( 'Times', '', 12 );
-            $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable second deposit in the amount of ' . timeapp_format_price( $deposit2_amt ) . ' made payable to Time Music Agency is due by ' . date( 'F jS, Y', strtotime( $deposit2_date ) ) . ';', 0, 1 );
-
-            $last = 'c';
-        }
-
-        if( $deposit3_amt && $deposit3_amt != '' ) {
-            $this->pdf->SetFont( 'Times', 'B', 12 );
-            $this->pdf->Cell( 15, 12 * $point, '5c.' );
-            $this->pdf->SetFont( 'Times', '', 12 );
-            $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable third deposit in the amount of ' . timeapp_format_price( $deposit3_amt ) . ' made payable to Time Music Agency is due by ' . date( 'F jS, Y', strtotime( $deposit3_date ) ) . ';', 0, 1 );
-
-            $last = 'd';
         }
 
         $this->pdf->SetFont( 'Times', 'B', 12 );

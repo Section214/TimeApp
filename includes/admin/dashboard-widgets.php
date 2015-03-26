@@ -157,28 +157,12 @@ function timeapp_past_due_deposits_widget() {
             $deposit1_date  = get_post_meta( $play->ID, '_timeapp_deposit1_date', true );
             $deposit1_paid  = get_post_meta( $play->ID, '_timeapp_deposit1_paid', true );
             $deposit1_amt   = get_post_meta( $play->ID, '_timeapp_deposit1_amt', true );
-            $deposit2_date  = get_post_meta( $play->ID, '_timeapp_deposit2_date', true );
-            $deposit2_paid  = get_post_meta( $play->ID, '_timeapp_deposit2_paid', true );
-            $deposit2_amt   = get_post_meta( $play->ID, '_timeapp_deposit2_amt', true );
-            $deposit3_date  = get_post_meta( $play->ID, '_timeapp_deposit3_date', true );
-            $deposit3_paid  = get_post_meta( $play->ID, '_timeapp_deposit3_paid', true );
-            $deposit3_amt   = get_post_meta( $play->ID, '_timeapp_deposit3_amt', true );
             $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
             $purchaser      = get_post( $purchaser );
 
             if( $deposit1_date && date( 'Ymd', strtotime( $deposit1_date ) ) < $now && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
                 $deposits[$play->ID]['deposit'][1]['date']         = $deposit1_date;
                 $deposits[$play->ID]['deposit'][1]['amt']          = $deposit1_amt;
-            }
-
-            if( $deposit2_date && date( 'Ymd', strtotime( $deposit2_date ) ) < $now && ( ! $deposit2_paid || $deposit2_paid == '' ) ) {
-                $deposits[$play->ID]['deposit'][2]['date']         = $deposit2_date;
-                $deposits[$play->ID]['deposit'][2]['amt']          = $deposit2_amt;
-            }
-
-            if( $deposit3_date && date( 'Ymd', strtotime( $deposit3_date ) ) < $now && ( ! $deposit3_paid || $deposit3_paid == '' ) ) {
-                $deposits[$play->ID]['deposit'][3]['date']         = $deposit3_date;
-                $deposits[$play->ID]['deposit'][3]['amt']          = $deposit3_amt;
             }
 
             if( isset( $deposits[$play->ID] ) ) {
@@ -212,20 +196,6 @@ function timeapp_past_due_deposits_widget() {
                             echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][1]['date'] ) ) ) . '</td>';
                             echo '<td>' . timeapp_format_price( $play['deposit'][1]['amt'] ) . '</td>';
                             echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit1_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
-                            echo '</tr>';
-                        }
-                        if( isset( $play['deposit'][2] ) ) {
-                            echo '<tr>';
-                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][2]['date'] ) ) ) . '</td>';
-                            echo '<td>' . timeapp_format_price( $play['deposit'][2]['amt'] ) . '</td>';
-                            echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit2_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
-                            echo '</tr>';
-                        }
-                        if( isset( $play['deposit'][3] ) ) {
-                            echo '<tr>';
-                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][3]['date'] ) ) ) . '</td>';
-                            echo '<td>' . timeapp_format_price( $play['deposit'][3]['amt'] ) . '</td>';
-                            echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit3_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
                             echo '</tr>';
                         }
                         ?>

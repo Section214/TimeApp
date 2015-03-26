@@ -293,14 +293,6 @@ function timeapp_render_financials_meta_box() {
     $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
     $deposit1_date  = ( isset( $deposit1_date ) && ! empty( $deposit1_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit1_date ) ) : '' );
     $deposit1_paid  = get_post_meta( $post_id, '_timeapp_deposit1_paid', true ) ? true : false;
-    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit2_amt', true );
-    $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
-    $deposit2_date  = ( isset( $deposit2_date ) && ! empty( $deposit2_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit2_date ) ) : '' );
-    $deposit2_paid  = get_post_meta( $post_id, '_timeapp_deposit2_paid', true ) ? true : false;
-    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit3_amt', true );
-    $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
-    $deposit3_date  = ( isset( $deposit3_date ) && ! empty( $deposit3_date ) ? date( 'm/d/Y g:i a', strtotime( $deposit3_date ) ) : '' );
-    $deposit3_paid  = get_post_meta( $post_id, '_timeapp_deposit3_paid', true ) ? true : false;
     $accommodations = get_post_meta( $post_id, '_timeapp_accommodations', true );
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? true : false;
     $production_css = ( $production ? ' style="display: none;"' : '' );
@@ -355,44 +347,6 @@ function timeapp_render_financials_meta_box() {
     echo '<strong><label for="_timeapp_deposit1_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="checkbox" name="_timeapp_deposit1_paid" id="_timeapp_deposit1_paid" value="1" ' . checked( true, $deposit1_paid, false ) . ' />';
     echo '<label for="_timeapp_deposit1_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
-    echo '</p>';
-    
-    echo '<div class="timeapp-clear"></div>';
-
-    // Deposit 2
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit2_amt">' . __( 'Amount', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" name="_timeapp_deposit2_amt" id="_timeapp_deposit2_amt" value="' . ( isset( $deposit2_amt ) && ! empty( $deposit2_amt ) ? $deposit2_amt : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
-    echo '</p>';
-
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit2_date">' . __( 'Due Date', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" class="timeapp-datetime" name="_timeapp_deposit2_date" id="_timeapp_deposit2_date" value="' . $deposit2_date . '" />';
-    echo '</p>';
-    
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit2_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="checkbox" name="_timeapp_deposit2_paid" id="_timeapp_deposit2_paid" value="1" ' . checked( true, $deposit2_paid, false ) . ' />';
-    echo '<label for="_timeapp_deposit2_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
-    echo '</p>';
-
-    echo '<div class="timeapp-clear"></div>';
-
-    // Deposit 3
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit3_amt">' . __( 'Amount', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" name="_timeapp_deposit3_amt" id="_timeapp_deposit3_amt" value="' . ( isset( $deposit3_amt ) && ! empty( $deposit3_amt ) ? $deposit3_amt : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
-    echo '</p>';
-
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit3_date">' . __( 'Due Date', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="text" class="timeapp-datetime" name="_timeapp_deposit3_date" id="_timeapp_deposit3_date" value="' . $deposit3_date . '" />';
-    echo '</p>';
-    
-    echo '<p class="timeapp-third">';
-    echo '<strong><label for="_timeapp_deposit3_paid">' . __( 'Paid?', 'timeapp' ) . '</label></strong><br />';
-    echo '<input type="checkbox" name="_timeapp_deposit3_paid" id="_timeapp_deposit3_paid" value="1" ' . checked( true, $deposit3_paid, false ) . ' />';
-    echo '<label for="_timeapp_deposit3_paid">' . __( 'Check if this deposit has been paid.', 'timeapp' ) . '</label>';
     echo '</p>';
     
     echo '<div class="timeapp-clear"></div>';
@@ -504,11 +458,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $bonus_details  = get_post_meta( $post_id, '_timeapp_bonus_details', true );
     $deposit1_date  = get_post_meta( $post_id, '_timeapp_deposit1_date', true );
     $deposit1_amt   = get_post_meta( $post_id, '_timeapp_deposit1_amt', true );
-    $deposit2_date  = get_post_meta( $post_id, '_timeapp_deposit2_date', true );
-    $deposit2_amt   = get_post_meta( $post_id, '_timeapp_deposit2_amt', true );
-    $deposit3_date  = get_post_meta( $post_id, '_timeapp_deposit3_date', true );
-    $deposit3_amt   = get_post_meta( $post_id, '_timeapp_deposit3_amt', true );
-    $balance        = $compensation - (int) $deposit1_amt - (int) $deposit2_amt - (int) $deposit3_amt;
+    $balance        = $compensation - (int) $deposit1_amt;
     $production_cost= get_post_meta( $post_id, '_timeapp_production_cost', true );
     $production     = get_post_meta( $post_id, '_timeapp_production', true ) ? 'Venue to provide production' : 'Artist to provide production';
     $notes          = get_post_meta( $post_id, '_timeapp_notes', true );
@@ -617,21 +567,9 @@ function timeapp_colorbox_holder( $post_id ) {
                     </tr>
                 <?php } ?>
                 <tr>
-                    <td><?php _e( 'Deposit 1', 'timeapp' ); ?></td>
+                    <td><?php _e( 'Deposit', 'timeapp' ); ?></td>
                     <td><?php echo timeapp_format_price( $deposit1_amt ) . __( ' by ', 'timeapp' ) . $deposit1_date; ?></td>
                 </tr>
-                <?php if( $deposit2_amt && $deposit2_amt != '' ) { ?>
-                <tr>
-                    <td><?php _e( 'Deposit 2', 'timeapp' ); ?></td>
-                    <td><?php echo timeapp_format_price( $deposit2_amt ) . __( ' by ', 'timeapp' ) . $deposit2_date; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if( $deposit3_amt && $deposit3_amt != '' ) { ?>
-                <tr>
-                    <td><?php _e( 'Deposit 3', 'timeapp' ); ?></td>
-                    <td><?php echo timeapp_format_price( $deposit3_amt ) . __( ' by ', 'timeapp' ) . $deposit3_date; ?></td>
-                </tr>
-                <?php } ?>
                 <tr>
                     <td><?php _e( 'Production', 'timeapp' ); ?></td>
                     <td><?php echo $production; ?></td>
@@ -710,12 +648,6 @@ function timeapp_save_play_meta_box( $post_id ) {
         '_timeapp_deposit1_amt',
         '_timeapp_deposit1_date',
         '_timeapp_deposit1_paid',
-        '_timeapp_deposit2_amt',
-        '_timeapp_deposit2_date',
-        '_timeapp_deposit2_paid',
-        '_timeapp_deposit3_amt',
-        '_timeapp_deposit3_date',
-        '_timeapp_deposit3_paid',
         '_timeapp_accommodations',
         '_timeapp_production',
         '_timeapp_production_cost',
