@@ -456,6 +456,9 @@ function timeapp_generate_pdf() {
 
     wp_mail( $to, $subject, $message, $headers, $attachments );
 
+    // Tag as sent
+    update_post_meta( $play->ID, '_timeapp_contract_sent', current_time( 'm/d/Y g:i a' ) );
+
     wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'pdf-nonce' => null ) ) );
     exit;
 }
