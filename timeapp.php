@@ -107,7 +107,7 @@ if( ! class_exists( 'TimeApp' ) ) {
             define( 'TIMEAPP_FILE', __FILE__ );
 
             // Enable debugging
-            define( 'TIMEAPP_DEBUG', true );
+            define( 'TIMEAPP_DEBUG', false );
         }
 
 
