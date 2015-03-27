@@ -131,6 +131,7 @@ if( ! class_exists( 'TimeApp' ) ) {
             require_once TIMEAPP_DIR . 'includes/admin/bulk-actions.php';
             require_once TIMEAPP_DIR . 'includes/admin/dashboard-columns.php';
             require_once TIMEAPP_DIR . 'includes/admin/dashboard-widgets.php';
+            require_once TIMEAPP_DIR . 'includes/admin/notices.php';
             require_once TIMEAPP_DIR . 'includes/install.php';
         }
 

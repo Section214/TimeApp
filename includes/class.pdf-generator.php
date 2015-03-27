@@ -259,6 +259,10 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
+        if( $this->cancelled ) {
+            $this->pdf->Image( TIMEAPP_URL . 'assets/img/cancelled.png', 14, 14, $this->pdf->w - 28 );
+        }
+
         $this->pdf->AddPage();
 
         $this->pdf->MultiCell( 0, 12 * $point, '    The parties have read, understood, and agree to the conditions and terms of this contract and any riders attached to this agreement. Both parties have had adequate time to review this contract with their respective legal counsel or advisors.', 0, 1 );

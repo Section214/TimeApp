@@ -707,7 +707,29 @@ function timeapp_cancel_play() {
 
     wp_mail( $to, $subject, $message, $headers, $attachments );
 
+    // Tag as cancelled
+    update_post_meta( $play->ID, '_timeapp_contract_cancelled', true );
+
     wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'cancel-play' => null ) ) );
     exit;
 }
 add_action( 'timeapp_cancel_play', 'timeapp_cancel_play' );
+
+
+/**
+ * Restore a play
+ *
+ * @since       1.3.0
+ * @return      void
+ */
+function timeapp_restore_play() {
+    // Don't process if nonce can't be verified
+    if( ! wp_verify_nonce( $_GET['restore-play'], 'restore-play' ) ) return;
+
+    // Remove the cancelled tag
+    delete_post_meta( $_GET['post'], '_timeapp_contract_cancelled' );
+
+    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'restore-play' => null ) ) );
+    exit;
+}
+add_action( 'timeapp_restore_play', 'timeapp_restore_play' );

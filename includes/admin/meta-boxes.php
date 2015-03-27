@@ -49,9 +49,12 @@ add_action( 'add_meta_boxes', 'timeapp_add_meta_boxes' );
  * Render our actions meta boxes
  *
  * @since       1.0.0
+ * @global      object $post The WordPress object for this post
  * @return      void
  */
 function timeapp_render_actions_meta_box() {
+    global $post;
+
     $post_type = get_post_type();
 
     echo '<a class="button button-primary timeapp-save">' . sprintf( __( 'Save %s', 'timeapp' ), ucwords( $post_type ) ) . '</a>';
@@ -59,7 +62,11 @@ function timeapp_render_actions_meta_box() {
     do_action( 'timeapp_meta_box_' . $post_type . '_actions' );
 
     echo '<div class="timeapp-action-delete">';
-    echo '<a class="submitdelete" href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'cancel_play' ) ), 'cancel-play', 'cancel-play' ) . '">' . __( 'Cancel Play', 'timeapp' ) . '</a>';
+    if( get_post_meta( $post->ID, '_timeapp_contract_cancelled', true ) == true ) {
+        echo '<a class="submitdelete" href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'restore_play' ) ), 'restore-play', 'restore-play' ) . '">' . __( 'Restore Play', 'timeapp' ) . '</a>';
+    } else {
+        echo '<a class="submitdelete" href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'cancel_play' ) ), 'cancel-play', 'cancel-play' ) . '">' . __( 'Cancel Play', 'timeapp' ) . '</a>';
+    }
     echo '&nbsp;&middot;&nbsp;';
     echo '<a class="submitdelete" href="' . get_delete_post_link() . '">' . __( 'Move to Trash', 'timeapp' ) . '</a>';
     echo '</div>';
