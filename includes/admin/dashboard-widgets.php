@@ -368,7 +368,7 @@ function timeapp_commissions_due_widget() {
         }
     }
 
-    $plays = get_posts( array(
+    $args = array(
         'post_type'     => 'play',
         'numberposts'   => 999999,
         'post_status'   => 'publish',
@@ -380,7 +380,27 @@ function timeapp_commissions_due_widget() {
                 'compare'   => '='
             )
         )
-    ) );
+    );
+
+    if( isset( $_POST['filter_month'] ) && ! empty( $_POST['filter_month'] ) ) {
+        $date = explode( '-', $_POST['filter_month'] );
+
+        $args['meta_query'][] = array(
+            'key'       => '_timeapp_start_date',
+            'value'     => $date[0] . '(.*)' . $date[1] . '(.*)',
+            'compare'   => 'REGEXP'
+        );
+    }
+
+    if( isset( $_POSTi['filter_artist'] ) && ! empty( $_POST['filter_artist'] ) ) {
+        $args['meta_query'][] = array(
+            'key'       => '_timeapp_artist',
+            'value'     => $_POST['filter_artist'],
+            'compare'   => '='
+        );
+    }
+
+    $plays = get_posts( $args );
 
     foreach( $plays as $key => $play ) {
         $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
@@ -393,6 +413,33 @@ function timeapp_commissions_due_widget() {
     echo '<div class="timeapp-dashboard-widget">';
     
     if( $plays ) {
+        $artists    = timeapp_get_artists();
+        $months     = timeapp_get_months();
+        ?>
+        <div class="timeapp-dashboard-widget-filters">
+            <form method="post">
+                <?php
+                    echo '<select name="filter_month">';
+                    echo '<option value="">' . __( 'Show all months', 'timeapp' ) . '</option>';
+                    foreach( $months as $id => $month ) {
+                        $selected = isset( $_POST['filter_month'] ) && $_POST['filter_month'] == $id ? ' selected="selected"' : '';
+                        echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $month ) . '</option>';
+                    }
+                    echo '</select>';
+
+                    echo '<select name="filter_artist">';
+                    echo '<option value="">' . __( 'Show all artists', 'timeapp' ) . '</option>';
+                    foreach( $artists as $id => $artist ) {
+                        $selected = isset( $_POST['filter_artist'] ) && $_POST['filter_artist'] == $id ? ' selected="selected"' : '';
+                        echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $artist ) . '</option>';
+                    }
+                    echo '</select>';
+
+                    submit_button( __( 'Filter', 'timeapp' ), 'secondary', 'timeapp_filter', false );
+                ?>
+            </form>
+        </div>
+        <?php
         foreach( $plays as $id => $play ) {
             $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
 

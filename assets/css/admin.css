@@ -277,6 +277,12 @@ div#actions_bottom div.inside {
     width: 100%;
 }
 
+.timeapp-dashboard-widget-filters {
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
 
 /* PDF preview styles
 -------------------------------------------------------------- */
