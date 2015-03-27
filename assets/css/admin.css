@@ -319,6 +319,7 @@ div#actions_bottom div.inside {
 -------------------------------------------------------------- */
 th.manage-column.column-status {
     width: 100px;
+    text-align: center;
 }
 
 td.status.column-status div {
