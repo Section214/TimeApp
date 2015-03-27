@@ -568,10 +568,13 @@ function timeapp_colorbox_holder( $post_id ) {
                         <td><?php echo $bonus_details; ?></td>
                     </tr>
                 <?php } ?>
-                <tr>
-                    <td><?php _e( 'Deposit', 'timeapp' ); ?></td>
-                    <td><?php echo timeapp_format_price( $deposit1_amt ) . __( ' by ', 'timeapp' ) . $deposit1_date; ?></td>
-                </tr>
+                <?php if( $deposit1_amt && $deposit1_amt != '' ) { ?>
+                    <?php $deposit1_date  = ( $deposit1_date ) ? ' by ' . date( 'F jS, Y', strtotime( $deposit1_date ) ) : ' with signed contract'; ?>
+                    <tr>
+                        <td><?php _e( 'Deposit', 'timeapp' ); ?></td>
+                        <td><?php echo timeapp_format_price( $deposit1_amt ) . $deposit1_date; ?></td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td><?php _e( 'Production', 'timeapp' ); ?></td>
                     <td><?php echo $production; ?></td>
