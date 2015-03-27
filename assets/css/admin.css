@@ -313,3 +313,33 @@ div#actions_bottom div.inside {
 .timeapp-colorbox-holder {
     display: none;
 }
+
+
+/* Dashboard column styles
+-------------------------------------------------------------- */
+th.manage-column.column-status {
+    width: 100px;
+}
+
+td.status.column-status div {
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+td.status.column-status .timeapp-contract-active {
+    background: #7ad03a;
+    border: 1px solid #5ebb17;
+}
+
+td.status.column-status .timeapp-contract-past {
+    background: #304e94;
+    border: 1px solid #1b397c;
+}
+
+td.status.column-status .timeapp-contract-cancelled {
+    background: #dd3d36;
+    border: 1px solid #ba2018;
+}
+

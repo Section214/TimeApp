@@ -16,13 +16,20 @@ if( ! defined( 'ABSPATH' ) ) exit;
  *
  * @since       1.1.3
  * @param       array $columns The current columns
+ * @global      string $typenow The post type we are viewing
  * @return      array $columns The updated columns
  */
 function timeapp_dashboard_columns( $columns ) {
+    global $typenow;
+
     $columns = array(
         'cb'            => '<input type="checkbox" />',
-        'title'         => __( 'Title', 'timeapp' )
+        'title'         => __( 'Title', 'timeapp' ),
     );
+
+    if( $typenow == 'play' ) {
+        $columns['status'] = __( 'Status', 'timeapp' );
+    }
 
     return apply_filters( 'timeapp_dashboard_columns', $columns );
 }
@@ -30,6 +37,36 @@ add_filter( 'manage_edit-play_columns', 'timeapp_dashboard_columns' );
 add_filter( 'manage_edit-artist_columns', 'timeapp_dashboard_columns' );
 add_filter( 'manage_edit-purchaser_columns', 'timeapp_dashboard_columns' );
 add_filter( 'manage_edit-agent_columns', 'timeapp_dashboard_columns' );
+
+
+/**
+ * Render our custom dashboard columns
+ *
+ * @since       1.3.0
+ * @param       string $column_name The column name for a given column
+ * @param       int $post_id The post ID for a given row
+ * @return      void
+ */
+function timeapp_render_dashboard_columns( $column_name, $post_id ) {
+    if( get_post_type( $post_id ) == 'play' ) {
+        switch( $column_name ) {
+            case 'status':
+                if( get_post_meta( $post_id, '_timeapp_contract_cancelled', true ) ) {
+                    echo '<div class="timeapp-contract-cancelled">' . __( 'Cancelled', 'timeapp' ) . '</div>';
+                } else {
+                    $date = get_post_meta( $post_id, '_timeapp_end_date', true );
+
+                    if( date( 'Ymd', strtotime( $date ) ) < date( 'Ymd', time() ) ) {
+                        echo '<div class="timeapp-contract-past">' . __( 'Past', 'timeapp' ) . '</div>';
+                    } else {
+                        echo '<div class="timeapp-contract-active">' . __( 'Active', 'timeapp' ) . '</div>';
+                    }
+                }
+                break;
+        }
+    }
+}
+add_action( 'manage_posts_custom_column', 'timeapp_render_dashboard_columns', 10, 2 );
 
 
 /**

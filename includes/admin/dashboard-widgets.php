@@ -392,7 +392,7 @@ function timeapp_commissions_due_widget() {
         );
     }
 
-    if( isset( $_POSTi['filter_artist'] ) && ! empty( $_POST['filter_artist'] ) ) {
+    if( isset( $_POST['filter_artist'] ) && ! empty( $_POST['filter_artist'] ) ) {
         $args['meta_query'][] = array(
             'key'       => '_timeapp_artist',
             'value'     => $_POST['filter_artist'],
