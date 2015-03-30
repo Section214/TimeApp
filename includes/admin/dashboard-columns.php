@@ -28,7 +28,7 @@ function timeapp_dashboard_columns( $columns ) {
     );
 
     if( $typenow == 'play' ) {
-        $columns['status'] = __( 'Status', 'timeapp' );
+        $columns['status'] = __( '', 'timeapp' );
     }
 
     return apply_filters( 'timeapp_dashboard_columns', $columns );
@@ -59,7 +59,7 @@ function timeapp_render_dashboard_columns( $column_name, $post_id ) {
                     if( date( 'Ymd', strtotime( $date ) ) < date( 'Ymd', time() ) ) {
                         echo '<div class="timeapp-contract-past">' . __( 'Past', 'timeapp' ) . '</div>';
                     } else {
-                        echo '<div class="timeapp-contract-active">' . __( 'Active', 'timeapp' ) . '</div>';
+                        echo '<div class="timeapp-contract-active">' . __( 'Upcoming', 'timeapp' ) . '</div>';
                     }
                 }
                 break;
