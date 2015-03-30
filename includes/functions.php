@@ -299,7 +299,7 @@ function timeapp_get_months() {
         }
 
         $months = array_unique( $months );
-        ksort( $months );
+        krsort( $months );
     } else {
         $months = false;
     }
