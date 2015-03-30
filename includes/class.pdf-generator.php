@@ -41,7 +41,7 @@ class TimeApp_Generate_PDF {
         $this->pdf          = new TimeApp_FPDF( 'P', 'mm', 'letter' );
         $this->file         = $file;
         $this->id           = $this->pdf->post_id = $post_id;
-        $this->cancelled    = ( $status ? true : false );
+        $this->cancelled    = ( $status == 'cancelled' ? true : false );
     }
 
 
