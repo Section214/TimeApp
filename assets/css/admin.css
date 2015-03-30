@@ -218,6 +218,28 @@ div#actions_bottom div.inside {
     margin-right: 10px;
 }
 
+.timeapp-contract-log-toggle:hover {
+    cursor: pointer;
+}
+
+.timeapp-contract-log {
+    border: 1px solid #ddd;
+    width: 50%;
+    display: block;
+    padding-right: 10px;
+    display: none;
+}
+
+.timeapp-contract-log-item {
+    width: 100%;
+    display: block;
+    padding: 3px 5px;
+}
+
+.timeapp-contract-log-item-odd {
+    background: #f9f9f9;
+}
+
 
 /* Widget styles
 -------------------------------------------------------------- */

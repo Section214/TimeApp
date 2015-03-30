@@ -156,5 +156,13 @@ jQuery(document).ready(function ($) {
     } else {
         jQuery("#contract_signatory").css('display', 'none');
     }
+
+    jQuery('.timeapp-contract-log-toggle').click(function () {
+        if (jQuery('.timeapp-contract-log').is(':visible')) {
+            jQuery('.timeapp-contract-log').css('display', 'none');
+        } else {
+            jQuery('.timeapp-contract-log').css('display', 'block');
+        }
+    });
 });
 
