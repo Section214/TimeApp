@@ -314,6 +314,10 @@ function timeapp_render_financials_meta_box() {
     $split_perc     = get_post_meta( $post_id, '_timeapp_split_perc', true );
     $split_agent    = get_post_meta( $post_id, '_timeapp_split_agent', true );
     $split_paid     = get_post_meta( $post_id, '_timeapp_split_paid', true );
+    $artist         = get_post_meta( $post_id, '_timeapp_artist', true );
+    $artist         = get_post( $artist );
+    $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
+    $commission_display = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_perc );
 
     // Gross guarantee
     echo '<p>';
@@ -381,6 +385,12 @@ function timeapp_render_financials_meta_box() {
     echo '<p' . $production_css . '>';
     echo '<strong><label for="_timeapp_production_cost">' . __( 'Production Cost', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="text" class="regular-text" name="_timeapp_production_cost" id="_timeapp_production_cost" value="' . ( isset( $production_cost ) && ! empty( $production_cost ) ? $production_cost : '' ) . '" placeholder="' . __( '$', 'timeapp' ) . '" />';
+    echo '</p>';
+
+    // Commission
+    echo '<p>';
+    echo '<strong><label for="_timeapp_commission_display">' . __( 'Commission Due', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" disabled="disabled" id="_timeapp_commission_display" value="' . $commission_display . '" />';
     echo '</p>';
 
     // Date paid
