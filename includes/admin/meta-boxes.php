@@ -129,8 +129,12 @@ function timeapp_render_communications_meta_box() {
     $post_id        = $post->ID;
     $contract_sent  = get_post_meta( $post_id, '_timeapp_contract_sent', true );
     $last_sent      = ( isset( $contract_sent ) && is_array( $contract_sent ) ? date( 'm/d/Y g:i a', strtotime( end( $contract_sent ) ) ) : '' );
-    array_pop( $contract_sent );
-    $contract_sent  = array_reverse( $contract_sent );
+    if( is_array( $contract_sent ) ) {
+        array_pop( $contract_sent );
+        $contract_sent = array_reverse( $contract_sent );
+    } else {
+        $contract_sent = '';
+    }
     $contract_rcvd  = get_post_meta( $post_id, '_timeapp_contract_rcvd', true );
     $contract_rcvd  = ( isset( $contract_rcvd ) && ! empty( $contract_rcvd ) ? date( 'm/d/Y g:i a', strtotime( $contract_rcvd ) ) : '' );
     $promo_sent     = get_post_meta( $post_id, '_timeapp_promo_sent', true );
@@ -142,19 +146,23 @@ function timeapp_render_communications_meta_box() {
     echo '<p class="timeapp-half">';
     echo '<strong><label for="_timeapp_contract_sent">' . __( 'Contract Sent', 'timeapp' ) . '</label></strong><br />';
     echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_contract_sent" id="_timeapp_contract_sent" value="' . $last_sent . '" /><br />';
-    echo '<a class="timeapp-contract-log-toggle">' . __( 'Toggle Contract Log', 'timeapp' ) . '</a>';
-    echo '<span class="timeapp-contract-log">';
-    $odd = true;
-    foreach( $contract_sent as $item ) {
-        if( $odd ) {
-            echo '<span class="timeapp-contract-log-item timeapp-contract-log-item-odd">' . $item . '</span>';
-        } else {
-            echo '<span class="timeapp-contract-log-item">' . $item . '</span>';
-        }
+    if( is_array( $contract_sent ) ) {
+        echo '<a class="timeapp-contract-log-toggle">' . __( 'Toggle Contract Log', 'timeapp' ) . '</a>';
+        echo '<span class="timeapp-contract-log">';
+        $odd = true;
+        foreach( $contract_sent as $item ) {
+            if( $item ) {
+                if( $odd ) {
+                    echo '<span class="timeapp-contract-log-item timeapp-contract-log-item-odd">' . $item . '</span>';
+                } else {
+                    echo '<span class="timeapp-contract-log-item">' . $item . '</span>';
+                }
 
-        $odd = ! $odd;
+                $odd = ! $odd;
+            }
+        }
+        echo '</span>';
     }
-    echo '</span>';
     echo '</p>';
 
     // Contract received

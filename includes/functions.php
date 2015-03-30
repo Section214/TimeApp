@@ -417,6 +417,17 @@ function timeapp_generate_pdf() {
     $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
     $file->build();
 
+    // Tag as sent
+    $contract_log   = get_post_meta( $play->ID, '_timeapp_contract_sent', true );
+    if( ! is_array( $contract_log ) ) {
+        $new_log        = array();
+        $new_log[]      = $contract_log;
+        $contract_log   = $new_log;
+    }
+    
+    $contract_log[] = current_time( 'm/d/Y g:i a' );
+    update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
+
     if( TIMEAPP_DEBUG ) {
         $url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
         wp_safe_redirect( $url );
@@ -455,19 +466,6 @@ function timeapp_generate_pdf() {
     }
 
     wp_mail( $to, $subject, $message, $headers, $attachments );
-
-    // Tag as sent
-    $contract_log   = get_post_meta( $play->ID, '_timeapp_contract_sent', true );
-    if( ! is_array( $contract_log ) ) {
-        $new_log        = array();
-        $new_log[]      = $contract_log;
-        $contract_log   = $new_log;
-    }
-
-    $contract_log[] = current_time( 'm/d/Y g:i a' );
-    update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
-
-    var_dump( $contract_log ); exit;
 
     wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'pdf-nonce' => null ) ) );
     exit;

@@ -26,12 +26,18 @@ class TimeApp_FPDF extends FPDF {
      */
     public function Header() {
         if( ! isset( $this->last_page ) ) {
-            $contract_sent = get_post_meta( $this->post_id, '_timeapp_contract_sent', true );
+            $contract_sent  = get_post_meta( $this->post_id, '_timeapp_contract_sent', true );
+            $status         = get_post_meta( $this->post_id, '_timeapp_status', true );
 
             if( $contract_sent ) {
                 $this->SetFont( 'Times', '', 14 );
-                $this->SetTextColor( '94', '187', '23' );
-                $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'L' );
+                if( $status == 'cancelled' ) {
+                    $this->SetTextColor( '218', '40', '32' );
+                    $this->Cell( 0, 12, 'Cancelled: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'L' );
+                } else {
+                    $this->SetTextColor( '94', '187', '23' );
+                    $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'L' );
+                }
             }
         }
     }
