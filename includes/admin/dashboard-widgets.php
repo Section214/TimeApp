@@ -596,7 +596,16 @@ function timeapp_total_commissions_widget() {
         );
     }
 
+    if( isset( $_POST['filter_comm_artist'] ) && ! empty( $_POST['filter_comm_artist'] ) ) {
+        $args['meta_query'][] = array(
+            'key'       => '_timeapp_artist',
+            'value'     => $_POST['filter_comm_artist'],
+            'compare'   => '='
+        );
+    }
+
     $plays      = get_posts( $args );
+    $artists    = timeapp_get_artists();
     $months     = timeapp_get_months();
     $total_comm = 0;
     $active     = __( 'all time', 'timeapp' );
@@ -609,8 +618,22 @@ function timeapp_total_commissions_widget() {
                 echo '<select name="filter_comm_month">';
                 echo '<option value="">' . __( 'Show all months', 'timeapp' ) . '</option>';
                 foreach( $months as $id => $month ) {
-                    $selected = isset( $_POST['filter_comm_month'] ) && $_POST['filter_comm_month'] == $id ? ' selected="selected"' && $active = $month : '';
+                    $selected = isset( $_POST['filter_comm_month'] ) && $_POST['filter_comm_month'] == $id ? ' selected="selected"' : '';
+                    if( $selected != '' ) {
+                        $active_month = $month;
+                    }
                     echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $month ) . '</option>';
+                }
+                echo '</select>';
+                
+                echo '<select name="filter_comm_artist">';
+                echo '<option value="">' . __( 'Show all artists', 'timeapp' ) . '</option>';
+                foreach( $artists as $id => $artist ) {
+                    $selected = isset( $_POST['filter_comm_artist'] ) && $_POST['filter_comm_artist'] == $id ? ' selected="selected"' : '';
+                    if( $selected != '' ) {
+                        $active_artist = $artist;
+                    }
+                    echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $artist ) . '</option>';
                 }
                 echo '</select>';
 
@@ -636,7 +659,7 @@ function timeapp_total_commissions_widget() {
         }
     }
 
-    echo __( 'Total commissions for', 'timeapp' ) . ' ' . $active . ': ' . timeapp_format_price( $total_comm );
+    echo __( 'Total commissions for', 'timeapp' ) . ' ' . $active . ( isset( $active_artist ) ? ' ' . __( 'for', 'timeapp' ) . ' ' . $active_artist : '' ) . ': ' . timeapp_format_price( $total_comm );
     echo '</div>';
 }
 
