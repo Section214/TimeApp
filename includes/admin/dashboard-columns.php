@@ -28,7 +28,8 @@ function timeapp_dashboard_columns( $columns ) {
     );
 
     if( $typenow == 'play' ) {
-        $columns['status'] = __( '', 'timeapp' );
+        $columns['commission']  = __( 'Commission', 'timeapp' );
+        $columns['status']      = __( 'Status', 'timeapp' );
     }
 
     return apply_filters( 'timeapp_dashboard_columns', $columns );
@@ -62,6 +63,25 @@ function timeapp_render_dashboard_columns( $column_name, $post_id ) {
                         echo '<div class="timeapp-contract-active">' . __( 'Upcoming', 'timeapp' ) . '</div>';
                     }
                 }
+                break;
+            case 'commission':
+                if( get_post_meta( $post_id, '_timeapp_date_paid', true ) ) {
+                    echo '<div class="timeapp-commission-paid">' . __( 'Paid', 'timeapp' ) . '</div>';
+                } else {
+                    $artist             = get_post_meta( $post_id, '_timeapp_artist', true );
+                    $artist             = get_post( $artist );
+                    $guarantee          = get_post_meta( $post_id, '_timeapp_guarantee', true );
+                    $production         = get_post_meta( $post_id, '_timeapp_production', true );
+                    $production_cost    = ( ! $production ? get_post_meta( $post_id, '_timeapp_production_cost', true ) : false );
+                    $commission_rate    = get_post_meta( $artist->ID, '_timeapp_commission', true );
+                    $split_comm         = get_post_meta( $post_id, '_timeapp_split_comm', true );
+                    $split_rate         = ( $split_comm ? get_post_meta( $post_id, '_timeapp_split_perc', true ) : false );
+
+                    $commission         = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
+                    
+                    echo '<div class="timeapp-commission-unpaid">' . sprintf( __( '%s', 'timeapp' ), $commission ) . '</div>';
+                }
+
                 break;
         }
     }

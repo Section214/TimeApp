@@ -317,18 +317,21 @@ div#actions_bottom div.inside {
 
 /* Dashboard column styles
 -------------------------------------------------------------- */
+th.manage-column.column-commission,
 th.manage-column.column-status {
     width: 100px;
     text-align: center;
 }
 
-td.status.column-status div {
+td.status.column-status div,
+td.commission.column-commission div {
     color: #fff;
     text-align: center;
     border-radius: 4px;
     -webkit-border-radius: 4px;
 }
 
+td.commission.column-commission .timeapp-commission-paid,
 td.status.column-status .timeapp-contract-active {
     background: #7ad03a;
     border: 1px solid #5ebb17;
@@ -339,6 +342,7 @@ td.status.column-status .timeapp-contract-past {
     border: 1px solid #1b397c;
 }
 
+td.commission.column-commission .timeapp-commission-unpaid,
 td.status.column-status .timeapp-contract-cancelled {
     background: #dd3d36;
     border: 1px solid #ba2018;
