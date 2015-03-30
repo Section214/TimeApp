@@ -387,6 +387,8 @@ function timeapp_commissions_due_widget() {
         )
     );
 
+    $has_filter = false;
+
     if( isset( $_POST['filter_month'] ) && ! empty( $_POST['filter_month'] ) ) {
         $date = explode( '-', $_POST['filter_month'] );
 
@@ -395,6 +397,8 @@ function timeapp_commissions_due_widget() {
             'value'     => $date[0] . '(.*)' . $date[1] . '(.*)',
             'compare'   => 'REGEXP'
         );
+        
+        $has_filter = true;
     }
 
     if( isset( $_POST['filter_artist'] ) && ! empty( $_POST['filter_artist'] ) ) {
@@ -403,6 +407,8 @@ function timeapp_commissions_due_widget() {
             'value'     => $_POST['filter_artist'],
             'compare'   => '='
         );
+
+        $has_filter = true;
     }
 
     $plays = get_posts( $args );
@@ -415,9 +421,10 @@ function timeapp_commissions_due_widget() {
         }
     }
 
+
     echo '<div class="timeapp-dashboard-widget">';
     
-    if( $plays ) {
+    if( $plays || $has_filter ) {
         $artists    = timeapp_get_artists();
         $months     = timeapp_get_months();
         ?>
@@ -445,105 +452,109 @@ function timeapp_commissions_due_widget() {
             </form>
         </div>
         <?php
-        foreach( $plays as $id => $play ) {
-            $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
+        if( $plays ) {
+            foreach( $plays as $id => $play ) {
+                $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
 
-            $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
-            $purchaser      = get_post( $purchaser );
-            $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
-            $artist         = get_post( $artist );
-            $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
-            $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
-            $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
-            $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
-            $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
-            $production     = get_post_meta( $play->ID, '_timeapp_production', true );
-            $production_cost= ( ! $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
-            $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
-            $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
-            $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
-            $commission_rcvd= get_post_meta( $play->ID, '_timeapp_date_paid', true );
-            $contact_name   = '';
+                $purchaser      = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+                $purchaser      = get_post( $purchaser );
+                $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
+                $artist         = get_post( $artist );
+                $contact_fname  = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
+                $contact_lname  = get_post_meta( $purchaser->ID, '_timeapp_last_name', true );
+                $contact_email  = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+                $contact_phone  = get_post_meta( $purchaser->ID, '_timeapp_phone_number', true );
+                $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
+                $production     = get_post_meta( $play->ID, '_timeapp_production', true );
+                $production_cost= ( ! $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
+                $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
+                $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
+                $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
+                $commission_rcvd= get_post_meta( $play->ID, '_timeapp_date_paid', true );
+                $contact_name   = '';
 
-            // Is a contact first name specified?
-            if( $contact_fname && $contact_fname != '' ) {
-                $contact_name .= $contact_fname;
-            }
-
-            // Is a contact last name specified?
-            if( $contact_lname && $contact_lname != '' ) {
-                if( $contact_name != '' ) {
-                    $contact_name .= ' ';
+                // Is a contact first name specified?
+                if( $contact_fname && $contact_fname != '' ) {
+                    $contact_name .= $contact_fname;
                 }
 
-                $contact_name .= $contact_lname;
+                // Is a contact last name specified?
+                if( $contact_lname && $contact_lname != '' ) {
+                    if( $contact_name != '' ) {
+                        $contact_name .= ' ';
+                    }
+
+                    $contact_name .= $contact_lname;
+                }
+
+                // No contact name specified
+                $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
+
+                $commission = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
+
+                ?>
+                <form method="post">
+                    <table class="timeapp-commissions-due-widget">
+                        <thead>
+                            <tr>
+                                <td class="timeapp-play-title" colspan="2">
+                                    <?php echo $play->post_title; ?>
+                                    <span>
+                                        <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
+                                <td><?php echo $date; ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php _e( 'Artist', 'timeapp' ); ?></td>
+                                <td><?php echo $artist->post_title; ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php _e( 'Commission', 'timeapp' ); ?></td>
+                                <td><?php echo $commission; ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
+                                <td><?php echo $purchaser->post_title; ?></td>
+                            </tr>
+                            <?php if( $purchaser->post_title != $contact_name ) { ?>
+                            <tr>
+                                <td><?php _e( 'Contact', 'timeapp' ); ?></td>
+                                <td><?php echo $contact_name; ?></td>
+                            </tr>
+                            <?php } ?>
+                            <?php if( $contact_email ) { ?>
+                            <tr>
+                                <td><?php _e( 'Email', 'timeapp' ); ?></td>
+                                <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
+                            </tr>
+                            <?php } ?>
+                            <?php if( $contact_phone ) { ?>
+                            <tr>
+                                <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
+                                <td><?php echo $contact_phone; ?></td>
+                            </tr>
+                            <?php } ?>
+                            <tr class="timeapp-date-paid">
+                                <td><?php _e( 'Date Paid', 'timeapp' ); ?></td>
+                                <td><input type="text" id="_timeapp_date_paid_<?php echo $play->ID; ?>" name="_timeapp_date_paid" class="widefat timeapp-datetime" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <input type="hidden" name="timeapp_play_id" value="<?php echo $play->ID; ?>" />
+                    <?php submit_button(); ?>
+                </form>
+                <div class="timeapp-clear"></div>
+                <?php
             }
-
-            // No contact name specified
-            $contact_name = ( $contact_name != '' ? $contact_name : __( 'None Specified', 'timeapp' ) );
-
-            $commission = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
-
-            ?>
-            <form method="post">
-                <table class="timeapp-commissions-due-widget">
-                    <thead>
-                        <tr>
-                            <td class="timeapp-play-title" colspan="2">
-                                <?php echo $play->post_title; ?>
-                                <span>
-                                    <a href="<?php echo admin_url( 'post.php?action=edit&post=' . $play->ID ); ?>"><? _e( 'Edit', 'timeapp' ); ?></a>
-                                </span>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><?php _e( 'Play Date', 'timeapp' ); ?></td>
-                            <td><?php echo $date; ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php _e( 'Artist', 'timeapp' ); ?></td>
-                            <td><?php echo $artist->post_title; ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php _e( 'Commission', 'timeapp' ); ?></td>
-                            <td><?php echo $commission; ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php _e( 'Purchaser', 'timeapp' ); ?></td>
-                            <td><?php echo $purchaser->post_title; ?></td>
-                        </tr>
-                        <?php if( $purchaser->post_title != $contact_name ) { ?>
-                        <tr>
-                            <td><?php _e( 'Contact', 'timeapp' ); ?></td>
-                            <td><?php echo $contact_name; ?></td>
-                        </tr>
-                        <?php } ?>
-                        <?php if( $contact_email ) { ?>
-                        <tr>
-                            <td><?php _e( 'Email', 'timeapp' ); ?></td>
-                            <td><?php echo '<a href="mailto:' . $contact_email . '">' . $contact_email . '</a>'; ?></td>
-                        </tr>
-                        <?php } ?>
-                        <?php if( $contact_phone ) { ?>
-                        <tr>
-                            <td><?php _e( 'Phone Number', 'timeapp' ); ?></td>
-                            <td><?php echo $contact_phone; ?></td>
-                        </tr>
-                        <?php } ?>
-                        <tr class="timeapp-date-paid">
-                            <td><?php _e( 'Date Paid', 'timeapp' ); ?></td>
-                            <td><input type="text" id="_timeapp_date_paid_<?php echo $play->ID; ?>" name="_timeapp_date_paid" class="widefat timeapp-datetime" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <input type="hidden" name="timeapp_play_id" value="<?php echo $play->ID; ?>" />
-                <?php submit_button(); ?>
-            </form>
-            <div class="timeapp-clear"></div>
-            <?php
+        } else {
+            echo '<i class="dashicons dashicons-smiley"></i> ' . __( 'No results found for that filter!', 'timeapp' );
         }
     } else {
         echo '<i class="dashicons dashicons-smiley"></i> ' . __( 'Congratulations! You have reached eternal bliss... Nobody owes you any money!', 'timeapp' );
