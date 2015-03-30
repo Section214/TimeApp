@@ -172,7 +172,7 @@ function timeapp_filter_query( $query ) {
 
             $query['meta_query'][] = array(
                 'key'       => '_timeapp_start_date',
-                'value'     => $start_date[0] . '(.*)' . $start_date[1] . '(.*)',
+                'value'     => $start_date[1] . '(.*)' . $start_date[0] . '(.*)',
                 'compare'   => 'REGEXP'
             );
         }

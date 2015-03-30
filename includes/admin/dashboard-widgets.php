@@ -394,7 +394,7 @@ function timeapp_commissions_due_widget() {
 
         $args['meta_query'][] = array(
             'key'       => '_timeapp_start_date',
-            'value'     => $date[0] . '(.*)' . $date[1] . '(.*)',
+            'value'     => $date[1] . '(.*)' . $date[0] . '(.*)',
             'compare'   => 'REGEXP'
         );
         

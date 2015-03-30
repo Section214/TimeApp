@@ -293,7 +293,7 @@ function timeapp_get_months( $hide_future = false ) {
             $date       = get_post_meta( $data->ID, '_timeapp_start_date', true );
             $text_date  = date( 'F Y', strtotime( $date ) );
             $short_date = date( 'Y-m', strtotime( $date ) );
-
+            
             if( $hide_future ) {
                 $now    = date( 'Ymd', time() );
                 $check  = date( 'Ymd', strtotime( $date ) );
