@@ -1,0 +1,927 @@
+# Copyright (C) 2015 TimeApp
+# This file is distributed under the same license as the TimeApp package.
+msgid ""
+msgstr ""
+"Project-Id-Version: TimeApp 1.2.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/TimeApp\n"
+"POT-Creation-Date: 2015-03-30 18:06:23+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#. #-#-#-#-#  timeapp.pot (TimeApp 1.2.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: includes/admin/admin-bar.php:50
+msgid "TimeApp"
+msgstr ""
+
+#: includes/admin/bulk-actions.php:27 includes/admin/bulk-actions.php:28
+msgid "Mark Followed Up"
+msgstr ""
+
+#: includes/admin/bulk-actions.php:29 includes/admin/bulk-actions.php:30
+msgid "Mark Commission Paid"
+msgstr ""
+
+#: includes/admin/bulk-actions.php:127
+msgid "Play marked as followed up."
+msgid_plural "%s plays marked as followed up."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/bulk-actions.php:132
+msgid "Play marked as commission paid."
+msgid_plural "%s plays marked as commission paid."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard-columns.php:27
+msgid "Title"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:31
+#: includes/admin/dashboard-widgets.php:518
+msgid "Commission"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:32
+msgid "Status"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:57 includes/admin/meta-boxes.php:233
+msgid "Cancelled"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:59 includes/admin/meta-boxes.php:232
+msgid "Contracted"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:61 includes/admin/meta-boxes.php:231
+msgid "Hold"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:66
+msgid "Paid"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:79
+msgid "%s"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:127
+#: includes/admin/dashboard-widgets.php:435
+msgid "Show all months"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:137
+#: includes/admin/dashboard-widgets.php:443
+msgid "Show all artists"
+msgstr ""
+
+#: includes/admin/dashboard-columns.php:147
+msgid "Show all purchasers"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:41
+msgid "Upcoming Plays"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:47
+msgid "Past Due Deposits"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:53
+msgid "Follow Up"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:59
+msgid "Commissions Due"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:65
+msgid "Split Commissions"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:104 includes/post-types.php:24
+msgid "Play"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:105
+#: includes/admin/dashboard-widgets.php:316
+#: includes/admin/dashboard-widgets.php:522 includes/admin/meta-boxes.php:258
+#: includes/admin/meta-boxes.php:586 includes/post-types.php:54
+msgid "Purchaser"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:106
+msgid "Date"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:123
+#: includes/admin/dashboard-widgets.php:192
+#: includes/admin/dashboard-widgets.php:299
+#: includes/admin/dashboard-widgets.php:503
+#: includes/admin/dashboard-widgets.php:624
+msgid "Edit"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:131
+msgid "No upcoming plays found!"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:201
+msgid "Deposit due %s"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:203
+#: includes/admin/dashboard-widgets.php:632
+msgid "Mark as paid"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:212
+msgid "No past due deposits found!"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:290
+#: includes/admin/dashboard-widgets.php:491
+msgid "None Specified"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:301
+msgid "Mark as followed up"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:308
+#: includes/admin/dashboard-widgets.php:510
+msgid "Play Date"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:312
+#: includes/admin/dashboard-widgets.php:514 includes/admin/meta-boxes.php:270
+#: includes/admin/meta-boxes.php:578 includes/post-types.php:84
+msgid "Artist"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:321
+#: includes/admin/dashboard-widgets.php:527
+msgid "Contact"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:327
+#: includes/admin/dashboard-widgets.php:533 includes/admin/meta-boxes.php:757
+msgid "Email"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:333
+#: includes/admin/dashboard-widgets.php:539 includes/admin/meta-boxes.php:763
+msgid "Phone Number"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:338 includes/admin/meta-boxes.php:295
+msgid "Notes"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:353
+msgid "No plays require following up!"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:450
+msgid "Filter"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:544
+msgid "Date Paid"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:557
+msgid "No results found for that filter!"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:560
+msgid ""
+"Congratulations! You have reached eternal bliss... Nobody owes you any money!"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:640
+msgid "No unpaid split commissions found!"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:22 includes/admin/meta-boxes.php:23
+#: includes/admin/meta-boxes.php:30 includes/admin/meta-boxes.php:31
+#: includes/admin/meta-boxes.php:37 includes/admin/meta-boxes.php:38
+#: includes/admin/meta-boxes.php:42
+msgid "Actions"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:24
+msgid "Calendar Information"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:25
+msgid "Play Details"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:26
+msgid "Financials"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:27
+msgid "Communications"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:32
+msgid "Contact Information"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:33
+msgid "Contract Signatory"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:34
+msgid "Venue Information"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:39
+msgid "Artist Details"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:43
+msgid "Agent Details"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:60
+msgid "Save %s"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:65
+msgid "Move to Trash"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:78
+msgid "Preview & Send PDF"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:101
+msgid "Start Date"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:107
+msgid "End Date"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:147
+msgid "Contract Sent"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:150
+msgid "Toggle Contract Log"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:170
+msgid "Contract Received"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:178
+msgid "Promo Sent"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:186
+msgid "Followed Up?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:188
+msgid "Check when gig has been followed up on."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:193
+msgid "Follow Up Notes"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:221
+msgid "has"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:221
+msgid "contract terms have"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:229 includes/admin/meta-boxes.php:631
+msgid "Event Status"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:238
+msgid "Event Type"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:240
+msgid "Club"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:241
+msgid "Event"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:246 includes/post-types.php:114
+msgid "Agent"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:282
+msgid "Approved?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:284
+msgid "Check when %s been approved."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:289 includes/admin/meta-boxes.php:595
+msgid "Set Requirements"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:342
+msgid "Gross Guarantee"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:343 includes/admin/meta-boxes.php:371
+#: includes/admin/meta-boxes.php:405
+msgid "$"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:348
+msgid "Performance Bonus"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:350
+msgid "Check if a performance bonus has been promised."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:355 includes/admin/meta-boxes.php:605
+msgid "Bonus Details"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:361 includes/admin/meta-boxes.php:612
+msgid "Deposit"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:363
+msgid "Check if a deposit is required."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:370
+msgid "Amount"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:375
+msgid "Due Date"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:380
+msgid "Paid?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:382
+msgid "Check if this deposit has been paid."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:391 includes/admin/meta-boxes.php:627
+msgid "Accommodations"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:397
+msgid "Production Provided"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:399
+msgid "Check if purchaser is providing production."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:404
+msgid "Production Cost"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:410
+msgid "Commission Due"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:416
+msgid "Date Commission Received"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:422
+msgid "Split Commission"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:424
+msgid "Check if commission is being split."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:431
+msgid "Split Agent"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:443
+msgid "Percentage Paid to Agent"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:444
+msgid "%"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:449
+msgid "Split Commission Paid?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:451
+msgid "Check if the split commission has been paid."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:471
+msgid ""
+"Please review the following contract details.<br />If everything looks "
+"correct, hit the 'Send Email' button at the bottom."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:479 includes/admin/meta-boxes.php:484
+msgid "No email specified"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:567 includes/class.pdf-generator.php:146
+msgid "See attached \"%s RIDER\""
+msgstr ""
+
+#: includes/admin/meta-boxes.php:572
+msgid "Field"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:573
+msgid "Value"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:582 includes/admin/meta-boxes.php:962
+msgid "Tax ID"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:590
+msgid "Date(s) of Engagement"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:600
+msgid "Compensation"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:617
+msgid "Production"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:622
+msgid "Additional Terms"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:628
+msgid "None"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:639
+msgid "Send Email"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:640
+msgid "Return to Editor"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:745 includes/admin/meta-boxes.php:796
+msgid "First Name"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:751 includes/admin/meta-boxes.php:802
+msgid "Last Name"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:769
+msgid "Different Signatory?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:771
+msgid "Check if Contract Signatory is different than Contact."
+msgstr ""
+
+#: includes/admin/meta-boxes.php:829
+msgid "Venue URL"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:830 includes/admin/meta-boxes.php:969
+#: includes/admin/meta-boxes.php:975
+msgid "http://"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:835
+msgid "Address"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:841
+msgid "City"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:847
+msgid "State"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:849
+msgid "Select State"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:860
+msgid "Zip Code"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:950
+msgid "Signer Name"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:956
+msgid "Artist Email"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:968
+msgid "Artist URL"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:974
+msgid "Promo URL"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:980
+msgid "Commission %"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:982
+msgid "5%"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:983
+msgid "10%"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:984
+msgid "15%"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:985
+msgid "20%"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:990
+msgid "Contract Terms"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:996
+msgid "Rider"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:998
+msgid "Download"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:999
+msgid "Remove"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:1089
+msgid "Internal Agent?"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:1091
+msgid "Check if agent is an internal agent."
+msgstr ""
+
+#: includes/admin/notices.php:39
+msgid "Play cancelled."
+msgstr ""
+
+#: includes/class.timeapp-roles.php:33
+msgid "Time Staff"
+msgstr ""
+
+#: includes/functions.php:73
+msgid "Copyright &copy; 2014%s Time Music Agency &middot; All Rights Reserved"
+msgstr ""
+
+#: includes/functions.php:179
+msgid "No purchasers defined!"
+msgstr ""
+
+#: includes/functions.php:208
+msgid "No artists defined!"
+msgstr ""
+
+#: includes/functions.php:243
+msgid " internal"
+msgstr ""
+
+#: includes/functions.php:255
+msgid " external"
+msgstr ""
+
+#: includes/functions.php:267
+msgid "No%s agents defined!"
+msgstr ""
+
+#: includes/functions.php:371
+msgid "%s and %s/100 dollars - U.S."
+msgstr ""
+
+#: includes/functions.php:462
+msgid "Time Music Agency Contract - %1$s %2$s"
+msgstr ""
+
+#: includes/functions.php:504
+msgid ""
+"Thank you for booking %s. Please print, sign and return the attached PDF "
+"contract to secure and finalize your booking."
+msgstr ""
+
+#: includes/functions.php:505
+msgid "Your business is appreciated, have a great day!"
+msgstr ""
+
+#: includes/functions.php:506
+msgid "Time Music Agency"
+msgstr ""
+
+#: includes/functions.php:507
+msgid "PO Box 353"
+msgstr ""
+
+#: includes/functions.php:508
+msgid "Long Lake, MN 55356"
+msgstr ""
+
+#: includes/functions.php:509
+msgid "952-448-4202"
+msgstr ""
+
+#: includes/post-types.php:23
+msgid "Plays"
+msgstr ""
+
+#: includes/post-types.php:25 includes/post-types.php:55
+#: includes/post-types.php:85 includes/post-types.php:115
+msgid "Add New"
+msgstr ""
+
+#: includes/post-types.php:26
+msgid "Add New Play"
+msgstr ""
+
+#: includes/post-types.php:27
+msgid "New Play"
+msgstr ""
+
+#: includes/post-types.php:28
+msgid "Edit Play"
+msgstr ""
+
+#: includes/post-types.php:29
+msgid "All Plays"
+msgstr ""
+
+#: includes/post-types.php:30
+msgid "View Play"
+msgstr ""
+
+#: includes/post-types.php:31
+msgid "Search Plays"
+msgstr ""
+
+#: includes/post-types.php:32
+msgid "No plays found"
+msgstr ""
+
+#: includes/post-types.php:33
+msgid "No plays found in Trash"
+msgstr ""
+
+#: includes/post-types.php:53
+msgid "Purchasers"
+msgstr ""
+
+#: includes/post-types.php:56
+msgid "Add New Purchaser"
+msgstr ""
+
+#: includes/post-types.php:57
+msgid "New Purchaser"
+msgstr ""
+
+#: includes/post-types.php:58
+msgid "Edit Purchaser"
+msgstr ""
+
+#: includes/post-types.php:59
+msgid "All Purchasers"
+msgstr ""
+
+#: includes/post-types.php:60
+msgid "View Purchaser"
+msgstr ""
+
+#: includes/post-types.php:61
+msgid "Search Purchasers"
+msgstr ""
+
+#: includes/post-types.php:62
+msgid "No purchasers found"
+msgstr ""
+
+#: includes/post-types.php:63
+msgid "No purchasers found in Trash"
+msgstr ""
+
+#: includes/post-types.php:83
+msgid "Artists"
+msgstr ""
+
+#: includes/post-types.php:86
+msgid "Add New Artist"
+msgstr ""
+
+#: includes/post-types.php:87
+msgid "New Artist"
+msgstr ""
+
+#: includes/post-types.php:88
+msgid "Edit Artist"
+msgstr ""
+
+#: includes/post-types.php:89
+msgid "All Artists"
+msgstr ""
+
+#: includes/post-types.php:90
+msgid "View Artist"
+msgstr ""
+
+#: includes/post-types.php:91
+msgid "Search Artists"
+msgstr ""
+
+#: includes/post-types.php:92
+msgid "No artists found"
+msgstr ""
+
+#: includes/post-types.php:93
+msgid "No artists found in Trash"
+msgstr ""
+
+#: includes/post-types.php:113
+msgid "Agents"
+msgstr ""
+
+#: includes/post-types.php:116
+msgid "Add New Agent"
+msgstr ""
+
+#: includes/post-types.php:117
+msgid "New Agent"
+msgstr ""
+
+#: includes/post-types.php:118
+msgid "Edit Agent"
+msgstr ""
+
+#: includes/post-types.php:119
+msgid "All Agents"
+msgstr ""
+
+#: includes/post-types.php:120
+msgid "View Agent"
+msgstr ""
+
+#: includes/post-types.php:121
+msgid "Search Agents"
+msgstr ""
+
+#: includes/post-types.php:122
+msgid "No agents found"
+msgstr ""
+
+#: includes/post-types.php:123
+msgid "No agents found in Trash"
+msgstr ""
+
+#: includes/post-types.php:154 includes/scripts.php:41
+msgid "Play title will be generated on save"
+msgstr ""
+
+#: includes/post-types.php:156
+msgid "Enter purchaser name here"
+msgstr ""
+
+#: includes/post-types.php:158
+msgid "Enter artist name here"
+msgstr ""
+
+#: includes/post-types.php:160
+msgid "Enter agent name here"
+msgstr ""
+
+#: includes/post-types.php:177 includes/post-types.php:178
+msgid "Play updated."
+msgstr ""
+
+#: includes/post-types.php:179
+msgid "Play published."
+msgstr ""
+
+#: includes/post-types.php:180
+msgid "Play saved."
+msgstr ""
+
+#: includes/post-types.php:181
+msgid "Play submitted."
+msgstr ""
+
+#: includes/post-types.php:185 includes/post-types.php:186
+msgid "Purchaser updated."
+msgstr ""
+
+#: includes/post-types.php:187
+msgid "Purchaser published."
+msgstr ""
+
+#: includes/post-types.php:188
+msgid "Purchaser saved."
+msgstr ""
+
+#: includes/post-types.php:189
+msgid "Purchaser submitted."
+msgstr ""
+
+#: includes/post-types.php:193 includes/post-types.php:194
+msgid "Artist updated."
+msgstr ""
+
+#: includes/post-types.php:195
+msgid "Artist published."
+msgstr ""
+
+#: includes/post-types.php:196
+msgid "Artist saved."
+msgstr ""
+
+#: includes/post-types.php:197
+msgid "Artist submitted."
+msgstr ""
+
+#: includes/post-types.php:201 includes/post-types.php:202
+msgid "Agent updated."
+msgstr ""
+
+#: includes/post-types.php:203
+msgid "Agent published."
+msgstr ""
+
+#: includes/post-types.php:204
+msgid "Agent saved."
+msgstr ""
+
+#: includes/post-types.php:205
+msgid "Agent submitted."
+msgstr ""
+
+#: includes/scripts.php:37
+msgid "Please enter all required fields!"
+msgstr ""
+
+#: includes/scripts.php:38
+msgid "Select an Agent"
+msgstr ""
+
+#: includes/scripts.php:39
+msgid "Select a Purchaser"
+msgstr ""
+
+#: includes/scripts.php:40
+msgid "Exit Preview"
+msgstr ""
+
+#: timeapp.php:73 timeapp.php:85
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#. #-#-#-#-#  timeapp.pot (TimeApp 1.2.2)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  timeapp.pot (TimeApp 1.2.2)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://ingroupconsulting.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Time Management's internal workflow tool"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kiko Doran"
+msgstr ""
