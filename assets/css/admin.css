@@ -310,6 +310,21 @@ div#actions_bottom div.inside {
     display: none;
 }
 
+#timeapp-pdf-preview .timeapp-status-contracted {
+    font-weight: bold;
+    color: #7ad03a;
+}
+
+#timeapp-pdf-preview .timeapp-status-hold {
+    font-weight: bold;
+    color: #304e94;
+}
+
+#timeapp-pdf-preview .timeapp-status-cancelled {
+    font-weight: bold;
+    color: #dd3d36;
+}
+
 
 /* Dashboard column styles
 -------------------------------------------------------------- */

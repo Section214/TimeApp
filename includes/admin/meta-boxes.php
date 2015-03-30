@@ -486,6 +486,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
     $tax_id         = get_post_meta( $artist->ID,'_timeapp_tax_id', true );
     $signatory      = get_post_meta( $purchaser->ID, '_timeapp_signatory', true ) ? true : false;
+    $status         = get_post_meta( $post_id, '_timeapp_status', true );
     $contact_name   = '';
 
     // Is a contact first name specified?
@@ -602,6 +603,10 @@ function timeapp_colorbox_holder( $post_id ) {
                 <tr>
                     <td><?php _e( 'Accommodations', 'timeapp' ); ?></td>
                     <td><?php echo ( $accommodations ? $accommodations : __( 'None', 'timeapp' ) ); ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Event Status', 'timeapp' ); ?></td>
+                    <td><?php echo '<span class="timeapp-status-' . $status . '">' . ucfirst( $status ) . '</span>'; ?></td>
                 </tr>
             </tbody>
         </table>
