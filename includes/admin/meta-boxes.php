@@ -162,6 +162,8 @@ function timeapp_render_communications_meta_box() {
     echo '<input type="text" class="regular-text timeapp-datetime" name="_timeapp_promo_sent" id="_timeapp_promo_sent" value="' . $promo_sent . '" />';
     echo '</p>';
 
+    echo '<div class="timeapp-clear"></div>';
+
     // Followed up
     echo '<p>';
     echo '<strong><label for="_timeapp_followed_up">' . __( 'Followed Up?', 'timeapp' ) . '</label></strong><br />';
