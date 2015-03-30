@@ -29,9 +29,9 @@ class TimeApp_FPDF extends FPDF {
             $contract_sent = get_post_meta( $this->post_id, '_timeapp_contract_sent', true );
 
             if( $contract_sent ) {
-                $this->SetFont( 'Arial', '', 14 );
+                $this->SetFont( 'Times', '', 14 );
                 $this->SetTextColor( '94', '187', '23' );
-                $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'C' );
+                $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'L' );
             }
         }
     }
