@@ -29,18 +29,19 @@ class TimeApp_Generate_PDF {
      * @since       1.0.0
      * @param       string $file The path to the output file
      * @param       int $post_id The play we are building this for
-     * @param       bool $cancelled Whether to flag the play as cancelled
      * @return      void
      */
-    public function __construct( $file, $post_id, $cancelled = false ) {
+    public function __construct( $file, $post_id ) {
         // We need the FPDF libs!
         require_once TIMEAPP_DIR . 'includes/libraries/fpdf/fpdf.php';
         require_once TIMEAPP_DIR . 'includes/class.timeapp-fpdf.php';
 
+        $status = get_post_meta( $post_id, '_timeapp_status', true );
+
         $this->pdf          = new TimeApp_FPDF( 'P', 'mm', 'letter' );
         $this->file         = $file;
         $this->id           = $this->pdf->post_id = $post_id;
-        $this->cancelled    = $cancelled;
+        $this->cancelled    = ( $status ? true : false );
     }
 
 
