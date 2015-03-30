@@ -426,7 +426,7 @@ function timeapp_commissions_due_widget() {
     
     if( $plays || $has_filter ) {
         $artists    = timeapp_get_artists();
-        $months     = timeapp_get_months();
+        $months     = timeapp_get_months( true );
         ?>
         <div class="timeapp-dashboard-widget-filters">
             <form method="post">

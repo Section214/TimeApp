@@ -275,9 +275,10 @@ function timeapp_get_agents( $type = null ) {
  * Get months array for start dates
  *
  * @since       1.2.0
+ * @param       bool $hide_future Whether to hide or show future dates
  * @return      mixed bool false|array $months The months array
  */
-function timeapp_get_months() {
+function timeapp_get_months( $hide_future = false ) {
     $args = array(
         'post_type'     => 'play',
         'posts_per_page'=> 999999,
@@ -293,8 +294,19 @@ function timeapp_get_months() {
             $text_date  = date( 'F Y', strtotime( $date ) );
             $short_date = date( 'Y-m', strtotime( $date ) );
 
-            if( ! array_key_exists( $short_date, $months ) ) {
-                $months[$short_date] = $text_date;
+            if( $hide_future ) {
+                $now    = date( 'Ymd', time() );
+                $check  = date( 'Ymd', strtotime( $date ) );
+
+                if( $check < $now ) {
+                    if( ! array_key_exists( $short_date, $months ) ) {
+                        $months[$short_date] = $text_date;
+                    }
+                }
+            } else {
+                if( ! array_key_exists( $short_date, $months ) ) {
+                    $months[$short_date] = $text_date;
+                }
             }
         }
 
