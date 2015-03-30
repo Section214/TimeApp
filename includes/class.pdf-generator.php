@@ -211,7 +211,7 @@ class TimeApp_Generate_PDF {
             $this->pdf->SetFont( 'Times', '', 12 );
             $date = ( $deposit1_date ) ? 'by ' . date( 'F jS, Y', strtotime( $deposit1_date ) ) : 'with signed contract.';
 
-            $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable earnest money deposit in the amount of ' . timeapp_format_price( $deposit1_amt ) . ' made payable to Time Music Agency is due ' . $date . ';', 0, 1 );
+            $this->pdf->MultiCell( 0, 12 * $point, 'A non-refundable earnest money deposit in the amount of ' . timeapp_format_price( $deposit1_amt ) . ' made payable to Time Music Agency is due ' . $date, 0, 1 );
         }
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
