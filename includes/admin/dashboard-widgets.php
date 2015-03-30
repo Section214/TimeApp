@@ -165,6 +165,11 @@ function timeapp_past_due_deposits_widget() {
                 $deposits[$play->ID]['deposit'][1]['amt']          = $deposit1_amt;
             }
 
+            if( ! $deposit1_date && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
+                $deposits[$play->ID]['deposit'][1]['date']         = $now;
+                $deposits[$play->ID]['deposit'][1]['amt']          = $deposit1_amt;
+            }
+
             if( isset( $deposits[$play->ID] ) ) {
                 $deposits[$play->ID]['title']        = $play->post_title;
                 $deposits[$play->ID]['purchaser']    = $purchaser->post_title;
