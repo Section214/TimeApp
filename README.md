@@ -1,6 +1,6 @@
 # [TimeApp](http://timeagency.ingroupconsulting.com) #
 
-[![Travis](https://img.shields.io/travis/WPAppKit/TimeApp.svg)](https://travis-ci.org/WPAppKit/TimeApp) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/WPAppKit/TimeApp/blob/master/license.txt) [![GitHub release](https://img.shields.io/github/release/WPAppKit/TimeApp.svg)](https://github.com/WPAppKit/TimeApp/releases)
+[![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/WPAppKit/TimeApp/blob/master/license.txt) [![GitHub release](https://img.shields.io/github/release/WPAppKit/TimeApp.svg)](https://github.com/WPAppKit/TimeApp/releases)
 
 ### Welcome to our GitHub Repository
 
