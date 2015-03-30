@@ -61,6 +61,12 @@ function timeapp_register_dashboard_widgets() {
     );
 
     wp_add_dashboard_widget(
+        'timeapp_total_commissions',
+        __( 'Total Commissions', 'timeapp' ),
+        'timeapp_total_commissions_widget'
+    );
+
+    wp_add_dashboard_widget(
         'timeapp_split_commissions',
         __( 'Split Commissions', 'timeapp' ),
         'timeapp_split_commissions_widget'
@@ -560,6 +566,77 @@ function timeapp_commissions_due_widget() {
         echo '<i class="dashicons dashicons-smiley"></i> ' . __( 'Congratulations! You have reached eternal bliss... Nobody owes you any money!', 'timeapp' );
     }
 
+    echo '</div>';
+}
+
+
+/**
+ * Render Total Commissions widget
+ *
+ * @since       1.3.1
+ * @return      void
+ */
+function timeapp_total_commissions_widget() {
+    $args = array(
+        'post_type'     => 'play',
+        'numberposts'   => 999999,
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            'relation'      => 'AND',
+        )
+    );
+
+    if( isset( $_POST['filter_comm_month'] ) && ! empty( $_POST['filter_comm_month'] ) ) {
+        $date = explode( '-', $_POST['filter_comm_month'] );
+
+        $args['meta_query'][] = array(
+            'key'       => '_timeapp_start_date',
+            'value'     => $date[1] . '(.*)' . $date[0] . '(.*)',
+            'compare'   => 'REGEXP'
+        );
+    }
+
+    $plays      = get_posts( $args );
+    $months     = timeapp_get_months();
+    $total_comm = 0;
+    $active     = __( 'all time', 'timeapp' );
+
+    echo '<div class="timeapp-dashboard-widget">';
+    ?>
+    <div class="timeapp-dashboard-widget-filters">
+        <form method="post">
+            <?php
+                echo '<select name="filter_comm_month">';
+                echo '<option value="">' . __( 'Show all months', 'timeapp' ) . '</option>';
+                foreach( $months as $id => $month ) {
+                    $selected = isset( $_POST['filter_comm_month'] ) && $_POST['filter_comm_month'] == $id ? ' selected="selected"' && $active = $month : '';
+                    echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $month ) . '</option>';
+                }
+                echo '</select>';
+
+                submit_button( __( 'Filter', 'timeapp' ), 'secondary', 'timeapp_filter', false );
+            ?>
+        </form>
+    </div>
+    <?php
+    if( $plays ) {
+        foreach( $plays as $id => $play ) {
+            $artist         = get_post_meta( $play->ID, '_timeapp_artist', true );
+            $artist         = get_post( $artist );
+            $guarantee      = get_post_meta( $play->ID, '_timeapp_guarantee', true );
+            $production     = get_post_meta( $play->ID, '_timeapp_production', true );
+            $production_cost= ( ! $production ? get_post_meta( $play->ID, '_timeapp_production_cost', true ) : false );
+            $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
+            $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
+            $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
+                
+            $commission = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
+            $commission = str_replace( '$', '', $commission );
+            $total_comm = $total_comm + (float) $commission;
+        }
+    }
+
+    echo __( 'Total commissions for', 'timeapp' ) . ' ' . $active . ': ' . timeapp_format_price( $total_comm );
     echo '</div>';
 }
 
