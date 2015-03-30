@@ -1,33 +1,33 @@
-/*global jQuery, document, timeapp_vars, alert*/
+/*global $, document, timeapp_vars, alert*/
 jQuery(document).ready(function ($) {
     'use strict';
 
-    jQuery('.post-type-play #title').attr('disabled', 'disabled');
-    jQuery('.post-type-play #title').attr('readonly', 'readonly');
+    $('.post-type-play #title').attr('disabled', 'disabled');
+    $('.post-type-play #title').attr('readonly', 'readonly');
     
-    if (jQuery('.post-type-play #title').val() === '') {
-        jQuery('.post-type-play #title').val(timeapp_vars.title_placeholder);
+    if ($('.post-type-play #title').val() === '') {
+        $('.post-type-play #title').val(timeapp_vars.title_placeholder);
     }
 
-    jQuery(function () {
-        if (jQuery('#_timeapp_rider').length > 0) {
-            jQuery('form').attr('enctype', 'multipart/form-data');
+    $(function () {
+        if ($('#_timeapp_rider').length > 0) {
+            $('form').attr('enctype', 'multipart/form-data');
         }
     });
 
-    jQuery('.post-type-play input').change(function () {
-        jQuery('.colorbox').css('display', 'none');
+    $('.post-type-play input').change(function () {
+        $('.colorbox').css('display', 'none');
     });
 
-    jQuery('.post-type-play select').change(function () {
-        jQuery('.colorbox').css('display', 'none');
+    $('.post-type-play select').change(function () {
+        $('.colorbox').css('display', 'none');
     });
 
-    jQuery('.post-type-play textarea').change(function () {
-        jQuery('.colorbox').css('display', 'none');
+    $('.post-type-play textarea').change(function () {
+        $('.colorbox').css('display', 'none');
     });
 
-    jQuery('.colorbox').colorbox({
+    $('.colorbox').colorbox({
         inline: true,
         href: "#timeapp-pdf-preview",
         maxWidth: "650px",
@@ -37,34 +37,34 @@ jQuery(document).ready(function ($) {
 
     var dateFormat = 'mm/dd/yy';
 
-    jQuery('.timeapp-datetime').datetimepicker({
+    $('.timeapp-datetime').datetimepicker({
         timeFormat: 'h:mm tt'
     });
 
-    jQuery('.timeapp-select2').select2();
+    $('.timeapp-select2').select2();
 
-    jQuery('#_timeapp_agent').select2({
+    $('#_timeapp_agent').select2({
         placeholder: timeapp_vars.select_agent
     });
 
-    jQuery('#_timeapp_purchaser').select2({
+    $('#_timeapp_purchaser').select2({
         placeholder: timeapp_vars.select_purchaser
     });
 
-    jQuery('.post-type-agent .timeapp-save').click(function (e) {
+    $('.post-type-agent .timeapp-save').click(function (e) {
         e.preventDefault();
-        jQuery('#publish').click();
-        jQuery('.colorbox').css('display', 'inline-block');
+        $('#publish').click();
+        $('.colorbox').css('display', 'inline-block');
     });
 
-    jQuery('.post-type-play .timeapp-save').click(function (e) {
+    $('.post-type-play .timeapp-save').click(function (e) {
         var startDate, endDate, eventType, purchaser, artist, errMessage;
 
-        startDate = jQuery("input[name='_timeapp_start_date']").val();
-        endDate = jQuery("input[name='_timeapp_end_date']").val();
-        eventType = jQuery("select[name='_timeapp_type'] option:selected").val();
-        purchaser = jQuery("select[name='_timeapp_purchaser'] option:selected").val();
-        artist = jQuery("select[name='_timeapp_artist'] option:selected").val();
+        startDate = $("input[name='_timeapp_start_date']").val();
+        endDate = $("input[name='_timeapp_end_date']").val();
+        eventType = $("select[name='_timeapp_type'] option:selected").val();
+        purchaser = $("select[name='_timeapp_purchaser'] option:selected").val();
+        artist = $("select[name='_timeapp_artist'] option:selected").val();
 
         if (startDate === '' || endDate === '' || eventType === '' || purchaser === '' || artist === '') {
             errMessage = timeapp_vars.required_fields;
@@ -72,19 +72,19 @@ jQuery(document).ready(function ($) {
         }
         
         e.preventDefault();
-        jQuery('#publish').click();
+        $('#publish').click();
     });
 
-    jQuery('.post-type-purchaser .timeapp-save').click(function (e) {
+    $('.post-type-purchaser .timeapp-save').click(function (e) {
         var firstName, lastName, email, address, city, state, zip, errMessage;
 
-        firstName = jQuery("input[name='_timeapp_first_name']").val();
-        lastName = jQuery("input[name='_timeapp_last_name']").val();
-        email = jQuery("input[name='_timeapp_email']").val();
-        address = jQuery("input[name='_timeapp_address']").val();
-        city = jQuery("input[name='_timeapp_city']").val();
-        state = jQuery("select[name='_timeapp_state'] option:selected").val();
-        zip = jQuery("input[name='_timeapp_zip']").val();
+        firstName = $("input[name='_timeapp_first_name']").val();
+        lastName = $("input[name='_timeapp_last_name']").val();
+        email = $("input[name='_timeapp_email']").val();
+        address = $("input[name='_timeapp_address']").val();
+        city = $("input[name='_timeapp_city']").val();
+        state = $("select[name='_timeapp_state'] option:selected").val();
+        zip = $("input[name='_timeapp_zip']").val();
 
         if (firstName === '' || lastName === '' || email === '' || address === '' || city === '' || state === '' || zip === '') {
             errMessage = timeapp_vars.required_fields;
@@ -92,15 +92,15 @@ jQuery(document).ready(function ($) {
         }
         
         e.preventDefault();
-        jQuery('#publish').click();
+        $('#publish').click();
     });
 
-    jQuery('.post-type-artist .timeapp-save').click(function (e) {
+    $('.post-type-artist .timeapp-save').click(function (e) {
         var signerName, artistEmail, taxID, errMessage;
 
-        signerName = jQuery("input[name='_timeapp_signer_name']").val();
-        artistEmail = jQuery("input[name='_timeapp_artist_email']").val();
-        taxID = jQuery("input[name='_timeapp_tax_id']").val();
+        signerName = $("input[name='_timeapp_signer_name']").val();
+        artistEmail = $("input[name='_timeapp_artist_email']").val();
+        taxID = $("input[name='_timeapp_tax_id']").val();
 
         if (signerName === '' || artistEmail === '' || taxID === '') {
             errMessage = timeapp_vars.required_fields;
@@ -108,61 +108,60 @@ jQuery(document).ready(function ($) {
         }
         
         e.preventDefault();
-        jQuery('#publish').click();
+        $('#publish').click();
     });
 
-    jQuery("input[name='_timeapp_bonus']").change(function () {
-        if (jQuery(this).is(':checked')) {
-            jQuery("input[name='_timeapp_bonus_details']").closest('p').css('display', 'block');
+    $("input[name='_timeapp_bonus']").change(function () {
+        if ($(this).is(':checked')) {
+            $("input[name='_timeapp_bonus_details']").closest('p').css('display', 'block');
         } else {
-            jQuery("input[name='_timeapp_bonus_details']").closest('p').css('display', 'none');
+            $("input[name='_timeapp_bonus_details']").closest('p').css('display', 'none');
         }
     });
 
-    jQuery("input[name='_timeapp_deposit']").change(function () {
-        if (jQuery(this).is(':checked')) {
-            jQuery("#timeapp-deposits").css('display', 'block');
+    $("input[name='_timeapp_deposit']").change(function () {
+        if ($(this).is(':checked')) {
+            $("#timeapp-deposits").css('display', 'block');
         } else {
-            jQuery("#timeapp-deposits").css('display', 'none');
+            $("#timeapp-deposits").css('display', 'none');
         }
     });
 
-    jQuery("input[name='_timeapp_production']").change(function () {
-        if (jQuery(this).is(':checked')) {
-            jQuery("input[name='_timeapp_production_cost']").closest('p').css('display', 'none');
+    $("input[name='_timeapp_production']").change(function () {
+        if ($(this).is(':checked')) {
+            $("input[name='_timeapp_production_cost']").closest('p').css('display', 'none');
         } else {
-            jQuery("input[name='_timeapp_production_cost']").closest('p').css('display', 'block');
+            $("input[name='_timeapp_production_cost']").closest('p').css('display', 'block');
         }
     });
 
-    jQuery("input[name='_timeapp_split_comm']").change(function () {
-        if (jQuery(this).is(':checked')) {
-            jQuery("input[name='_timeapp_split_perc']").closest('div').css('display', 'block');
+    $("input[name='_timeapp_split_comm']").change(function () {
+        if ($(this).is(':checked')) {
+            $("input[name='_timeapp_split_perc']").closest('div').css('display', 'block');
         } else {
-            jQuery("input[name='_timeapp_split_perc']").closest('div').css('display', 'none');
+            $("input[name='_timeapp_split_perc']").closest('div').css('display', 'none');
         }
     });
 
-    jQuery("input[name='_timeapp_signatory']").change(function () {
-        if (jQuery(this).is(':checked')) {
-            jQuery("#contract_signatory").css('display', 'block');
+    $("input[name='_timeapp_signatory']").change(function () {
+        if ($(this).is(':checked')) {
+            $("#contract_signatory").css('display', 'block');
         } else {
-            jQuery("#contract_signatory").css('display', 'none');
+            $("#contract_signatory").css('display', 'none');
         }
     });
 
-    if (jQuery("input[name='_timeapp_signatory']").is(':checked')) {
-        jQuery("#contract_signatory").css('display', 'block');
+    if ($("input[name='_timeapp_signatory']").is(':checked')) {
+        $("#contract_signatory").css('display', 'block');
     } else {
-        jQuery("#contract_signatory").css('display', 'none');
+        $("#contract_signatory").css('display', 'none');
     }
 
-    jQuery('.timeapp-contract-log-toggle').click(function () {
-        if (jQuery('.timeapp-contract-log').is(':visible')) {
-            jQuery('.timeapp-contract-log').css('display', 'none');
+    $('.timeapp-contract-log-toggle').click(function () {
+        if ($('.timeapp-contract-log').is(':visible')) {
+            $('.timeapp-contract-log').css('display', 'none');
         } else {
-            jQuery('.timeapp-contract-log').css('display', 'block');
+            $('.timeapp-contract-log').css('display', 'block');
         }
     });
 });
-
