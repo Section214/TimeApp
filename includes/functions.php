@@ -291,7 +291,7 @@ function timeapp_get_months() {
         foreach( $all_plays as $id => $data ) {
             $date       = get_post_meta( $data->ID, '_timeapp_start_date', true );
             $text_date  = date( 'F Y', strtotime( $date ) );
-            $short_date = date( 'm-Y', strtotime( $date ) );
+            $short_date = date( 'Y-m', strtotime( $date ) );
 
             if( ! array_key_exists( $short_date, $months ) ) {
                 $months[$short_date] = $text_date;

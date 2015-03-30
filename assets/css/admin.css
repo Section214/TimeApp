@@ -328,12 +328,12 @@ td.commission.column-commission div {
 }
 
 td.commission.column-commission .timeapp-commission-paid,
-td.status.column-status .timeapp-contract-active {
+td.status.column-status .timeapp-contract-contracted {
     background: #7ad03a;
     border: 1px solid #5ebb17;
 }
 
-td.status.column-status .timeapp-contract-past {
+td.status.column-status .timeapp-contract-hold {
     background: #304e94;
     border: 1px solid #1b397c;
 }

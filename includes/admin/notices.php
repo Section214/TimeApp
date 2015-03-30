@@ -33,7 +33,9 @@ function timeapp_display_admin_notices() {
     }
 
     // Display the cancelled play notice
-    if( get_post_meta( $_GET['post'], '_timeapp_contract_cancelled', true ) ) {
+    $status = get_post_meta( $_GET['post'], '_timeapp_status', true );
+
+    if( $status == 'cancelled' ) {
         echo '<div class="error"><p>' . __( 'Play cancelled.', 'timeapp' ) . '</p></div>';
     }
 }

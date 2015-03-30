@@ -52,16 +52,13 @@ function timeapp_render_dashboard_columns( $column_name, $post_id ) {
     if( get_post_type( $post_id ) == 'play' ) {
         switch( $column_name ) {
             case 'status':
-                if( get_post_meta( $post_id, '_timeapp_contract_cancelled', true ) ) {
+                $status = get_post_meta( $post_id, '_timeapp_status', true );
+                if( $status == 'cancelled' ) {
                     echo '<div class="timeapp-contract-cancelled">' . __( 'Cancelled', 'timeapp' ) . '</div>';
-                } else {
-                    $date = get_post_meta( $post_id, '_timeapp_end_date', true );
-
-                    if( date( 'Ymd', strtotime( $date ) ) < date( 'Ymd', time() ) ) {
-                        echo '<div class="timeapp-contract-past">' . __( 'Past', 'timeapp' ) . '</div>';
-                    } else {
-                        echo '<div class="timeapp-contract-active">' . __( 'Upcoming', 'timeapp' ) . '</div>';
-                    }
+                } elseif( $status == 'contracted' ) {
+                    echo '<div class="timeapp-contract-contracted">' . __( 'Contracted', 'timeapp' ) . '</div>';
+                } elseif( $status == 'hold' ) {
+                    echo '<div class="timeapp-contract-hold">' . __( 'Hold', 'timeapp' ) . '</div>';
                 }
                 break;
             case 'commission':

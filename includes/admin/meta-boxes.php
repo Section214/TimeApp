@@ -213,6 +213,7 @@ function timeapp_render_play_details_meta_box() {
     echo '<select class="timeapp-select2" name="_timeapp_status" id="_timeapp_status">';
     echo '<option value="hold"' . ( ! isset( $status ) || $status == 'hold' ? ' selected' : '' ) . '>' . __( 'Hold', 'timeapp' ) . '</option>';
     echo '<option value="contracted"' . ( $status == 'contracted' ? ' selected' : '' ) . '>' . __( 'Contracted', 'timeapp' ) . '</option>';
+    echo '<option value="cancelled"' . ( $status == 'cancelled' ? ' selected' : '' ) . '>' . __( 'Cancelled', 'timeapp' ) . '</option>';
     echo '</select>';
 
     // Type
