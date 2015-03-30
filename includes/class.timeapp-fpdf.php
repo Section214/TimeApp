@@ -31,7 +31,7 @@ class TimeApp_FPDF extends FPDF {
             if( $contract_sent ) {
                 $this->SetFont( 'Arial', '', 14 );
                 $this->SetTextColor( '94', '187', '23' );
-                $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y' ), 0, 2, 'C' );
+                $this->Cell( 0, 12, 'Revised: ' . current_time( 'm/d/Y, h:i a' ), 0, 2, 'C' );
             }
         }
     }
