@@ -675,7 +675,7 @@ function timeapp_save_play_meta_box( $post_id ) {
     $fields = apply_filters( 'timeapp_play_fields_save', array(
         '_timeapp_start_date',
         '_timeapp_end_date',
-        '_timeapp_contract_sent',
+//        '_timeapp_contract_sent',
         '_timeapp_contract_rcvd',
         '_timeapp_promo_sent',
         '_timeapp_followed_up',
