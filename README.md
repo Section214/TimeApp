@@ -1,6 +1,6 @@
 # [TimeApp](http://timeagency.ingroupconsulting.com) #
 
-[![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/WPAppKit/TimeApp/blob/master/license.txt) [![GitHub release](https://img.shields.io/github/release/WPAppKit/TimeApp.svg)](https://github.com/WPAppKit/TimeApp/releases)
+[![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/WPAppKit/TimeApp/blob/master/license.txt)
 
 ### Welcome to our GitHub Repository
 
