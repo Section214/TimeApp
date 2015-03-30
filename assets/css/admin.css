@@ -301,6 +301,10 @@ div#actions_bottom div.inside {
     margin-bottom: 10px;
 }
 
+.timeapp-dashboard-widget-filters input[type="select"] {
+    max-width: 45%;
+}
+
 
 /* PDF preview styles
 -------------------------------------------------------------- */
