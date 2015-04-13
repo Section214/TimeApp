@@ -247,14 +247,14 @@ class TimeApp_Generate_PDF {
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
-        $this->pdf->Cell( 65, 12 * $point, '12. Inclement Weather/Outdoor Performances:', 0, 1 );
+        $this->pdf->Cell( 65, 12 * $point, '9. Inclement Weather/Outdoor Performances:', 0, 1 );
         $this->pdf->SetFont( 'Times', '', 12 );
         $this->pdf->MultiCell( 0, 12 * $point, 'In the event of inclement weather, purchaser agrees to provide an alternative site PRIOR to any setup of the ARTIST or the ARTIST\'s production crew if applicable. If no alternative site is provided, ARTIST will have no liability to Purchaser if ARTIST determines, in its exclusive and sole right of discretion, that its performance is or will become hazardous, prevented or substantially impaired due to inclement weather. In such occurrence, Purchaser remains liable to ARTIST for the full contract price. Water in the air space or on the surface of the performance area can render that show cancellable at ARTIST\'s discretion.', 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
-        $this->pdf->Cell( 65, 12 * $point, '21. RE-BOOKING:', 0, 1 );
+        $this->pdf->Cell( 65, 12 * $point, '10. RE-BOOKING:', 0, 1 );
         $this->pdf->SetFont( 'Times', '', 12 );
         $this->pdf->MultiCell( 0, 12 * $point, 'In the event Purchaser, on its own effort and without involving Time Music Agency, Inc., books Artist into any establishment owned in whole or part, booked alone or with other parties, or controlled/represented by the Purchaser within twelve (12) months after the engagement date above, Time Music Agency, Inc shall be owed and paid by Purchaser a commission of ' . $commission . '% (' . $textualizer->textualize( $commission ) . ' percent) of the total contract price that Artist and Purchaser agreed to therein and Purchaser\'s failure to honor this clause is a material breach of this contract.', 0, 1 );
 
