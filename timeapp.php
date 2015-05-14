@@ -144,7 +144,6 @@ if( ! class_exists( 'TimeApp' ) ) {
          * @return      void
          */
         private function hooks() {
-            add_action( 'admin_init', array( $this, 'do_upgrade' ) );
         }
 
 
@@ -177,44 +176,6 @@ if( ! class_exists( 'TimeApp' ) ) {
             } else {
                 // Load the default language files
                 load_plugin_textdomain( 'timeapp', false, $lang_dir );
-            }
-        }
-
-
-        /**
-         * Process upgrade since I'm an idiot
-         *
-         * @access      public
-         * @since       1.0.0
-         * @return      void
-         */
-        public function do_upgrade() {
-            if( get_option( 'timeapp_version', false ) != '1.0.7' ) {
-                $plays = get_posts( array( 'post_type' => 'play', 'numberposts' => 999, 'post_status' => 'publish' ) );
-
-                foreach( $plays as $key => $play ) {
-                    $agent_id   = get_post_meta( $play->ID, '_timeapp_split_agent', true );
-                    $agents     = timeapp_get_agents();
-                    $agent      = get_post( $agent_id );
-
-                    if( $agent_id == 'chiggins' ) {
-                        foreach( $agents as $id => $name ) {
-                            if( $name == 'Chad Higgins' ) {
-                                update_post_meta( $play->ID, '_timeapp_split_agent', $id );
-                            }
-                        }
-                    }
-
-                    if( $agent_id == 'mfindling' ) {
-                        foreach( $agents as $id => $name ) {
-                            if( $name == 'Mike Findling' ) {
-                                update_post_meta( $play->ID, '_timeapp_split_agent', $id );
-                            }
-                        }
-                    }
-                }
-
-                update_option( 'timeapp_version', '1.0.7' );
             }
         }
     }
