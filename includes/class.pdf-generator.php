@@ -362,6 +362,8 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'www.timemusicagency.com', 0, 1 );
 
+        $this->pdf->Cell( 0, 12 * $point, $email );
+
         $this->pdf->AliasNbPages();
         $this->pdf->last_page = true;
 
