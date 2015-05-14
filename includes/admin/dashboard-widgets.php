@@ -89,6 +89,13 @@ function timeapp_upcoming_plays_widget() {
         'post_type'     => 'play',
         'numberposts'   => 999999,
         'post_status'   => 'publish',
+        'meta_query'    => array(
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
+                'compare'   => '='
+            )
+        )
     ) );
 
     echo '<div class="timeapp-dashboard-widget">';
@@ -153,7 +160,14 @@ function timeapp_past_due_deposits_widget() {
     $plays      = get_posts( array(
         'post_type'     => 'play',
         'numberposts'   => 999999,
-        'post_status'   => 'publish'
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
+                'compare'   => '='
+            )
+        )
     ) );
 
     foreach( $plays as $id => $play ) {
@@ -249,6 +263,11 @@ function timeapp_follow_up_widget() {
             array(
                 'key'       => '_timeapp_followed_up',
                 'compare'   => 'NOT EXISTS'
+            ),
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
+                'compare'   => '='
             )
         )
     ) );
@@ -388,6 +407,11 @@ function timeapp_commissions_due_widget() {
             array(
                 'key'       => '_timeapp_date_paid',
                 'value'     => '',
+                'compare'   => '='
+            ),
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
                 'compare'   => '='
             )
         )
@@ -583,6 +607,11 @@ function timeapp_total_commissions_widget() {
         'post_status'   => 'publish',
         'meta_query'    => array(
             'relation'      => 'AND',
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
+                'compare'   => '='
+            )
         )
     );
 
@@ -685,6 +714,11 @@ function timeapp_split_commissions_widget() {
             array(
                 'key'       => '_timeapp_split_paid',
                 'compare'   => 'NOT EXISTS'
+            ),
+            array(
+                'key'       => '_timeapp_status',
+                'value'     => 'contracted',
+                'compare'   => '='
             )
         )
     ) );
