@@ -463,7 +463,7 @@ function timeapp_generate_pdf() {
     $subject    = sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), $artist->post_title, $start_date );
     $message    = timeapp_get_email_content( $play->ID );
     $headers[]  = 'From: Time Music Agency, Inc <contracts@timemusicagency.com>';
-    $headers[]  = 'Cc: Danielle Findling <danielle@timemusicagency.com>';
+    $headers[]  = 'Cc: Alyssa Higgins <alyssa@timemusicagency.com>';
 
     if( $cc_email ) {
         $headers[] = 'Cc: ' . $cc_email;
