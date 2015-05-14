@@ -636,7 +636,8 @@ function timeapp_colorbox_holder( $post_id ) {
         <br />
     <?php
 
-    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-primary">' . __( 'Send Email', 'timeapp' ) . '</a>';
+    $label = ( defined( 'TIMEAPP_DEBUG' ) && TIMEAPP_DEBUG ? __( 'Display PDF', 'timeapp' ) : __( 'Send Email', 'timeapp' ) );
+    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-primary">' . $label . '</a>';
     echo '<a onClick="jQuery.colorbox.close(); return false;" class="button button-secondary">' . __( 'Return to Editor', 'timeapp' ) . '</a>';
 
     echo '</div>';
