@@ -157,6 +157,20 @@ jQuery(document).ready(function ($) {
         $("#contract_signatory").css('display', 'none');
     }
 
+    $("input[name='_timeapp_alt_mailing']").change(function () {
+        if ($(this).is(':checked')) {
+            $("#mailing_address").css('display', 'block');
+        } else {
+            $("#mailing_address").css('display', 'none');
+        }
+    });
+
+    if ($("input[name='_timeapp_alt_mailing']").is(':checked')) {
+        $("#mailing_address").css('display', 'block');
+    } else {
+        $("#mailing_address").css('display', 'none');
+    }
+
     $('.timeapp-contract-log-toggle').click(function () {
         if ($('.timeapp-contract-log').is(':visible')) {
             $('.timeapp-contract-log').css('display', 'none');
