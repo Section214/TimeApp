@@ -32,6 +32,7 @@ function timeapp_add_meta_boxes() {
     add_meta_box( 'contact_info', __( 'Contact Information', 'timeapp' ), 'timeapp_render_contact_info_meta_box', 'purchaser', 'normal', 'default' );
     add_meta_box( 'contract_signatory', __( 'Contract Signatory', 'timeapp' ), 'timeapp_render_contract_signatory_meta_box', 'purchaser', 'normal', 'default' );
     add_meta_box( 'venue_info', __( 'Venue Information', 'timeapp' ), 'timeapp_render_venue_info_meta_box', 'purchaser', 'normal', 'default' );
+    add_meta_box( 'mailing_address', __( 'Mailing Address', 'timeapp' ), 'timeapp_render_mailing_address_meta_box', 'purchaser', 'normal', 'default' );
 
     // Artist post type
     add_meta_box( 'actions_top', __( 'Actions', 'timeapp' ), 'timeapp_render_actions_meta_box', 'artist', 'normal', 'high' );
@@ -824,6 +825,7 @@ function timeapp_render_venue_info_meta_box() {
     $city           = get_post_meta( $post_id, '_timeapp_city', true );
     $state          = get_post_meta( $post_id, '_timeapp_state', true );
     $zip            = get_post_meta( $post_id, '_timeapp_zip', true );
+    $alt_mailing    = get_post_meta( $post_id, '_timeapp_alt_mailing', true );
 
     // Venue URL
     echo '<p>';
@@ -862,7 +864,65 @@ function timeapp_render_venue_info_meta_box() {
     echo '<input type="text" class="regular-text" name="_timeapp_zip" id="_timeapp_zip" value="' . ( isset( $zip ) && ! empty( $zip ) ? $zip : '' ) . '" />';
     echo '</p>';
     
+    // Different Mailing Address?
+    echo '<p>';
+    echo '<strong><label for="_timeapp_alt_mailing">' . __( 'Different Mailing Address?', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="checkbox" name="_timeapp_alt_mailing" id="_timeapp_alt_mailing" value="1" ' . checked( true,  $alt_mailing, false ) . ' />';
+    echo '<label for="_timeapp_alt_mailing">' . __( 'Check if Mailing Address is different than Venue Address.', 'timeapp' ) . '</label>';
+    echo '</p>';
+
     do_action( 'timeapp_venue_info_fields', $post_id );
+}
+
+
+/**
+ * Render mailing address meta box
+ *
+ * @since       1.0.0
+ * @global      object $post The WordPress object for this post
+ * @return      void
+ */
+function timeapp_render_mailing_address_meta_box() {
+    global $post;
+
+    $post_id        = $post->ID;
+    $address        = get_post_meta( $post_id, '_timeapp_mailing_address', true );
+    $city           = get_post_meta( $post_id, '_timeapp_mailing_city', true );
+    $state          = get_post_meta( $post_id, '_timeapp_mailing_state', true );
+    $zip            = get_post_meta( $post_id, '_timeapp_mailing_zip', true );
+
+    // Address
+    echo '<p>';
+    echo '<strong><label for="_timeapp_mailing_address">' . __( 'Address', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_mailing_address" id="_timeapp_mailing_address" value="' . ( isset( $address ) && ! empty( $address ) ? $address : '' ) . '" />';
+    echo '</p>';
+
+    // City
+    echo '<p>';
+    echo '<strong><label for="_timeapp_mailing_city">' . __( 'City', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_mailing_city" id="_timeapp_mailing_city" value="' . ( isset( $city ) && ! empty( $city ) ? $city : '' ) . '" />';
+    echo '</p>';
+
+    // State
+    echo '<p>';
+    echo '<strong><label for="_timeapp_mailing_state">' . __( 'State', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<select class="timeapp-select" name="_timeapp_mailing_state" id="_timeapp_mailing_state">';
+    echo '<option value=""' .  ( ! isset( $state ) || $state == '' ? ' selected' : '' ) . '>' . __( 'Select State', 'timeapp' ) . '</option>';
+    
+    $states = timeapp_get_states();
+    foreach( $states as $abbr => $name ) {
+        echo '<option value="' . $abbr . '"' . ( $state == $abbr ? ' selected' : '' ) . '>' . $name . '</option>';
+    }
+
+    echo '</select>';
+
+    // Zip Code
+    echo '<p>';
+    echo '<strong><label for="_timeapp_mailing_zip">' . __( 'Zip Code', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_mailing_zip" id="_timeapp_mailing_zip" value="' . ( isset( $zip ) && ! empty( $zip ) ? $zip : '' ) . '" />';
+    echo '</p>';
+    
+    do_action( 'timeapp_mailing_address_fields', $post_id );
 }
 
 
@@ -905,7 +965,12 @@ function timeapp_save_purchaser_meta_box( $post_id ) {
         '_timeapp_address',
         '_timeapp_city',
         '_timeapp_state',
-        '_timeapp_zip'
+        '_timeapp_zip',
+        '_timeapp_alt_mailing',
+        '_timeapp_mailing_address',
+        '_timeapp_mailing_city',
+        '_timeapp_mailing_state',
+        '_timeapp_mailing_zip',
     ) );
 
     foreach( $fields as $field ) {
