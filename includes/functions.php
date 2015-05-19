@@ -422,7 +422,8 @@ function timeapp_generate_pdf() {
     $artist     = get_post( $artist );
     $purchaser  = get_post_meta( $play->ID, '_timeapp_purchaser', true );
     $purchaser  = get_post( $purchaser );
-    $date       = date( 'm-d-Y' );
+    $date       = get_post_meta( $play->ID, '_timeapp_start_date', true );
+    $date       = date( 'm-d-Y', strtotime( $date ) );
     $filename   = strtolower( $artist->post_title ) . '-' . strtolower( $purchaser->post_title ) . '-contract-' . $date . '.pdf';
     $filename   = str_replace( ' ', '', $filename );
 
