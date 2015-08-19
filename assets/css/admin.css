@@ -6,6 +6,14 @@
  */
 
 
+/* Notification bar icons
+-------------------------------------------------------------- */
+#wp-admin-bar-timeapp-logo.timeapp-logo a img {
+    height: 14px;
+    top: 10px;
+}
+
+
 /* Menu icons
 -------------------------------------------------------------- */
 @font-face {
@@ -46,12 +54,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.timeapp-icon-time:before {
-    content: "t";
-    color: #999999;
-    font: 400 16px/1 "timeapp";
-    vertical-align: middle;
-}
 .timeapp-icon-artist:before {
     content: "c";
 }

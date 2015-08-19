@@ -50,7 +50,14 @@ function timeapp_get_registered_settings() {
                 'desc'      => __( 'Upload a logo to display on the login page', 'timeapp' ),
                 'type'      => 'upload',
                 'std'       => TIMEAPP_URL . 'assets/img/login-logo.png'
-            ) 
+            ),
+            array(
+                'id'        => 'admin_logo',
+                'name'      => __( 'Admin Bar Logo', 'timeapp' ),
+                'desc'      => __( 'Upload a logo to display in the admin bar', 'timeapp' ),
+                'type'      => 'upload',
+                'std'       => TIMEAPP_URL . 'assets/img/admin-logo.png'
+            )
         ) ),
         'email' => apply_filters( 'timeapp_settings_email', array(
             array(

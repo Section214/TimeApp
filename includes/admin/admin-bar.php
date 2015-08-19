@@ -44,7 +44,7 @@ function timeapp_admin_bar_icon( $wp_admin_bar ) {
         $wp_admin_bar->add_node( array(
             'id'    => 'timeapp-logo',
             'href'  => admin_url(),
-            'title' => '<span class="timeapp-icon-time"></span>',
+            'title' => '<img src="' . timeapp_get_option( 'admin_logo', TIMEAPP_URL . 'assets/img/admin-logo.png' ) . '" />',
             'meta'  => array(
                 'class' => 'timeapp-logo',
                 'title' => __( 'TimeApp', 'timeapp' )
