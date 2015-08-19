@@ -136,10 +136,10 @@ if( ! class_exists( 'TimeApp' ) ) {
             require_once TIMEAPP_DIR . 'includes/functions.php';
             require_once TIMEAPP_DIR . 'includes/scripts.php';
             require_once TIMEAPP_DIR . 'includes/class.template-tags.php';
+            require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
 
             if( is_admin() ) {
                 require_once TIMEAPP_DIR . 'includes/admin/settings/display.php';
-                require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
                 require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
                 require_once TIMEAPP_DIR . 'includes/post-types.php';
                 require_once TIMEAPP_DIR . 'includes/admin/actions.php';
