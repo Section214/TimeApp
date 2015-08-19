@@ -223,7 +223,9 @@ function timeapp_get_agents( $type = null ) {
     $args = array(
         'post_type'     => 'agent',
         'posts_per_page'=> 999999,
-        'post_status'   => 'publish'
+        'post_status'   => 'publish',
+        'orderby'       => 'title',
+        'order'         => 'ASC'
     );
 
     $meta   = array();
