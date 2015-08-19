@@ -43,7 +43,14 @@ function timeapp_get_registered_settings() {
                 'name'      => __( 'General Settings', 'timeapp' ),
                 'desc'      => '',
                 'type'      => 'header'
-            )
+            ),
+            array(
+                'id'        => 'login_logo',
+                'name'      => __( 'Login Logo', 'timeapp' ),
+                'desc'      => __( 'Upload a logo to display on the login page', 'timeapp' ),
+                'type'      => 'upload',
+                'std'       => TIMEAPP_URL . 'assets/img/login-logo.png'
+            ) 
         ) ),
         'email' => apply_filters( 'timeapp_settings_email', array(
             array(
@@ -623,6 +630,10 @@ function timeapp_upload_callback( $args ) {
     $html  = '<input type="text" class="' . $size . '-text" id="timeapp_settings[' . $args['id'] . ']" name="timeapp_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '" />&nbsp;';
     $html .= '<span><input type="button" class="timeapp_settings_upload_button button-secondary" value="' . __( 'Upload File', 'timeapp' ) . '" /></span>&nbsp;';
     $html .= '<label for="timeapp_settings[' . $args['id'] . ']">' . $args['desc'] . '</label>';
+
+    if( $value ) {
+        $html .= '<br /><img src="' . $value . '" class="timeapp_settings_upload_image" />';
+    }
 
     echo $html;
 }

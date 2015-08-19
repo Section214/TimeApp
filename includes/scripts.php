@@ -76,3 +76,21 @@ function timeapp_login_scripts() {
     wp_enqueue_script( 'timeapp-login', TIMEAPP_URL . 'assets/js/login' . $suffix . '.js', array( 'jquery' ), TIMEAPP_VER );
 }
 add_action( 'login_enqueue_scripts', 'timeapp_login_scripts' );
+
+
+/**
+ * Add login header scripts
+ *
+ * @since       2.0.0
+ * @return      void
+ */
+function timeapp_login_head() {
+    $logo = timeapp_get_option( 'login_logo', TIMEAPP_URL . 'assets/img/login-logo.png' );
+
+    $css  = '<style>';
+    $css .= '.login h1 a { background: url( \'' . $logo . '\' ); }';
+    $css .= '</style>';
+
+    echo $css;
+}
+add_action( 'login_head', 'timeapp_login_head' );
