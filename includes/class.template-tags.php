@@ -255,12 +255,12 @@ function timeapp_setup_template_tags() {
     $tags = array(
         array(
             'tag'       => 'sitename',
-            'desc'      => __( 'Your site name', 'edd-pdf-stamper' ),
+            'desc'      => __( 'Your site name', 'timeapp' ),
             'func'      => 'timeapp_template_tag_sitename'
         ),
         array(
             'tag'       => 'siteurl',
-            'desc'      => __( 'Your site URL', 'edd-pdf-stamper' ),
+            'desc'      => __( 'Your site URL', 'timeapp' ),
             'func'      => 'timeapp_template_tag_siteurl'
         ),
         array(
