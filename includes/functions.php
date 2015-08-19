@@ -452,6 +452,9 @@ function timeapp_generate_pdf() {
         exit;
     }
 
+    // Get the email type
+    $status     = get_post_meta( $play->ID, '_timeapp_status', true );
+
     // Get rider
     $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
     $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
@@ -459,9 +462,15 @@ function timeapp_generate_pdf() {
 
     // Send the email!
     $to         = $email;
-    $subject    = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
+
+    if( $status == 'cancelled' ) {
+        $subject    = timeapp_get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
+        $message    = timeapp_get_option( 'cancelled_email_content', timeapp_get_cancelled_email_content() );
+    } else {
+        $subject    = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
+        $message    = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
+    }
     $subject    = timeapp_do_tags( $subject, $play->ID );
-    $message    = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
     $message    = timeapp_do_tags( $message, $play->ID );
     $headers[]  = 'From: ' . timeapp_get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp_get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
     $cc_emails  = timeapp_get_option( 'email_cc_addresses', false );
@@ -482,9 +491,11 @@ function timeapp_generate_pdf() {
         $cache_dir . $filename
     );
 
-    if( $rider_url ) {
-        $rider_url      = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $rider_url );
-        $attachments[]  = $rider_url;
+    if( $status != 'cancelled' ) {
+        if( $rider_url ) {
+            $rider_url      = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $rider_url );
+            $attachments[]  = $rider_url;
+        }
     }
 
     wp_mail( $to, $subject, $message, $headers, $attachments );
@@ -510,7 +521,28 @@ function timeapp_get_booking_email_content() {
     $message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
     $message   .= __( '952-448-4202', 'timeapp' );
 
-    $message    = apply_filters( 'timeapp_email_content', $message );
+    $message    = apply_filters( 'timeapp_booking_email_content', $message );
+
+    return $message;
+}
+
+
+/**
+ * Retrieve email content
+ *
+ * @since       2.0.0
+ * @return      string $message The email content
+ */
+function timeapp_get_cancelled_email_content() {
+    $message    = '{purchaser_name},' . "\n";
+    $message   .= __( 'This email serves as the formal cancellation for the show reflected on the attached cancelled contract.', 'timeapp' ) . "\n\n";
+    $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
+    $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
+    $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
+    $message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+    $message   .= __( '952-448-4202', 'timeapp' );
+
+    $message    = apply_filters( 'timeapp_cancelled_email_content', $message );
 
     return $message;
 }

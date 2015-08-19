@@ -94,6 +94,20 @@ function timeapp_get_registered_settings() {
                 'desc'      => __( 'Enter the content for booking emails', 'timeapp' ),
                 'type'      => 'editor',
                 'std'       => timeapp_get_booking_email_content()
+            ),
+            array(
+                'id'        => 'cancelled_email_subject',
+                'name'      => __( 'Cancellation Email Subject', 'timeapp' ),
+                'desc'      => __( 'Enter the subject line for cancellation emails', 'timeapp' ),
+                'type'      => 'text',
+                'std'       => __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' )
+            ),
+            array(
+                'id'        => 'cancelled_email_content',
+                'name'      => __( 'Cancellation Email Content', 'timeapp' ),
+                'desc'      => __( 'Enter the content for cancellation emails', 'timeapp' ),
+                'type'      => 'editor',
+                'std'       => timeapp_get_cancelled_email_content()
             )
         ) )
     );
