@@ -76,7 +76,7 @@ function timeapp_render_actions_meta_box() {
  */
 function timeapp_add_send_pdf_button() {
 //    echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-secondary">' . __( 'Generate PDF', 'timeapp' ) . '</a>';
-    echo '<a class="button button-secondary colorbox">' . __( 'Preview & Send PDF', 'timeapp' ) . '</a>';
+    echo '<a class="button button-secondary colorbox">' . ( timeapp_get_option( 'enable_debugging', false ) ? __( 'Preview & Display PDF', 'timeapp' ) : __( 'Preview & Send PDF', 'timeapp' ) ) . '</a>';
 }
 add_action( 'timeapp_meta_box_play_actions', 'timeapp_add_send_pdf_button' );
 
@@ -637,7 +637,7 @@ function timeapp_colorbox_holder( $post_id ) {
         <br />
     <?php
 
-    $label = ( defined( 'TIMEAPP_DEBUG' ) && TIMEAPP_DEBUG ? __( 'Display PDF', 'timeapp' ) : __( 'Send Email', 'timeapp' ) );
+    $label = timeapp_get_option( 'enable_debugging', false ) ? __( 'Display PDF', 'timeapp' ) : __( 'Send Email', 'timeapp' );
     echo '<a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'generate_pdf' ) ), 'generate-pdf', 'pdf-nonce' ) . '" class="button button-primary">' . $label . '</a>';
     echo '<a onClick="jQuery.colorbox.close(); return false;" class="button button-secondary">' . __( 'Return to Editor', 'timeapp' ) . '</a>';
 

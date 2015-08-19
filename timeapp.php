@@ -113,9 +113,6 @@ if( ! class_exists( 'TimeApp' ) ) {
 
             // Plugin file
             define( 'TIMEAPP_FILE', __FILE__ );
-
-            // Enable debugging
-            define( 'TIMEAPP_DEBUG', false );
         }
 
 

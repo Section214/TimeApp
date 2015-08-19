@@ -23,6 +23,10 @@ function timeapp_get_settings_tabs() {
     $tabs               = array();
     $tabs['general']    = __( 'General', 'timeapp' );
     $tabs['email']      = __( 'Email', 'timeapp' );
+
+    if( current_user_can( 'manage_options' ) ) {
+        $tabs['debugging'] = __( 'Debugging', 'timeapp' );
+    }
     
     return apply_filters( 'timeapp_settings_tabs', $tabs );
 }
@@ -122,6 +126,20 @@ function timeapp_get_registered_settings() {
                 'desc'      => __( 'Enter the content for cancellation emails', 'timeapp' ),
                 'type'      => 'editor',
                 'std'       => timeapp_get_cancelled_email_content()
+            )
+        ) ),
+        'debugging' => apply_filters( 'timeapp_settings_debugging', array(
+            array(
+                'id'        => 'debugging_header',
+                'name'      => __( 'Debugging Settings', 'timeapp' ),
+                'desc'      => '',
+                'type'      => 'header'
+            ),
+            array(
+                'id'        => 'enable_debugging',
+                'name'      => __( 'Debugging', 'timeapp' ),
+                'desc'      => __( 'Enable debug mode', 'timeapp' ),
+                'type'      => 'checkbox'
             )
         ) )
     );

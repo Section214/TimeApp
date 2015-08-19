@@ -446,7 +446,7 @@ function timeapp_generate_pdf() {
     $contract_log[] = current_time( 'm/d/Y g:i a' );
     update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
 
-    if( TIMEAPP_DEBUG ) {
+    if( timeapp_get_option( 'enable_debugging', false ) ) {
         $url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
         wp_safe_redirect( $url );
         exit;
