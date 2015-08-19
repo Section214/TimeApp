@@ -101,7 +101,8 @@ jQuery(document).ready(function ($) {
     var dateFormat = 'mm/dd/yy';
 
     $('.timeapp-datetime').datetimepicker({
-        timeFormat: 'h:mm tt'
+        timeFormat: 'h:mm tt',
+        stepMinute: 15
     });
 
     $('.timeapp-select2').select2();
