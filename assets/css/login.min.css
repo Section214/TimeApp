@@ -1,1 +1,1 @@
-.login h1 a{background:url('../img/login-logo.png') no-repeat center bottom;width:300px;margin:0 10px}p.message,div#login_error{margin-top:20px}
+.login h1 a{background-repeat:no-repeat;background-position:center bottom;background-size:contain;width:300px;margin:0 10px}div#login_error,p.message{margin-top:20px}
