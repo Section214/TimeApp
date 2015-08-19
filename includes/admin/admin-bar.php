@@ -51,5 +51,13 @@ function timeapp_admin_bar_icon( $wp_admin_bar ) {
             )
         ) );
     }
+
+    if( timeapp_get_option( 'enable_debugging', false ) ) {
+        $wp_admin_bar->add_node( array(
+            'id'        => 'timeapp-debugging-on',
+            'title'     => __( 'TimeApp Debugging Enabled', 'timeapp' ),
+            'parent'    => 'top-secondary',
+        ) );
+    }
 }
 add_action( 'admin_bar_menu', 'timeapp_admin_bar_icon' );
