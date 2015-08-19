@@ -23,7 +23,7 @@ if( ! defined( 'ABSPATH' ) ) {
 function timeapp_add_settings_pages() {
     global $timeapp_settings_page;
 
-    $timeapp_settings_page = add_options_page( __( 'TimeApp Settings', 'timeapp' ), __( 'TimeApp', 'timeapp' ), 'manage_options', 'timeapp-settings', 'timeapp_render_settings_page' );
+    $timeapp_settings_page = add_options_page( __( 'TimeApp Settings', 'timeapp' ), __( 'TimeApp', 'timeapp' ), 'edit_plays', 'timeapp-settings', 'timeapp_render_settings_page' );
 }
 add_action( 'admin_menu', 'timeapp_add_settings_pages', 10 );
 
