@@ -456,15 +456,23 @@ function timeapp_generate_pdf() {
     $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
     $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
     $cc_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
-    $start_date = get_post_meta( $play->ID, '_timeapp_start_date', true );
-    $start_date = ( isset( $start_date ) && ! empty( $start_date ) ? date( 'm/d/Y g:i a', strtotime( $start_date ) ) : '' );
 
     // Send the email!
     $to         = $email;
-    $subject    = sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), $artist->post_title, $start_date );
-    $message    = timeapp_get_email_content( $play->ID );
-    $headers[]  = 'From: Time Music Agency, Inc <contracts@timemusicagency.com>';
-    $headers[]  = 'Cc: Alyssa Higgins <alyssa@timemusicagency.com>';
+    $subject    = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
+    $subject    = timeapp_do_tags( $subject, $play->ID );
+    $message    = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
+    $message    = timeapp_do_tags( $message, $play->ID );
+    $headers[]  = 'From: ' . timeapp_get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp_get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
+    $cc_emails  = timeapp_get_option( 'email_cc_addresses', false );
+
+    if( $cc_emails ) {
+        $cc_emails = explode( ',', $cc_emails );
+
+        foreach( $cc_emails as $email_address ) {
+            $headers[] = 'Cc: ' . $email_address;
+        }
+    }
 
     if( $cc_email ) {
         $headers[] = 'Cc: ' . $cc_email;
@@ -491,19 +499,11 @@ add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );
  * Retrieve email content
  *
  * @since       1.0.0
- * @param       int $id The ID of a given play
  * @return      string $message The email content
  */
-function timeapp_get_email_content( $id ) {
-    $purchaser  = get_post_meta( $id, '_timeapp_purchaser', true );
-    $purchaser  = get_post( $purchaser );
-    $artist     = get_post_meta( $id, '_timeapp_artist', true );
-    $artist     = get_post( $artist );
-
-    $first_name = get_post_meta( $purchaser->ID, '_timeapp_first_name', true );
-
-    $message    = ucwords( $first_name ) . ',' . "\n";
-    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), $artist->post_title ) . "\n\n";
+function timeapp_get_booking_email_content() {
+    $message    = '{purchaser_name},' . "\n";
+    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), '{artist_name}' ) . "\n\n";
     $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
     $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
     $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";

@@ -22,6 +22,7 @@ function timeapp_get_settings_tabs() {
 
     $tabs               = array();
     $tabs['general']    = __( 'General', 'timeapp' );
+    $tabs['email']      = __( 'Email', 'timeapp' );
     
     return apply_filters( 'timeapp_settings_tabs', $tabs );
 }
@@ -42,6 +43,57 @@ function timeapp_get_registered_settings() {
                 'name'      => __( 'General Settings', 'timeapp' ),
                 'desc'      => '',
                 'type'      => 'header'
+            )
+        ) ),
+        'email' => apply_filters( 'timeapp_settings_email', array(
+            array(
+                'id'        => 'email_header',
+                'name'      => __( 'Email Settings', 'timeapp' ),
+                'desc'      => '',
+                'type'      => 'header'
+            ),
+            array(
+                'id'        => 'email_from_name',
+                'name'      => __( 'From Name', 'timeapp' ),
+                'desc'      => __( 'The display name emails should be sent from', 'timeapp' ),
+                'type'      => 'text',
+                'std'       => 'Time Music Agency, Inc'
+            ),
+            array(
+                'id'        => 'email_from_address',
+                'name'      => __( 'From Address', 'timeapp' ),
+                'desc'      => __( 'The email address emails should be sent from', 'timeapp' ),
+                'type'      => 'text',
+                'std'       => 'contracts@timemusicagency.com'
+            ),
+            array(
+                'id'        => 'email_cc_addresses',
+                'name'      => __( 'CC Addresses', 'timeapp' ),
+                'desc'      => __( 'A comma separated list of additional emails that should be CC\'d on all emails', 'timeapp' ),
+                'type'      => 'textarea',
+                'std'       => 'alyssa@timemusicagency.com'
+            ),
+            array(
+                'id'        => 'email_template_tags',
+                'name'      => '',
+                'desc'      => timeapp_tags_list(),
+                'type'      => 'info',
+                'style'     => 'success',
+                'header'    => __( 'The following template tags can be entered into email fields:', 'timeapp' )
+            ),
+            array(
+                'id'        => 'booking_email_subject',
+                'name'      => __( 'Booking Email Subject', 'timeapp' ),
+                'desc'      => __( 'Enter the subject line for booking emails', 'timeapp' ),
+                'type'      => 'text',
+                'std'       => sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' )
+            ),
+            array(
+                'id'        => 'booking_email_content',
+                'name'      => __( 'Booking Email Content', 'timeapp' ),
+                'desc'      => __( 'Enter the content for booking emails', 'timeapp' ),
+                'type'      => 'editor',
+                'std'       => timeapp_get_booking_email_content()
             )
         ) )
     );

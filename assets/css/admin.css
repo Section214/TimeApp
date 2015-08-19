@@ -497,18 +497,17 @@ td.status.column-status .timeapp-contract-cancelled {
 
 /* Template tag list styles
 -------------------------------------------------------------- */
-.timeapp-tag-list {
+.timeapp-tag-name {
+    display: inline-block;
+    width: 8rem;
+    font-weight: bold;
     font-size: .8rem;
     margin-left: 1rem;
 }
 
-.timeapp-tag-list .timeapp-tag-list-tag {
-    display: inline-block;
-    width: 7rem;
-    font-weight: bold;
-}
-
-.timeapp-tag-list .timeapp-tag-list-description {
+.timeapp-tag-desc {
     display: inline-block;
     clear: both;
+    font-size: .8rem;
+    margin-left: 1rem;
 }

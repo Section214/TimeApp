@@ -35,6 +35,13 @@ if( ! class_exists( 'TimeApp' ) ) {
 
 
         /**
+         * @var         object $template_tags The template tags object
+         * @since       2.0.0
+         */
+        public $template_tags;
+
+
+        /**
          * @var         object $roles The TimeApp roles object
          * @since       1.0.0
          */
@@ -55,6 +62,7 @@ if( ! class_exists( 'TimeApp' ) ) {
                 self::$instance->includes();
                 self::$instance->load_textdomain();
                 self::$instance->hooks();
+                self::$instance->template_tags = new TimeApp_Template_Tags();
                 self::$instance->roles = new TimeApp_Roles();
             }
 
@@ -125,12 +133,14 @@ if( ! class_exists( 'TimeApp' ) ) {
             require_once TIMEAPP_DIR . 'includes/admin/settings/register.php';
             $timeapp_options = timeapp_get_settings();
 
+            require_once TIMEAPP_DIR . 'includes/functions.php';
+            require_once TIMEAPP_DIR . 'includes/scripts.php';
+            require_once TIMEAPP_DIR . 'includes/class.template-tags.php';
+
             if( is_admin() ) {
                 require_once TIMEAPP_DIR . 'includes/admin/settings/display.php';
                 require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
                 require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
-                require_once TIMEAPP_DIR . 'includes/functions.php';
-                require_once TIMEAPP_DIR . 'includes/scripts.php';
                 require_once TIMEAPP_DIR . 'includes/post-types.php';
                 require_once TIMEAPP_DIR . 'includes/admin/actions.php';
                 require_once TIMEAPP_DIR . 'includes/admin/pages.php';
