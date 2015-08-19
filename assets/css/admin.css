@@ -385,3 +385,130 @@ td.status.column-status .timeapp-contract-cancelled {
     border: 1px solid #ba2018;
 }
 
+
+/* Fix color picker label alignment
+-------------------------------------------------------------- */
+.timeapp-color-picker-label label {
+    vertical-align: top;
+    line-height: 24px;
+}
+
+
+/* Info styles
+-------------------------------------------------------------- */
+.timeapp-info {
+    min-height: 20px;
+    padding: 8px 19px;
+    margin: 10px 0;
+    border: 1px solid;
+    border-radius: 4px;
+    position: relative;
+}
+
+.timeapp-info-notice {
+    margin: 5px 0 15px;
+    background-color: #ffffff;
+    border: 0;
+    -webkit-box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+    box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+    padding: 1px 12px;
+}
+
+.timeapp-info-notice p {
+    margin: .5em 0;
+    padding: 2px;
+}
+
+.timeapp-info-desc {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.timeapp-info .timeapp-info-icon,
+.timeapp-info-notice .timeapp-info-icon {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.timeapp-info-icon i {
+    font-size: 2em;
+}
+
+.timeapp-info-desc {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.timeapp-info.timeapp-info-normal {
+    background-color: #eeeeee;
+    border-color: #cccccc;
+    color: #666666;
+}
+
+.timeapp-info.timeapp-info-normal i {
+    color: #c5c5c5;
+}
+
+.timeapp-info.timeapp-info-warning {
+    background-color: #fbeba4;
+    border-color: #d7c281;
+    color: #958234;
+}
+
+.timeapp-info.timeapp-info-warning i {
+    color: #dcca81;
+}
+
+.timeapp-info.timeapp-info-success {
+    background-color: #c4ee91;
+    border-color: #71af5d;
+    color: #4d7615;
+}
+
+.timeapp-info.timeapp-info-success i {
+    color: #a0ca6c;
+}
+
+.timeapp-info.timeapp-info-critical {
+    background-color: #fba1a3;
+    border-color: #b84f5b;
+    color: #981225;
+}
+
+.timeapp-info.timeapp-info-critical i {
+    color: #dd767d;
+}
+
+.timeapp-info-notice.timeapp-info-normal {
+    border-left: 4px solid #0099d5;
+}
+
+.timeapp-info-notice.timeapp-info-success {
+    border-left: 4px solid #7ad03a;
+}
+
+.timeapp-info-notice.timeapp-info-warning {
+    border-left: 4px solid #fbeba4;
+}
+
+.timeapp-info-notice.timeapp-info-critical {
+    border-left: 4px solid #dd3d36;
+}
+
+/* Template tag list styles
+-------------------------------------------------------------- */
+.timeapp-tag-list {
+    font-size: .8rem;
+    margin-left: 1rem;
+}
+
+.timeapp-tag-list .timeapp-tag-list-tag {
+    display: inline-block;
+    width: 7rem;
+    font-weight: bold;
+}
+
+.timeapp-tag-list .timeapp-tag-list-description {
+    display: inline-block;
+    clear: both;
+}

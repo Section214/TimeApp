@@ -116,23 +116,33 @@ if( ! class_exists( 'TimeApp' ) ) {
          *
          * @access      private
          * @since       1.0.0
+         * @global      array $timeapp_options The TimeApp options array
          * @return      void
          */
         private function includes() {
-            require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
-            require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
-            require_once TIMEAPP_DIR . 'includes/functions.php';
-            require_once TIMEAPP_DIR . 'includes/scripts.php';
-            require_once TIMEAPP_DIR . 'includes/post-types.php';
-            require_once TIMEAPP_DIR . 'includes/admin/actions.php';
-            require_once TIMEAPP_DIR . 'includes/admin/meta-boxes.php';
-            require_once TIMEAPP_DIR . 'includes/admin/admin-bar.php';
-            require_once TIMEAPP_DIR . 'includes/admin/dashboard.php';
-            require_once TIMEAPP_DIR . 'includes/admin/bulk-actions.php';
-            require_once TIMEAPP_DIR . 'includes/admin/dashboard-columns.php';
-            require_once TIMEAPP_DIR . 'includes/admin/dashboard-widgets.php';
-            require_once TIMEAPP_DIR . 'includes/admin/notices.php';
-            require_once TIMEAPP_DIR . 'includes/install.php';
+            global $timeapp_options;
+
+            require_once TIMEAPP_DIR . 'includes/admin/settings/register.php';
+            $timeapp_options = timeapp_get_settings();
+
+            if( is_admin() ) {
+                require_once TIMEAPP_DIR . 'includes/admin/settings/display.php';
+                require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
+                require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
+                require_once TIMEAPP_DIR . 'includes/functions.php';
+                require_once TIMEAPP_DIR . 'includes/scripts.php';
+                require_once TIMEAPP_DIR . 'includes/post-types.php';
+                require_once TIMEAPP_DIR . 'includes/admin/actions.php';
+                require_once TIMEAPP_DIR . 'includes/admin/pages.php';
+                require_once TIMEAPP_DIR . 'includes/admin/meta-boxes.php';
+                require_once TIMEAPP_DIR . 'includes/admin/admin-bar.php';
+                require_once TIMEAPP_DIR . 'includes/admin/dashboard.php';
+                require_once TIMEAPP_DIR . 'includes/admin/bulk-actions.php';
+                require_once TIMEAPP_DIR . 'includes/admin/dashboard-columns.php';
+                require_once TIMEAPP_DIR . 'includes/admin/dashboard-widgets.php';
+                require_once TIMEAPP_DIR . 'includes/admin/notices.php';
+                require_once TIMEAPP_DIR . 'includes/install.php';
+            }
         }
 
 
