@@ -31,7 +31,8 @@ if( ! class_exists( 'TimeApp_Roles' ) ) {
          */
         public function add_roles() {
             add_role( 'staff', __( 'Time Staff', 'timeapp' ), array(
-                'read'      => true
+                'read'          => true,
+                'upload_files'  => true
             ) );
         }
 
@@ -62,6 +63,8 @@ if( ! class_exists( 'TimeApp_Roles' ) ) {
                         $wp_roles->add_cap( 'administrator', $cap );
                     }
                 }
+
+                $wp_roles->add_cap( 'staff', 'upload_files' );
             }
         }
 
