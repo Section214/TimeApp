@@ -90,6 +90,7 @@ class TimeApp_Generate_PDF {
         $set_reqs       = get_post_meta( $this->id, '_timeapp_set_reqs', true );
         $tax_id         = get_post_meta( $artist->ID, '_timeapp_tax_id', true );
         $signatory      = get_post_meta( $purchaser->ID, '_timeapp_signatory', true ) ? true : false;
+        $payable_to     = get_post_meta( $artist->ID, '_timeapp_payable_to', true );
         $contact_name   = '';
         $date           = '';
         $terms          = '';
@@ -141,6 +142,11 @@ class TimeApp_Generate_PDF {
             }
 
             $terms .= $notes;
+        }
+
+        // Setup payable name
+        if( ! $payable_to || $payable_to == '' ) {
+            $payable_to = $artist->post_title;
         }
 
         $terms .= ( $terms != '' ? "\n" : '' ) . sprintf( __( 'See attached "%s RIDER"', 'timeapp' ), strtoupper( $artist->post_title ) );
@@ -217,11 +223,11 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 15, 12 * $point, '5b.' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, 'The remaining balance of ' . timeapp_format_price( $balance ) . ' is due, owing and shall be made payable to ARTIST the day of the show.', 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, 'The remaining balance of ' . timeapp_format_price( $balance ) . ' is due, owing and shall be made payable to ' . $payable_to . ' the day of the show.', 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
-        $this->pdf->Cell( 0, 12 * $point, 'TIME IS OF THE ESSENCE ON ALL PAYMENTS DUE ARTIST.', 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, 'TIME IS OF THE ESSENCE ON ALL PAYMENTS DUE TO: ' . strtoupper( $payable_to ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
