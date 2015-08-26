@@ -1004,6 +1004,7 @@ function timeapp_render_artist_details_meta_box() {
     $post_id        = $post->ID;
     $signer_name    = get_post_meta( $post_id, '_timeapp_signer_name', true );
     $artist_email   = get_post_meta( $post_id, '_timeapp_artist_email', true );
+    $payable_to     = get_post_meta( $post_id, '_timeapp_payable_to', true );
     $tax_id         = get_post_meta( $post_id, '_timeapp_tax_id', true );
     $artist_url     = get_post_meta( $post_id, '_timeapp_artist_url', true );
     $promo_url      = get_post_meta( $post_id, '_timeapp_promo_url', true );
@@ -1023,6 +1024,12 @@ function timeapp_render_artist_details_meta_box() {
     echo '<input type="text" class="regular-text" name="_timeapp_artist_email" id="_timeapp_artist_email" value="' . ( isset( $artist_email ) && ! empty( $artist_email ) ? $artist_email : '' ) . '" />';
     echo '</p>';
     
+    // Make payments to
+    echo '<p>';
+    echo '<strong><label for="_timeapp_payable_to">' . __( 'Make Payments To', 'timeapp' ) . '</label></strong><br />';
+    echo '<input type="text" class="regular-text" name="_timeapp_payable_to" id="_timeapp_payable_to" value="' . ( isset( $payable_to ) && ! empty( $payable_to ) ? $payable_to : '' ) . '" />';
+    echo '</p>';
+
     // Tax ID
     echo '<p>';
     echo '<strong><label for="_timeapp_tax_id">' . __( 'Tax ID', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
@@ -1104,6 +1111,7 @@ function timeapp_save_artist_meta_box( $post_id ) {
     $fields = apply_filters( 'timeapp_artist_fields_save', array(
         '_timeapp_signer_name',
         '_timeapp_artist_email',
+        '_timeapp_payable_to',
         '_timeapp_tax_id',
         '_timeapp_artist_url',
         '_timeapp_promo_url',
