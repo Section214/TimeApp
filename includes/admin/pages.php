@@ -24,6 +24,11 @@ function timeapp_add_settings_pages() {
     global $timeapp_settings_page;
 
     $timeapp_settings_page = add_options_page( __( 'TimeApp Settings', 'timeapp' ), __( 'TimeApp', 'timeapp' ), 'edit_plays', 'timeapp-settings', 'timeapp_render_settings_page' );
+
+    // Remove the media menu item for staff
+    if( ! current_user_can( 'manage_options' ) ) {
+        remove_menu_page( 'upload.php' );
+    }
 }
 add_action( 'admin_menu', 'timeapp_add_settings_pages', 10 );
 
