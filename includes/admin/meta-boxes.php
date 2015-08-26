@@ -511,6 +511,7 @@ function timeapp_colorbox_holder( $post_id ) {
     $tax_id         = get_post_meta( $artist->ID,'_timeapp_tax_id', true );
     $signatory      = get_post_meta( $purchaser->ID, '_timeapp_signatory', true ) ? true : false;
     $status         = get_post_meta( $post_id, '_timeapp_status', true );
+    $payable_to     = get_post_meta( $artist->ID, '_timeapp_payable_to', true );
     $contact_name   = '';
 
     // Is a contact first name specified?
@@ -579,6 +580,12 @@ function timeapp_colorbox_holder( $post_id ) {
                     <td><?php _e( 'Artist', 'timeapp' ); ?></td>
                     <td><?php echo $artist->post_title . ' &lt;' . $artist_email . '&gt;'; ?></td>
                 </tr>
+                <?php if( $payable_to && $payable_to != '' ) { ?>
+                    <tr>
+                        <td><?php _e( 'Payable To', 'timeapp' ); ?></td>
+                        <td><?php echo $payable_to; ?></td>
+                    </tr>
+                <?php } ?>
                 <tr>
                     <td><?php _e( 'Tax ID', 'timeapp' ); ?></td>
                     <td><?php echo $tax_id; ?></td>
