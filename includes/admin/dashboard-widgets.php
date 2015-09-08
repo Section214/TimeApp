@@ -161,12 +161,18 @@ function timeapp_past_due_deposits_widget() {
         'post_type'     => 'play',
         'numberposts'   => 999999,
         'post_status'   => 'publish',
-        'meta_query'    => array(
+		'meta_query'    => array(
+			'relation'      => 'OR',
             array(
                 'key'       => '_timeapp_status',
                 'value'     => 'contracted',
                 'compare'   => '='
-            )
+			),
+			array(
+				'key'       => '_timeapp_status',
+				'value'     => 'hold',
+				'compare'   => '='
+			)
         )
     ) );
 
