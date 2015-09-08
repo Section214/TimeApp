@@ -3,7 +3,7 @@
  * Plugin Name:     TimeApp
  * Plugin URI:      http://ingroupconsulting.com/
  * Description:     Time Management's internal workflow tool
- * Version:         2.0.2
+ * Version:         2.0.3
  * Author:          Kiko Doran
  * Author URI:      http://ingroupconsulting.com/
  * Text Domain:     timeapp
@@ -103,7 +103,7 @@ if( ! class_exists( 'TimeApp' ) ) {
          */
         private function setup_constants() {
             // Plugin version
-            define( 'TIMEAPP_VER', '2.0.2' );
+            define( 'TIMEAPP_VER', '2.0.3' );
 
             // Plugin path
             define( 'TIMEAPP_DIR', plugin_dir_path( __FILE__ ) );
