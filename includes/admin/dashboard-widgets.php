@@ -186,7 +186,7 @@ function timeapp_past_due_deposits_widget() {
             }
 
             if( ! $deposit1_date && ( ! $deposit1_paid || $deposit1_paid == '' ) ) {
-                $deposits[$play->ID]['deposit'][1]['date']         = $now;
+                $deposits[$play->ID]['deposit'][1]['date']         = '';
                 $deposits[$play->ID]['deposit'][1]['amt']          = $deposit1_amt;
             }
 
@@ -194,7 +194,7 @@ function timeapp_past_due_deposits_widget() {
                 $deposits[$play->ID]['title']        = $play->post_title;
                 $deposits[$play->ID]['purchaser']    = $purchaser->post_title;
             }
-        }
+		}
     }
 
     echo '<div class="timeapp-dashboard-widget">';
@@ -218,11 +218,17 @@ function timeapp_past_due_deposits_widget() {
                         <?php
                         if( isset( $play['deposit'][1] ) ) {
                             echo '<tr>';
-                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), date( 'm/d/Y', strtotime( $play['deposit'][1]['date'] ) ) ) . '</td>';
+                            echo '<td>' . sprintf( __( 'Deposit due %s', 'timeapp' ), ( $play['deposit'][1]['date'] != '' ? date( 'm/d/Y', strtotime( $play['deposit'][1]['date'] ) ) : '' ) ) . '</td>';
                             echo '<td>' . timeapp_format_price( $play['deposit'][1]['amt'] ) . '</td>';
                             echo '<td><a href="' . wp_nonce_url( add_query_arg( array( 'timeapp-action' => 'update_meta', 'type' => 'play', 'id' => $id, 'key' => '_timeapp_deposit1_paid', 'value' => '1' ) ), 'update-meta', 'update-nonce' ) . '#timeapp_past_due_deposits">' . __( 'Mark as paid', 'timeapp' ) . '</a></td>';
                             echo '</tr>';
-                        }
+						} else {
+							echo '<tr>';
+							echo '<td>' . __( 'No deposit set', 'timeapp' ) . '</td>';
+							echo '<td></td>';
+							echo '<td></td>';
+							echo '</tr>';
+						}
                         ?>
                     </tbody>
             </table>

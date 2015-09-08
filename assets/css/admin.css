@@ -282,6 +282,11 @@ div#actions_bottom div.inside {
     font-weight: bold;
 }
 
+.timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:nth-child(2) {
+	text-align: right;
+	padding-right: 25px;
+}
+
 .timeapp-dashboard-widget table.timeapp-past-due-deposits-widget tbody tr td:last-child,
 .timeapp-dashboard-widget table.timeapp-split-commissions-widget tbody tr td:last-child {
     width: 82px;
