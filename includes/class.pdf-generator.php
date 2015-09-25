@@ -184,28 +184,28 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '1. Artist: ' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->Cell( 0, 12 * $point, $artist->post_title, 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $artist->post_title, ENT_QUOTES ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '2. Purchaser: ' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, $purchaser->post_title . " / " . $address . " / " . $city . ', ' . $state . ' ' . $zip_code, 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, html_entity_decode( $purchaser->post_title, ENT_QUOTES ) . " / " . html_entity_decode( $address, ENT_QUOTES ) . " / " . html_entity_decode( $city, ENT_QUOTES ) . ', ' . html_entity_decode( $state, ENT_QUOTES ) . ' ' . html_entity_decode( $zip_code, ENT_QUOTES ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '3. Date(s) of Engagement:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, $date . ( $set_reqs && $set_reqs != '' ? "\n" . $set_reqs : '' ), 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, $date . ( $set_reqs && $set_reqs != '' ? "\n" . html_entity_decode( $set_reqs, ENT_QUOTES ) : '' ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '4. Compensation:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, timeapp_format_price( $compensation ) . ' (' . timeapp_format_price( $compensation, true ) . ')' . ( $bonus && $bonus_details && $bonus_details != '' ? "\n" . 'or ' . $bonus_details . ', whichever is greater' : '' ) , 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, timeapp_format_price( $compensation ) . ' (' . timeapp_format_price( $compensation, true ) . ')' . ( $bonus && $bonus_details && $bonus_details != '' ? "\n" . 'or ' . html_entity_decode( $bonus_details, ENT_QUOTES ) . ', whichever is greater' : '' ) , 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
@@ -227,28 +227,28 @@ class TimeApp_Generate_PDF {
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
-        $this->pdf->Cell( 0, 12 * $point, 'TIME IS OF THE ESSENCE ON ALL PAYMENTS DUE TO: ' . strtoupper( $payable_to ), 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, 'TIME IS OF THE ESSENCE ON ALL PAYMENTS DUE TO: ' . html_entity_decode( strtoupper( $payable_to ), ENT_QUOTES ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '6. Production:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->Cell( 0, 12 * $point, $production, 0, 1 );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $production, ENT_QUOTES ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '7. Additional Terms:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, $terms, 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, html_entity_decode( $terms, ENT_QUOTES ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
         $this->pdf->SetFont( 'Times', 'B', 12 );
         $this->pdf->Cell( 65, 12 * $point, '8. Accommodations:' );
         $this->pdf->SetFont( 'Times', '', 12 );
-        $this->pdf->MultiCell( 0, 12 * $point, ( $accommodations ? $accommodations : 'N/A' ), 0, 1 );
+        $this->pdf->MultiCell( 0, 12 * $point, ( $accommodations ? html_entity_decode( $accommodations, ENT_QUOTES ) : 'N/A' ), 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
@@ -323,11 +323,11 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'By:', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $contact_name );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $contact_name, ENT_QUOTES ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Chad Higgins', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $purchaser->post_title, ENT_QUOTES ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Time Music Agency', 0, 1 );
 
@@ -344,29 +344,29 @@ class TimeApp_Generate_PDF {
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Its CEO', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $purchaser->post_title );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $purchaser->post_title, ENT_QUOTES ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'c/o Time Music Agency', 0, 1 );
     
-        $this->pdf->Cell( 0, 12 * $point, $address );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $address, ENT_QUOTES ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'PO Box 353', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $city . ', ' . $state . ( $zip_code && $zip_code != '' ? ' ' . $zip_code : '' ) );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $city, ENT_QUOTES ) . ', ' . html_entity_decode( $state, ENT_QUOTES ) . ( $zip_code && $zip_code != '' ? ' ' . html_entity_decode( $zip_code, ENT_QUOTES ) : '' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Long Lake, MN 55356', 0, 1 );
 
         $this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
-        $this->pdf->Cell( 0, 12 * $point, 'Office: ' . ( $phone && $phone != '' ? $phone : '' ) );
+        $this->pdf->Cell( 0, 12 * $point, 'Office: ' . ( $phone && $phone != '' ? html_entity_decode( $phone, ENT_QUOTES ) : '' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'Office: (952) 448-4202', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, ( $website && $website != '' ? $website : 'Website:' ) );
+        $this->pdf->Cell( 0, 12 * $point, ( $website && $website != '' ? html_entity_decode( $website, ENT_QUOTES ) : 'Website:' ) );
         $this->pdf->SetX( 115 );
         $this->pdf->Cell( 0, 12 * $point, 'www.timemusicagency.com', 0, 1 );
 
-        $this->pdf->Cell( 0, 12 * $point, $email );
+        $this->pdf->Cell( 0, 12 * $point, html_entity_decode( $email, ENT_QUOTES ) );
 
         $this->pdf->AliasNbPages();
         $this->pdf->last_page = true;
