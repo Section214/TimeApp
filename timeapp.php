@@ -150,6 +150,10 @@ if( ! class_exists( 'TimeApp' ) ) {
                 require_once TIMEAPP_DIR . 'includes/admin/notices.php';
                 require_once TIMEAPP_DIR . 'includes/install.php';
             }
+
+            if( ! class_exists( 'InGroup_Plugin_Updater' ) ) {
+                require_once TIMEAPP_DIR . 'includes/InGroup_Plugin_Updater.php';
+            }
         }
 
 
@@ -161,6 +165,20 @@ if( ! class_exists( 'TimeApp' ) ) {
          * @return      void
          */
         private function hooks() {
+            if( is_admin() && current_user_can( 'update_plugins' ) ) {
+                $license = get_option( 'timeapp_license', false );
+
+                if( $license == 'valid' ) {
+                    $update = new InGroup_Plugin_Updater( 'http://ingroupconsulting.com', __FILE__, array(
+                        'version'   => TIMEAPP_VER,
+                        'license'   => 'b76ae062e3cd62424479cafed2000529',
+                        'item_id'   => 622,
+                        'author'    => 'Kiko Doran'
+            	    ) );
+                } else {
+                    add_action( 'admin_init', 'timeapp_register_site' );
+                }
+            }
         }
 
 
@@ -209,6 +227,4 @@ if( ! class_exists( 'TimeApp' ) ) {
 function TimeApp() {
     return TimeApp::instance();
 }
-
-// Off we go!
-TimeApp();
+add_action( 'plugins_loaded', 'TimeApp' );
