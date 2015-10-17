@@ -79,7 +79,7 @@ function timeapp_render_dashboard_columns( $column_name, $post_id ) {
 
                         $commission         = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
                     }
-                    
+
                     echo '<div class="timeapp-commission-unpaid">' . sprintf( __( '%s', 'timeapp' ), $commission ) . '</div>';
                 }
 
@@ -113,14 +113,14 @@ add_filter( 'months_dropdown_results', 'timeapp_remove_date_filter', 99 );
 
 
 /**
- * Add play custom filters to play CPT 
+ * Add play custom filters to play CPT
  *
  * @since       1.2.0
  * @return      void
  */
 function timeapp_filter_columns() {
     global $typenow, $wpdb, $wp_locale;
-    
+
     if( $typenow == 'play' ) {
         $artists    = timeapp_get_artists();
         $purchasers = timeapp_get_purchasers();
@@ -176,7 +176,7 @@ function timeapp_filter_query( $query ) {
 
             $query['meta_query'][] = array(
                 'key'       => '_timeapp_start_date',
-                'value'     => $start_date[1] . '(.*)' . $start_date[0] . '(.*)',
+                'value'     => '^' . $start_date[1] . '(.*)' . $start_date[0],
                 'compare'   => 'REGEXP'
             );
         }
