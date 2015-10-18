@@ -20,7 +20,7 @@ if( ! defined( 'ABSPATH' ) ) exit;
  */
 function timeapp_remove_dashboard_widgets() {
     global $wp_meta_boxes;
-    
+
     if( ! current_user_can( 'manage_options' ) ) {
         unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity'] );
         unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'] );
@@ -84,7 +84,7 @@ add_action( 'wp_dashboard_setup', 'timeapp_register_dashboard_widgets', 10 );
 function timeapp_upcoming_plays_widget() {
     $latest = date( 'Ymd', time() + ( 86400 * 7 ) );
     $now    = date( 'Ymd', time() );
-    
+
     $plays = get_posts( array(
         'post_type'     => 'play',
         'numberposts'   => 999999,
@@ -256,7 +256,7 @@ function timeapp_past_due_deposits_widget() {
  */
 function timeapp_follow_up_widget() {
     $now    = date( 'Ymd', time() );
-    
+
     // Quick hack to handle upating notes from the dashboard
     if( isset( $_POST['timeapp_play_id'] ) ) {
         if( isset( $_POST['_timeapp_followup_notes'] ) && $_POST['_timeapp_followup_notes'] != '' ) {
@@ -293,7 +293,7 @@ function timeapp_follow_up_widget() {
     }
 
     echo '<div class="timeapp-dashboard-widget">';
-    
+
     if( $plays ) {
         foreach( $plays as $id => $play ) {
             $date           = get_post_meta( $play->ID, '_timeapp_start_date', true );
@@ -402,7 +402,7 @@ function timeapp_follow_up_widget() {
  */
 function timeapp_commissions_due_widget() {
     $now    = date( 'Ymd', time() );
-    
+
     // Quick hack to handle upating commissions from the dashboard
     if( isset( $_POST['timeapp_play_id'] ) ) {
         if( isset( $_POST['_timeapp_date_paid'] ) && $_POST['_timeapp_date_paid'] != '' ) {
@@ -439,7 +439,7 @@ function timeapp_commissions_due_widget() {
             'value'     => $date[1] . '(.*)' . $date[0] . '(.*)',
             'compare'   => 'REGEXP'
         );
-        
+
         $has_filter = true;
     }
 
@@ -465,7 +465,7 @@ function timeapp_commissions_due_widget() {
 
 
     echo '<div class="timeapp-dashboard-widget">';
-    
+
     if( $plays || $has_filter ) {
         $artists    = timeapp_get_artists();
         $months     = timeapp_get_months( true );
@@ -632,7 +632,7 @@ function timeapp_total_commissions_widget() {
 
         $args['meta_query'][] = array(
             'key'       => '_timeapp_start_date',
-            'value'     => $date[1] . '(.*)' . $date[0] . '(.*)',
+            'value'     => '^' . $date[1] . '(.*)' . $date[0],
             'compare'   => 'REGEXP'
         );
     }
@@ -666,7 +666,7 @@ function timeapp_total_commissions_widget() {
                     echo '<option value="' . $id . '"' . $selected . '>' . esc_html( $month ) . '</option>';
                 }
                 echo '</select>';
-                
+
                 echo '<select name="filter_comm_artist">';
                 echo '<option value="">' . __( 'Show all artists', 'timeapp' ) . '</option>';
                 foreach( $artists as $id => $artist ) {
@@ -693,14 +693,24 @@ function timeapp_total_commissions_widget() {
             $commission_rate= get_post_meta( $artist->ID, '_timeapp_commission', true );
             $split_comm     = get_post_meta( $play->ID, '_timeapp_split_comm', true );
             $split_rate     = ( $split_comm ? get_post_meta( $play->ID, '_timeapp_split_perc', true ) : false );
-                
+
             $commission = timeapp_get_commission( $guarantee, $production_cost, $commission_rate, $split_rate );
             $commission = str_replace( '$', '', $commission );
             $total_comm = $total_comm + (float) $commission;
         }
     }
 
-    echo __( 'Total commissions for', 'timeapp' ) . ' ' . $active . ( isset( $active_artist ) ? ' ' . __( 'for', 'timeapp' ) . ' ' . $active_artist : '' ) . ': ' . timeapp_format_price( $total_comm );
+    if( isset( $active_artist ) && ! isset( $active_month ) ) {
+    	$title = $active_artist;
+    } elseif( isset( $active_month ) && ! isset( $active_artist ) ) {
+    	$title = $active_month;
+    } elseif( isset( $active_month ) && isset( $active_artist ) ) {
+    	$title = $active_artist . ' ' . __( 'during', 'timeapp' ) . ' ' . $active_month;
+    } else {
+    	$title = $active;
+    }
+
+    echo __( 'Total commissions for', 'timeapp' ) . ' ' . $title . ': ' . timeapp_format_price( $total_comm );
     echo '</div>';
 }
 
@@ -734,7 +744,7 @@ function timeapp_split_commissions_widget() {
             )
         )
     ) );
-    
+
     foreach( $plays as $key => $play ) {
         $date = get_post_meta( $play->ID, '_timeapp_start_date', true );
 
