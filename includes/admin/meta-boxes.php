@@ -220,7 +220,7 @@ function timeapp_render_play_details_meta_box() {
 
 	$post_id        = $post->ID;
 	$status         = get_post_meta( $post_id, '_timeapp_status', true );
-	$type           = get_post_meta( $post_id, '_timeapp_type', true );
+	//$type           = get_post_meta( $post_id, '_timeapp_type', true );
 	$agent          = get_post_meta( $post_id, '_timeapp_agent', true );
 	$purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
 	$artist         = get_post_meta( $post_id, '_timeapp_artist', true );
@@ -242,12 +242,13 @@ function timeapp_render_play_details_meta_box() {
 	echo '</select>';
 
 	// Type
-	echo '<p>';
+	// Removed in 2.1.0
+	/*echo '<p>';
 	echo '<strong><label for="_timeapp_type">' . __( 'Event Type', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
 	echo '<select class="timeapp-select2" name="_timeapp_type" id="_timeapp_type">';
 	echo '<option value="club"' . ( ! isset( $type ) || $type == 'club' ? ' selected' : '' ) . '>' . __( 'Club', 'timeapp' ) . '</option>';
 	echo '<option value="event"' . ( $type == 'event' ? ' selected' : '' ) . '>' . __( 'Event', 'timeapp' ) . '</option>';
-	echo '</select>';
+	echo '</select>';*/
 
 	// Agent
 	echo '<p>';
@@ -707,7 +708,7 @@ function timeapp_save_play_meta_box( $post_id ) {
 		'_timeapp_followed_up',
 		'_timeapp_followup_notes',
 		'_timeapp_status',
-		'_timeapp_type',
+//		'_timeapp_type',
 		'_timeapp_agent',
 		'_timeapp_purchaser',
 		'_timeapp_artist',
