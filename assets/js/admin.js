@@ -148,11 +148,11 @@ jQuery(document).ready(function ($) {
 
         startDate = $("input[name='_timeapp_start_date']").val();
         endDate = $("input[name='_timeapp_end_date']").val();
-        eventType = $("select[name='_timeapp_type'] option:selected").val();
+        //eventType = $("select[name='_timeapp_type'] option:selected").val();
         purchaser = $("select[name='_timeapp_purchaser'] option:selected").val();
         artist = $("select[name='_timeapp_artist'] option:selected").val();
 
-        if (startDate === '' || endDate === '' || eventType === '' || purchaser === '' || artist === '') {
+        if (startDate === '' || endDate === '' || purchaser === '' || artist === '') {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
