@@ -127,6 +127,9 @@ function timeapp_filter_columns() {
 		$purchasers = timeapp_get_purchasers();
 		$months     = timeapp_get_months();
 
+		asort( $artists );
+		asort( $purchasers );
+
 		if ( $months ) {
 			echo '<select name="filter_start_date">';
 			echo '<option value="">' . __( 'Show all months', 'timeapp' ) . '</option>';
