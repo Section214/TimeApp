@@ -133,7 +133,7 @@ jQuery(document).ready(function ($) {
             var startDate = new Date($(this).val());
 
             endDate = moment(startDate).add(1, 'days').format('MM/DD/YY h:mm a');
-			$('#_timeapp_end_date').val(endDate);
+            $('#_timeapp_end_date').val(endDate);
         }
     });
 
@@ -229,6 +229,14 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $("input[name='_timeapp_enable_additional_emails']").change(function () {
+        if ($(this).is(':checked')) {
+            $(".timeapp-additional-emails").css('display', 'block');
+        } else {
+            $(".timeapp-additional-emails").css('display', 'none');
+        }
+    });
+
     $("input[name='_timeapp_signatory']").change(function () {
         if ($(this).is(':checked')) {
             $("#contract_signatory").css('display', 'block');
@@ -236,6 +244,12 @@ jQuery(document).ready(function ($) {
             $("#contract_signatory").css('display', 'none');
         }
     });
+
+    if ($("input[name='_timeapp_enable_additional_emails']").is(':checked')) {
+        $(".timeapp-additional-emails").css('display', 'block');
+    } else {
+        $(".timeapp-additional-emails").css('display', 'none');
+    }
 
     if ($("input[name='_timeapp_signatory']").is(':checked')) {
         $("#contract_signatory").css('display', 'block');
