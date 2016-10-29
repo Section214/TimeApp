@@ -300,7 +300,7 @@ function timeapp_render_play_details_meta_box() {
 
 	// Notes
 	echo '<p>';
-	echo '<strong><label for="_timeapp_notes">' . __( 'Notes', 'timeapp' ) . '</label></strong><br />';
+	echo '<strong><label for="_timeapp_notes">' . __( 'Additional Terms', 'timeapp' ) . '</label></strong><br />';
 	echo '<textarea cols="30" rows="5" name="_timeapp_notes" id="_timeapp_notes">' . $notes . '</textarea>';
 	echo '</p>';
 
