@@ -11,6 +11,6 @@
 	"browser": true,
 
 	"globals": {
-		"jQuery": false,
+		"jQuery": false
 	}
 }

@@ -40,6 +40,8 @@ function timeapp_admin_scripts() {
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 	wp_enqueue_script( 'jquery-ui-slider' );
 	wp_enqueue_script( 'timeapp-timepicker', TIMEAPP_URL . 'assets/js/jquery-ui-timepicker-addon' . $suffix . '.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ) );
+	wp_enqueue_style( 'timeapp-timepicker', TIMEAPP_URL . 'assets/css/jquery-ui-timepicker-addon' . $suffix . '.css' );
+	wp_enqueue_script( 'timeapp-moment', TIMEAPP_URL . 'assets/js/moment' . $suffix . '.js', array( 'jquery' ) );
 
 	wp_enqueue_style( 'timeapp-fa', TIMEAPP_URL . 'assets/css/font-awesome.min.css', array(), '4.3.0' );
 	wp_enqueue_style( 'timeapp', TIMEAPP_URL . 'assets/css/admin' . $suffix . '.css', array(), TIMEAPP_VER );
