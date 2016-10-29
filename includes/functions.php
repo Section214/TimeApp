@@ -8,7 +8,9 @@
 
 
 // Exit if accessed directly
-if( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 
 /**
@@ -18,10 +20,10 @@ if( ! defined( 'ABSPATH' ) ) exit;
  * @return      void
  */
 function timeapp_disable_frontend() {
-    if( ! is_admin() && $GLOBALS['pagenow'] != 'wp-login.php' ) {
-        wp_safe_redirect( admin_url() );
-        exit;
-    }
+	if ( ! is_admin() && $GLOBALS['pagenow'] != 'wp-login.php' ) {
+		wp_safe_redirect( admin_url() );
+		exit;
+	}
 }
 add_action( 'template_redirect', 'timeapp_disable_frontend' );
 
@@ -33,7 +35,7 @@ add_action( 'template_redirect', 'timeapp_disable_frontend' );
  * @return      string New URL to redirect to
  */
 function timeapp_default_page( $redirect_to ) {
-    return admin_url( 'index.php' );
+	return admin_url( 'index.php' );
 }
 add_filter( 'login_redirect', 'timeapp_default_page' );
 
@@ -45,7 +47,7 @@ add_filter( 'login_redirect', 'timeapp_default_page' );
  * @return      null
  */
 function timeapp_login_header_url() {
-    return null;
+	return null;
 }
 add_filter( 'login_headerurl', 'timeapp_login_header_url' );
 
@@ -57,7 +59,7 @@ add_filter( 'login_headerurl', 'timeapp_login_header_url' );
  * @return      null
  */
 function timeapp_login_header_title() {
-    return null;
+	return null;
 }
 add_filter( 'login_headertitle', 'timeapp_login_header_title' );
 
@@ -70,9 +72,9 @@ add_filter( 'login_headertitle', 'timeapp_login_header_title' );
  * @return      string $footer_text The updated footer text
  */
 function timeapp_footer_text( $footer_text ) {
-    $footer_text = sprintf( __( 'Copyright &copy; 2014%s Time Music Agency &middot; All Rights Reserved' ), ( date( 'Y' ) > 2014 ? '-' . date( 'Y' ) : '' ) );
+	$footer_text = sprintf( __( 'Copyright &copy; 2014%s Time Music Agency &middot; All Rights Reserved' ), ( date( 'Y' ) > 2014 ? '-' . date( 'Y' ) : '' ) );
 
-    return $footer_text;
+	return $footer_text;
 }
 add_filter( 'admin_footer_text', 'timeapp_footer_text' );
 
@@ -84,9 +86,9 @@ add_filter( 'admin_footer_text', 'timeapp_footer_text' );
  * @return      void
  */
 function timeapp_hide_footer_version() {
-    if( ! current_user_can( 'manage_options' ) ) {
-        remove_filter( 'update_footer', 'core_update_footer' );
-    }
+	if ( ! current_user_can( 'manage_options' ) ) {
+		remove_filter( 'update_footer', 'core_update_footer' );
+	}
 }
 add_action( 'admin_menu', 'timeapp_hide_footer_version' );
 
@@ -98,61 +100,61 @@ add_action( 'admin_menu', 'timeapp_hide_footer_version' );
  * @return      array $states The array of states
  */
 function timeapp_get_states() {
-    $states = array(
-        'AL' => 'Alabama',
-        'AK' => 'Alaska', 
-        'AZ' => 'Arizona', 
-        'AR' => 'Arkansas', 
-        'CA' => 'California', 
-        'CO' => 'Colorado', 
-        'CT' => 'Connecticut', 
-        'DE' => 'Delaware', 
-        'DC' => 'District Of Columbia', 
-        'FL' => 'Florida', 
-        'GA' => 'Georgia', 
-        'HI' => 'Hawaii', 
-        'ID' => 'Idaho', 
-        'IL' => 'Illinois', 
-        'IN' => 'Indiana', 
-        'IA' => 'Iowa', 
-        'KS' => 'Kansas', 
-        'KY' => 'Kentucky', 
-        'LA' => 'Louisiana', 
-        'ME' => 'Maine', 
-        'MD' => 'Maryland', 
-        'MA' => 'Massachusetts', 
-        'MI' => 'Michigan', 
-        'MN' => 'Minnesota', 
-        'MS' => 'Mississippi', 
-        'MO' => 'Missouri', 
-        'MT' => 'Montana',
-        'NE' => 'Nebraska',
-        'NV' => 'Nevada',
-        'NH' => 'New Hampshire',
-        'NJ' => 'New Jersey',
-        'NM' => 'New Mexico',
-        'NY' => 'New York',
-        'NC' => 'North Carolina',
-        'ND' => 'North Dakota',
-        'OH' => 'Ohio', 
-        'OK' => 'Oklahoma', 
-        'OR' => 'Oregon', 
-        'PA' => 'Pennsylvania', 
-        'RI' => 'Rhode Island', 
-        'SC' => 'South Carolina', 
-        'SD' => 'South Dakota',
-        'TN' => 'Tennessee', 
-        'TX' => 'Texas', 
-        'UT' => 'Utah', 
-        'VT' => 'Vermont', 
-        'VA' => 'Virginia', 
-        'WA' => 'Washington', 
-        'WV' => 'West Virginia', 
-        'WI' => 'Wisconsin', 
-        'WY' => 'Wyoming'
-    );
+	$states = array(
+		'AL' => 'Alabama',
+		'AK' => 'Alaska',
+		'AZ' => 'Arizona',
+		'AR' => 'Arkansas',
+		'CA' => 'California',
+		'CO' => 'Colorado',
+		'CT' => 'Connecticut',
+		'DE' => 'Delaware',
+		'DC' => 'District Of Columbia',
+		'FL' => 'Florida',
+		'GA' => 'Georgia',
+		'HI' => 'Hawaii',
+		'ID' => 'Idaho',
+		'IL' => 'Illinois',
+		'IN' => 'Indiana',
+		'IA' => 'Iowa',
+		'KS' => 'Kansas',
+		'KY' => 'Kentucky',
+		'LA' => 'Louisiana',
+		'ME' => 'Maine',
+		'MD' => 'Maryland',
+		'MA' => 'Massachusetts',
+		'MI' => 'Michigan',
+		'MN' => 'Minnesota',
+		'MS' => 'Mississippi',
+		'MO' => 'Missouri',
+		'MT' => 'Montana',
+		'NE' => 'Nebraska',
+		'NV' => 'Nevada',
+		'NH' => 'New Hampshire',
+		'NJ' => 'New Jersey',
+		'NM' => 'New Mexico',
+		'NY' => 'New York',
+		'NC' => 'North Carolina',
+		'ND' => 'North Dakota',
+		'OH' => 'Ohio',
+		'OK' => 'Oklahoma',
+		'OR' => 'Oregon',
+		'PA' => 'Pennsylvania',
+		'RI' => 'Rhode Island',
+		'SC' => 'South Carolina',
+		'SD' => 'South Dakota',
+		'TN' => 'Tennessee',
+		'TX' => 'Texas',
+		'UT' => 'Utah',
+		'VT' => 'Vermont',
+		'VA' => 'Virginia',
+		'WA' => 'Washington',
+		'WV' => 'West Virginia',
+		'WI' => 'Wisconsin',
+		'WY' => 'Wyoming'
+	);
 
-    return $states;
+	return $states;
 }
 
 
@@ -163,23 +165,23 @@ function timeapp_get_states() {
  * @return      array $purchasers The array of purchasers
  */
 function timeapp_get_purchasers() {
-    $all_purchasers = get_posts(
-        array(
-            'post_type'     => 'purchaser',
-            'posts_per_page'=> 999999,
-            'post_status'   => 'publish'
-        )
-    );
+	$all_purchasers = get_posts(
+		array(
+			'post_type'      => 'purchaser',
+			'posts_per_page' => 999999,
+			'post_status'    => 'publish'
+		)
+	);
 
-    if( $all_purchasers ) {
-        foreach( $all_purchasers as $id => $data ) {
-            $purchasers[$data->ID] = $data->post_title;
-        }
-    } else {
-        $purchasers[] = __( 'No purchasers defined!', 'timeapp' );
-    }
+	if ( $all_purchasers ) {
+		foreach ( $all_purchasers as $id => $data ) {
+			$purchasers[ $data->ID ] = $data->post_title;
+		}
+	} else {
+		$purchasers[] = __( 'No purchasers defined!', 'timeapp' );
+	}
 
-    return $purchasers;
+	return $purchasers;
 }
 
 
@@ -190,25 +192,25 @@ function timeapp_get_purchasers() {
  * @return      array $artists The array of artists
  */
 function timeapp_get_artists() {
-    global $wp_query;
-    
-    $all_artists = get_posts(
-        array(
-            'post_type'     => 'artist',
-            'posts_per_page'=> 999999,
-            'post_status'   => 'publish'
-        )
-    );
-    
-    if( $all_artists ) {
-        foreach( $all_artists as $id => $data ) {
-            $artists[$data->ID] = $data->post_title;
-        }
-    } else {
-        $artists[] = __( 'No artists defined!', 'timeapp' );
-    }
+	global $wp_query;
 
-    return $artists;
+	$all_artists = get_posts(
+		array(
+			'post_type'      => 'artist',
+			'posts_per_page' => 999999,
+			'post_status'    => 'publish'
+		)
+	);
+
+	if ( $all_artists ) {
+		foreach ( $all_artists as $id => $data ) {
+			$artists[ $data->ID ] = $data->post_title;
+		}
+	} else {
+		$artists[] = __( 'No artists defined!', 'timeapp' );
+	}
+
+	return $artists;
 }
 
 
@@ -220,56 +222,55 @@ function timeapp_get_artists() {
  * @return      array $agents The array of agents
  */
 function timeapp_get_agents( $type = null ) {
-    $args = array(
-        'post_type'     => 'agent',
-        'posts_per_page'=> 999999,
-        'post_status'   => 'publish',
-        'orderby'       => 'title',
-        'order'         => 'ASC'
-    );
+	$args = array(
+		'post_type'      => 'agent',
+		'posts_per_page' => 999999,
+		'post_status'    => 'publish',
+		'orderby'        => 'title',
+		'order'          => 'ASC'
+	);
 
-    $meta   = array();
-    $label  = '';
+	$meta  = array();
+	$label = '';
 
-    if( $type == 'internal' ) {
-        $meta = array(
-            'meta_query'    => array(
-                'relation'  => 'AND',
-                array(
-                    'key'       => '_timeapp_internal_agent',
-                    'compare'   => 'EXISTS'
-                )
-            )
-        );
+	if ( $type == 'internal' ) {
+		$meta = array(
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key'     => '_timeapp_internal_agent',
+					'compare' => 'EXISTS'
+				)
+			)
+		);
 
-        $label = __( ' internal', 'timeapp' );
-    } else if( $type == 'external' ) {
-        $meta = array(
-            'meta_query'    => array(
-                'relation'  => 'AND',
-                array(
-                    'key'       => '_timeapp_internal_agent',
-                    'compare'   => 'NOT EXISTS'
-                )
-            )
-        );
+		$label = __( ' internal', 'timeapp' );
+	} elseif ( $type == 'external' ) {
+		$meta = array(
+			'meta_query' => array(
+				'relation' => 'AND',
+				array(
+					'key'     => '_timeapp_internal_agent',
+					'compare' => 'NOT EXISTS'
+				)
+			)
+		);
 
-        $label = __( ' external', 'timeapp' );
-    }
+		$label = __( ' external', 'timeapp' );
+	}
 
-    $args = array_merge( $args, $meta );
+	$args       = array_merge( $args, $meta );
+	$all_agents = get_posts( $args );
 
-    $all_agents = get_posts( $args );
+	if ( $all_agents ) {
+		foreach ( $all_agents as $id => $data ) {
+			$agents[ $data->ID ] = $data->post_title;
+		}
+	} else {
+		$agents[] = sprintf( __( 'No%s agents defined!', 'timeapp' ), $label );
+	}
 
-    if( $all_agents ) {
-        foreach( $all_agents as $id => $data ) {
-            $agents[$data->ID] = $data->post_title;
-        }
-    } else {
-        $agents[] = sprintf( __( 'No%s agents defined!', 'timeapp' ), $label );
-    }
-
-    return $agents;
+	return $agents;
 }
 
 
@@ -281,44 +282,44 @@ function timeapp_get_agents( $type = null ) {
  * @return      mixed bool false|array $months The months array
  */
 function timeapp_get_months( $hide_future = false ) {
-    $args = array(
-        'post_type'     => 'play',
-        'posts_per_page'=> 999999,
-        'post_status'   => 'publish',
-    );
+	$args = array(
+		'post_type'      => 'play',
+		'posts_per_page' => 999999,
+		'post_status'    => 'publish',
+	);
 
-    $all_plays  = get_posts( $args );
-    $months     = array();
+	$all_plays = get_posts( $args );
+	$months    = array();
 
-    if( $all_plays ) {
-        foreach( $all_plays as $id => $data ) {
-            $date       = get_post_meta( $data->ID, '_timeapp_start_date', true );
-            $text_date  = date( 'F Y', strtotime( $date ) );
-            $short_date = date( 'Y-m', strtotime( $date ) );
-            
-            if( $hide_future ) {
-                $now    = date( 'Ymd', time() );
-                $check  = date( 'Ymd', strtotime( $date ) );
+	if ( $all_plays ) {
+		foreach ( $all_plays as $id => $data ) {
+			$date       = get_post_meta( $data->ID, '_timeapp_start_date', true );
+			$text_date  = date( 'F Y', strtotime( $date ) );
+			$short_date = date( 'Y-m', strtotime( $date ) );
 
-                if( $check < $now ) {
-                    if( ! array_key_exists( $short_date, $months ) ) {
-                        $months[$short_date] = $text_date;
-                    }
-                }
-            } else {
-                if( ! array_key_exists( $short_date, $months ) ) {
-                    $months[$short_date] = $text_date;
-                }
-            }
-        }
+			if ( $hide_future ) {
+				$now   = date( 'Ymd', time() );
+				$check = date( 'Ymd', strtotime( $date ) );
 
-        $months = array_unique( $months );
-        krsort( $months );
-    } else {
-        $months = false;
-    }
+				if ( $check < $now ) {
+					if ( ! array_key_exists( $short_date, $months ) ) {
+						$months[ $short_date ] = $text_date;
+					}
+				}
+			} else {
+				if ( ! array_key_exists( $short_date, $months ) ) {
+					$months[ $short_date ] = $text_date;
+				}
+			}
+		}
 
-    return $months;
+		$months = array_unique( $months );
+		krsort( $months );
+	} else {
+		$months = false;
+	}
+
+	return $months;
 }
 
 
@@ -329,16 +330,22 @@ function timeapp_get_months( $hide_future = false ) {
  * @return      void
  */
 function timeapp_update_meta() {
-    // Don't process if nonce can't be verified
-    if( ! wp_verify_nonce( $_GET['update-nonce'], 'update-meta' ) ) return;
+	// Don't process if nonce can't be verified
+	if ( ! wp_verify_nonce( $_GET['update-nonce'], 'update-meta' ) ) {
+		return;
+	}
 
-    // Don't process if the current user shouldn't be editing this
-    if( ! isset( $_GET['type'] ) || ! isset( $_GET['id'] ) || ! current_user_can( 'edit_' . $_GET['type'], $_GET['id'] ) ) return;
+	// Don't process if the current user shouldn't be editing this
+	if ( ! isset( $_GET['type'] ) || ! isset( $_GET['id'] ) || ! current_user_can( 'edit_' . $_GET['type'], $_GET['id'] ) ) {
+		return;
+	}
 
-    // Don't process if no key or value is passed
-    if( ! isset( $_GET['key'] ) || ! isset( $_GET['value'] ) ) return;
+	// Don't process if no key or value is passed
+	if ( ! isset( $_GET['key'] ) || ! isset( $_GET['value'] ) ) {
+		return;
+	}
 
-    update_post_meta( $_GET['id'], $_GET['key'], $_GET['value'] );
+	update_post_meta( $_GET['id'], $_GET['key'], $_GET['value'] );
 }
 add_action( 'timeapp_update_meta', 'timeapp_update_meta' );
 
@@ -352,28 +359,28 @@ add_action( 'timeapp_update_meta', 'timeapp_update_meta' );
  * @return      string $price The formatted price
  */
 function timeapp_format_price( $price, $textualize = false ) {
-    if( ! $price ) {
-        $price = '0.00';
-    }
+	if ( ! $price ) {
+		$price = '0.00';
+	}
 
-    if( ! $textualize ) {
-        if( $price[0] == '$' ) {
-            $price = substr( $price, 1 );
-        }
+	if ( ! $textualize ) {
+		if ( $price[0] == '$' ) {
+			$price = substr( $price, 1 );
+		}
 
-        $price = '$' . number_format( $price, 2 );
-    } else {
-        $price = number_format( $price, 2, '.', '' );
+		$price = '$' . number_format( $price, 2 );
+	} else {
+		$price = number_format( $price, 2, '.', '' );
 
-        list( $dollars, $cents ) = explode( '.', $price );
+		list( $dollars, $cents ) = explode( '.', $price );
 
-        $textualizer = new TimeApp_Textualizer();
-        $dollars = $textualizer->textualize( $dollars );
+		$textualizer = new TimeApp_Textualizer();
+		$dollars     = $textualizer->textualize( $dollars );
 
-        $price = sprintf( __( '%s and %s/100 dollars - U.S.', 'timeapp' ), ucwords( $dollars ), $cents );
-    }
+		$price = sprintf( __( '%s and %s/100 dollars - U.S.', 'timeapp' ), ucwords( $dollars ), $cents );
+	}
 
-    return $price;
+	return $price;
 }
 
 
@@ -384,126 +391,129 @@ function timeapp_format_price( $price, $textualize = false ) {
  * @return      void
  */
 function timeapp_generate_pdf() {
-    // Don't process if nonce can't be verified
-    if( ! wp_verify_nonce( $_GET['pdf-nonce'], 'generate-pdf' ) ) return;
+	// Don't process if nonce can't be verified
+	if ( ! wp_verify_nonce( $_GET['pdf-nonce'], 'generate-pdf' ) ) {
+		return;
+	}
 
-    // Include the generator class
-    require_once TIMEAPP_DIR . 'includes/class.pdf-generator.php';
+	// Include the generator class
+	require_once TIMEAPP_DIR . 'includes/class.pdf-generator.php';
 
-    // Setup cache
-    $wp_upload_dir  = wp_upload_dir();
-    $cache_dir      = $wp_upload_dir['basedir'] . '/timeapp-cache/';
+	// Setup cache
+	$wp_upload_dir = wp_upload_dir();
+	$cache_dir     = $wp_upload_dir['basedir'] . '/timeapp-cache/';
 
-    // Ensure that the cache directory is protected
-    if( get_transient( 'timeapp_check_protection_files' ) === false ) {
-        wp_mkdir_p( $cache_dir );
+	// Ensure that the cache directory is protected
+	if ( get_transient( 'timeapp_check_protection_files' ) === false ) {
+		wp_mkdir_p( $cache_dir );
 
-        // Top level blank index.php
-        if( ! file_exists( $cache_dir . 'index.php' ) ) {
-            @file_put_contents( $cache_dir . 'index.php', '<?php' . PHP_EOL . '// Silence is golden.' );
-        }
+		// Top level blank index.php
+		if ( ! file_exists( $cache_dir . 'index.php' ) ) {
+			@file_put_contents( $cache_dir . 'index.php', '<?php' . PHP_EOL . '// Silence is golden.' );
+		}
 
-        // Top level .htaccess
-        $rules = "Options -Indexes";
-        if( file_exists( $cache_dir . '.htaccess' ) ) {
-            $contents = @file_get_contents( $cache_dir . '.htaccess' );
+		// Top level .htaccess
+		$rules = "Options -Indexes";
+		if ( file_exists( $cache_dir . '.htaccess' ) ) {
+			$contents = @file_get_contents( $cache_dir . '.htaccess' );
 
-            if( $contents !== $rules || ! $contents ) {
-                @file_put_contents( $cache_dir . '.htaccess', $rules );
-            }
-        } else {
-            @file_put_contents( $cache_dir . '.htaccess', $rules );
-        }
+			if ( $contents !== $rules || ! $contents ) {
+				@file_put_contents( $cache_dir . '.htaccess', $rules );
+			}
+		} else {
+			@file_put_contents( $cache_dir . '.htaccess', $rules );
+		}
 
-        // Check daily
-        set_transient( 'timeapp_check_protection_files', true, 3600 * 24 );
-    }
+		// Check daily
+		set_transient( 'timeapp_check_protection_files', true, 3600 * 24 );
+	}
 
-    $play       = get_post( $_GET['post'] );
-    $artist     = get_post_meta( $play->ID, '_timeapp_artist', true );
-    $artist     = get_post( $artist );
-    $purchaser  = get_post_meta( $play->ID, '_timeapp_purchaser', true );
-    $purchaser  = get_post( $purchaser );
-    $date       = get_post_meta( $play->ID, '_timeapp_start_date', true );
-    $date       = date( 'm-d-Y', strtotime( $date ) );
-    $filename   = strtolower( $artist->post_title ) . '-' . $date . '.pdf';
-    $filename   = str_replace( ' ', '', $filename );
+	$play      = get_post( $_GET['post'] );
+	$artist    = get_post_meta( $play->ID, '_timeapp_artist', true );
+	$artist    = get_post( $artist );
+	$purchaser = get_post_meta( $play->ID, '_timeapp_purchaser', true );
+	$purchaser = get_post( $purchaser );
+	$date      = get_post_meta( $play->ID, '_timeapp_start_date', true );
+	$date      = date( 'm-d-Y', strtotime( $date ) );
+	$filename  = strtolower( $artist->post_title ) . '-' . $date . '.pdf';
+	$filename  = str_replace( ' ', '', $filename );
 
-    // We don't store contracts!
-    if( file_exists( $cache_dir . $filename ) ) {
-        unlink( $cache_dir . $filename );
-    }
+	// We don't store contracts!
+	if ( file_exists( $cache_dir . $filename ) ) {
+		unlink( $cache_dir . $filename );
+	}
 
-    $file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
-    $file->build();
+	$file = new TimeApp_Generate_PDF( $cache_dir . $filename, $_GET['post'] );
+	$file->build();
 
-    // Tag as sent
-    $contract_log   = get_post_meta( $play->ID, '_timeapp_contract_sent', true );
-    if( ! is_array( $contract_log ) ) {
-        $new_log        = array();
-        $new_log[]      = $contract_log;
-        $contract_log   = $new_log;
-    }
-    
-    $contract_log[] = current_time( 'm/d/Y g:i a' );
-    update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
+	// Tag as sent
+	$contract_log = get_post_meta( $play->ID, '_timeapp_contract_sent', true );
 
-    if( timeapp_get_option( 'enable_debugging', false ) ) {
-        $url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
-        wp_safe_redirect( $url );
-        exit;
-    }
+	if ( ! is_array( $contract_log ) ) {
+		$new_log      = array();
+		$new_log[]    = $contract_log;
+		$contract_log = $new_log;
+	}
 
-    // Get the email type
-    $status     = get_post_meta( $play->ID, '_timeapp_status', true );
+	$contract_log[] = current_time( 'm/d/Y g:i a' );
+	update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
 
-    // Get rider
-    $rider_url  = get_post_meta( $artist->ID, '_timeapp_rider', true );
-    $email      = get_post_meta( $purchaser->ID, '_timeapp_email', true );
-    $cc_email   = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
+	if ( timeapp_get_option( 'enable_debugging', false ) ) {
+		$url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
+		wp_safe_redirect( $url );
+		exit;
+	}
 
-    // Send the email!
-    $to         = $email;
+	// Get the email type
+	$status = get_post_meta( $play->ID, '_timeapp_status', true );
 
-    if( $status == 'cancelled' ) {
-        $subject    = timeapp_get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
-        $message    = timeapp_get_option( 'cancelled_email_content', timeapp_get_cancelled_email_content() );
-    } else {
-        $subject    = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
-        $message    = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
-    }
-    $subject    = timeapp_do_tags( $subject, $play->ID );
-    $message    = timeapp_do_tags( $message, $play->ID );
-    $headers[]  = 'From: ' . timeapp_get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp_get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
-    $cc_emails  = timeapp_get_option( 'email_cc_addresses', false );
+	// Get rider
+	$rider_url = get_post_meta( $artist->ID, '_timeapp_rider', true );
+	$email     = get_post_meta( $purchaser->ID, '_timeapp_email', true );
+	$cc_email  = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
 
-    if( $cc_emails ) {
-        $cc_emails = explode( ',', $cc_emails );
+	// Send the email!
+	$to = $email;
 
-        foreach( $cc_emails as $email_address ) {
-            $headers[] = 'Cc: ' . $email_address;
-        }
-    }
+	if ( $status == 'cancelled' ) {
+		$subject = timeapp_get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
+		$message = timeapp_get_option( 'cancelled_email_content', timeapp_get_cancelled_email_content() );
+	} else {
+		$subject = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
+		$message = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
+	}
+	$subject   = timeapp_do_tags( $subject, $play->ID );
+	$message   = timeapp_do_tags( $message, $play->ID );
+	$headers[] = 'From: ' . timeapp_get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp_get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
+	$cc_emails = timeapp_get_option( 'email_cc_addresses', false );
 
-    if( $cc_email ) {
-        $headers[] = 'Cc: ' . $cc_email;
-    }
+	if ( $cc_emails ) {
+		$cc_emails = explode( ',', $cc_emails );
 
-    $attachments= array(
-        $cache_dir . $filename
-    );
+		foreach ( $cc_emails as $email_address ) {
+			$headers[] = 'Cc: ' . $email_address;
+		}
+	}
 
-    if( $status != 'cancelled' ) {
-        if( $rider_url ) {
-            $rider_url      = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $rider_url );
-            $attachments[]  = $rider_url;
-        }
-    }
+	if ( $cc_email ) {
+		$headers[] = 'Cc: ' . $cc_email;
+	}
 
-    wp_mail( $to, $subject, $message, $headers, $attachments );
+	$attachments = array(
+		$cache_dir . $filename
+	);
 
-    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'pdf-nonce' => null ) ) );
-    exit;
+	if ( $status != 'cancelled' ) {
+		if ( $rider_url ) {
+			$rider_url     = str_replace( WP_CONTENT_URL, WP_CONTENT_DIR, $rider_url );
+			$attachments[] = $rider_url;
+		}
+	}
+
+	wp_mail( $to, $subject, $message, $headers, $attachments );
+
+	wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null, 'pdf-nonce' => null ) ) );
+	exit;
 }
 add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );
 
@@ -515,17 +525,16 @@ add_action( 'timeapp_generate_pdf', 'timeapp_generate_pdf' );
  * @return      string $message The email content
  */
 function timeapp_get_booking_email_content() {
-    $message    = '{purchaser_name},' . "\n";
-    $message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), '{artist_name}' ) . "\n\n";
-    $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
-    $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
-    $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
-    $message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
-    $message   .= __( '952-448-4202', 'timeapp' );
+	$message	= '{purchaser_name},' . "\n";
+	$message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), '{artist_name}' ) . "\n\n";
+	$message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
+	$message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
+	$message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
+	$message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+	$message   .= __( '952-448-4202', 'timeapp' );
+	$message	= apply_filters( 'timeapp_booking_email_content', $message );
 
-    $message    = apply_filters( 'timeapp_booking_email_content', $message );
-
-    return $message;
+	return $message;
 }
 
 
@@ -536,17 +545,16 @@ function timeapp_get_booking_email_content() {
  * @return      string $message The email content
  */
 function timeapp_get_cancelled_email_content() {
-    $message    = '{purchaser_name},' . "\n";
-    $message   .= __( 'This email serves as the formal cancellation for the show reflected on the attached cancelled contract.', 'timeapp' ) . "\n\n";
-    $message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
-    $message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
-    $message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
-    $message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
-    $message   .= __( '952-448-4202', 'timeapp' );
+	$message	= '{purchaser_name},' . "\n";
+	$message   .= __( 'This email serves as the formal cancellation for the show reflected on the attached cancelled contract.', 'timeapp' ) . "\n\n";
+	$message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
+	$message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
+	$message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
+	$message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+	$message   .= __( '952-448-4202', 'timeapp' );
+	$message	= apply_filters( 'timeapp_cancelled_email_content', $message );
 
-    $message    = apply_filters( 'timeapp_cancelled_email_content', $message );
-
-    return $message;
+	return $message;
 }
 
 
@@ -557,23 +565,24 @@ function timeapp_get_cancelled_email_content() {
  * @return      void
  */
 function timeapp_download_rider() {
-    $rider_url  = get_post_meta( $_GET['post'], '_timeapp_rider', true );
-    $rider_name = basename( $rider_url );
+	$rider_url  = get_post_meta( $_GET['post'], '_timeapp_rider', true );
+	$rider_name = basename( $rider_url );
 
-    nocache_headers();
-    header( 'Robots: none' );
-    if( wp_is_mobile() ) {
-        header( 'Content-Type: application/octet-stream' );
-    } else {
-        header( 'Content-Type: application/force-download' );
-    }
-    header( 'Content-Disposition: attachment; filename="' . $rider_name . '"' );
-    header( 'Content-Transfer-Encoding: Binary' );
+	nocache_headers();
+	header( 'Robots: none' );
 
-    readfile( $rider_url );
+	if ( wp_is_mobile() ) {
+		header( 'Content-Type: application/octet-stream' );
+	} else {
+		header( 'Content-Type: application/force-download' );
+	}
+	header( 'Content-Disposition: attachment; filename="' . $rider_name . '"' );
+	header( 'Content-Transfer-Encoding: Binary' );
 
-    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
-    exit;
+	readfile( $rider_url );
+
+	wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
+	exit;
 }
 add_action( 'timeapp_download_rider', 'timeapp_download_rider' );
 
@@ -585,10 +594,10 @@ add_action( 'timeapp_download_rider', 'timeapp_download_rider' );
  * @return      void
  */
 function timeapp_remove_rider() {
-    delete_post_meta( $_GET['post'], '_timeapp_rider' );
+	delete_post_meta( $_GET['post'], '_timeapp_rider' );
 
-    wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
-    exit;
+	wp_safe_redirect( add_query_arg( array( 'timeapp-action' => null ) ) );
+	exit;
 }
 add_action( 'timeapp_remove_rider', 'timeapp_remove_rider' );
 
@@ -601,20 +610,18 @@ add_action( 'timeapp_remove_rider', 'timeapp_remove_rider' );
  * @return      string $post_title The new post title
  */
 function timeapp_update_play_title( $post_title ) {
-    if( isset( $_POST['post_type'] ) && $_POST['post_type'] == 'play' ) {
-        $artist = get_post( $_POST['_timeapp_artist'] );
-        $artist = $artist->post_title;
+	if ( isset( $_POST['post_type'] ) && $_POST['post_type'] == 'play' ) {
+		$artist    = get_post( $_POST['_timeapp_artist'] );
+		$artist    = $artist->post_title;
+		$purchaser = get_post( $_POST['_timeapp_purchaser'] );
+		$purchaser = $purchaser->post_title;
+		$date      = $_POST['_timeapp_start_date'];
+		$date      = date( 'm-d-Y', strtotime( $date ) );
 
-        $purchaser = get_post( $_POST['_timeapp_purchaser'] );
-        $purchaser = $purchaser->post_title;
+		$post_title = $artist . '@' . $purchaser . ' - ' . $date;
+	}
 
-        $date = $_POST['_timeapp_start_date'];
-        $date = date( 'm-d-Y', strtotime( $date ) );
-
-        $post_title = $artist . '@' . $purchaser . ' - ' . $date;
-    }
-
-    return $post_title;
+	return $post_title;
 }
 add_filter( 'title_save_pre', 'timeapp_update_play_title' );
 
@@ -631,40 +638,40 @@ add_filter( 'title_save_pre', 'timeapp_update_play_title' );
  * @return      string $commission The calculated commission
  */
 function timeapp_get_commission( $guarantee = 0, $production = false, $rate, $split = false, $show_split = false ) {
-    $values = array(
-        'guarantee' => $guarantee,
-        'production'=> $production,
-        'rate'      => $rate,
-        'split'     => $split
-    );
+	$values = array(
+		'guarantee'  => $guarantee,
+		'production' => $production,
+		'rate'       => $rate,
+		'split'      => $split
+	);
 
-    // Strip dollar signs
-    foreach( $values as $id => $value ) {
-        if( $value && $value[0] == '$' ) {
-            $values[$id] = substr( $value, 1 );
-        }
-    }
+	// Strip dollar signs
+	foreach ( $values as $id => $value ) {
+		if ( $value && $value[0] == '$' ) {
+			$values[ $id ] = substr( $value, 1 );
+		}
+	}
 
-    $commission = $values['guarantee'];
+	$commission = $values['guarantee'];
 
-    // Maybe subtract production
-    if( $values['production'] ) {
-        $commission = $commission - $production;
-    }
+	// Maybe subtract production
+	if ( $values['production'] ) {
+		$commission = $commission - $production;
+	}
 
-    // Mod rate
-    $commission = $commission * ( (float) str_replace( '%', '', $values['rate'] ) / 100 );
+	// Mod rate
+	$commission = $commission * ( (float) str_replace( '%', '', $values['rate'] ) / 100 );
 
-    // Maybe mod split
-    if( $values['split'] ) {
-        if( $show_split ) {
-            $split = (float) str_replace( '%', '', $values['split'] ) / 100;
-        } else {
-            $split = ( 1 -(float) str_replace( '%', '', $values['split'] ) / 100 );
-        }
+	// Maybe mod split
+	if ( $values['split'] ) {
+		if ( $show_split ) {
+			$split = (float) str_replace( '%', '', $values['split'] ) / 100;
+		} else {
+			$split = ( 1 -(float) str_replace( '%', '', $values['split'] ) / 100 );
+		}
 
-        $commission = $commission * $split;
-    }
+		$commission = $commission * $split;
+	}
 
-    return timeapp_format_price( $commission );
+	return timeapp_format_price( $commission );
 }

@@ -8,7 +8,9 @@
 
 
 // Exit if accessed directly
-if( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 
 /**
@@ -20,23 +22,23 @@ if( ! defined( 'ABSPATH' ) ) exit;
  * @return      void
  */
 function timeapp_display_admin_notices() {
-    global $typenow, $pagenow;
+	global $typenow, $pagenow;
 
-    // Bail if this isn't a post edit page
-    if( $pagenow != 'post.php' || ! isset( $_GET['post'] ) ) {
-        return;
-    }
+	// Bail if this isn't a post edit page
+	if ( $pagenow != 'post.php' || ! isset( $_GET['post'] ) ) {
+		return;
+	}
 
-    // Bail if this isn't the play post type
-    if( $typenow != 'play' ) {
-        return;
-    }
+	// Bail if this isn't the play post type
+	if ( $typenow != 'play' ) {
+		return;
+	}
 
-    // Display the cancelled play notice
-    $status = get_post_meta( $_GET['post'], '_timeapp_status', true );
+	// Display the cancelled play notice
+	$status = get_post_meta( $_GET['post'], '_timeapp_status', true );
 
-    if( $status == 'cancelled' ) {
-        echo '<div class="error"><p>' . __( 'Play cancelled.', 'timeapp' ) . '</p></div>';
-    }
+	if ( $status == 'cancelled' ) {
+		echo '<div class="error"><p>' . __( 'Play cancelled.', 'timeapp' ) . '</p></div>';
+	}
 }
 add_action( 'admin_notices', 'timeapp_display_admin_notices' );

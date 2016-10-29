@@ -1,13 +1,16 @@
 {
-    "curly": true,
-    "eqeqeq": true,
-    "globals": {
-        "jQuery": false,
-        "timeapp_vars": false
-    },
-    "immed": true,
-    "undef": true,
-    "unused": true,
-    "boss": true,
-    "browser": true
+	"boss": true,
+	"curly": true,
+	"eqeqeq": true,
+	"immed": true,
+	"noarg": true,
+	"quotmark": "single",
+	"undef": true,
+	"unused": true,
+
+	"browser": true,
+
+	"globals": {
+		"jQuery": false,
+	}
 }

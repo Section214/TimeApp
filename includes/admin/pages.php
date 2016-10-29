@@ -9,7 +9,7 @@
 
 // Exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 
@@ -21,14 +21,14 @@ if( ! defined( 'ABSPATH' ) ) {
  * @return      void
  */
 function timeapp_add_settings_pages() {
-    global $timeapp_settings_page;
+	global $timeapp_settings_page;
 
-    $timeapp_settings_page = add_options_page( __( 'TimeApp Settings', 'timeapp' ), __( 'TimeApp', 'timeapp' ), 'edit_plays', 'timeapp-settings', 'timeapp_render_settings_page' );
+	$timeapp_settings_page = add_options_page( __( 'TimeApp Settings', 'timeapp' ), __( 'TimeApp', 'timeapp' ), 'edit_plays', 'timeapp-settings', 'timeapp_render_settings_page' );
 
-    // Remove the media menu item for staff
-    if( ! current_user_can( 'manage_options' ) ) {
-        remove_menu_page( 'upload.php' );
-    }
+	// Remove the media menu item for staff
+	if( ! current_user_can( 'manage_options' ) ) {
+		remove_menu_page( 'upload.php' );
+	}
 }
 add_action( 'admin_menu', 'timeapp_add_settings_pages', 10 );
 
@@ -44,14 +44,14 @@ add_action( 'admin_menu', 'timeapp_add_settings_pages', 10 );
  * @return      bool $ret True if TimeApp page, false otherwise
  */
 function timeapp_is_admin_page( $hook ) {
-    global $typenow, $pagenow, $timeapp_settings_page;
+	global $typenow, $pagenow, $timeapp_settings_page;
 
-    $ret    = false;
-    $pages  = apply_filters( 'timeapp_admin_pages', array( $timeapp_settings_page ) );
+	$ret   = false;
+	$pages = apply_filters( 'timeapp_admin_pages', array( $timeapp_settings_page ) );
 
-    if( in_array( $hook, $pages ) ) {
-        $ret = true;
-    }
+	if ( in_array( $hook, $pages ) ) {
+		$ret = true;
+	}
 
-    return (bool) apply_filters( 'timeapp_is_admin_page', $ret );
+	return (bool) apply_filters( 'timeapp_is_admin_page', $ret );
 }

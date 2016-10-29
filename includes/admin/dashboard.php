@@ -8,7 +8,9 @@
 
 
 // Exit if accessed directly
-if( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 
 /**
@@ -21,9 +23,9 @@ if( ! defined( 'ABSPATH' ) ) exit;
  * @return      string $contextual_help The updated content
  */
 function timeapp_remove_contextual_help( $contextual_help, $screen_id, $screen ) {
-    $screen->remove_help_tabs();
+	$screen->remove_help_tabs();
 
-    return $contextual_help;
+	return $contextual_help;
 }
 add_filter( 'contextual_help', 'timeapp_remove_contextual_help', 999, 3 );
 
@@ -37,10 +39,10 @@ add_filter( 'contextual_help', 'timeapp_remove_contextual_help', 999, 3 );
  * @return      bool
  */
 function timeapp_remove_screen_options( $show_screen, $screen ) {
-    if( ! current_user_can( 'manage_options' ) ) {
-        return false;
-    }
+	if ( ! current_user_can( 'manage_options' ) ) {
+	    return false;
+	}
 
-    return $show_screen;
-}
+	return $show_screen;
+	}
 add_filter( 'screen_options_show_screen', 'timeapp_remove_screen_options', 10, 2 );
