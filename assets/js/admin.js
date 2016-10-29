@@ -1,4 +1,4 @@
-/*global $, jQuery, document, window, wp, _wpMediaViewsL10n, file_frame, timeapp_vars, alert*/
+/*global $, jQuery, document, window, wp, _wpMediaViewsL10n, file_frame, timeapp_vars, alert, moment*/
 jQuery(document).ready(function ($) {
     'use strict';
 
@@ -67,7 +67,7 @@ jQuery(document).ready(function ($) {
 
     $('.post-type-play #title').attr('disabled', 'disabled');
     $('.post-type-play #title').attr('readonly', 'readonly');
-    
+
     if ($('.post-type-play #title').val() === '') {
         $('.post-type-play #title').val(timeapp_vars.title_placeholder);
     }
@@ -92,9 +92,9 @@ jQuery(document).ready(function ($) {
 
     $('.colorbox').colorbox({
         inline: true,
-        href: "#timeapp-pdf-preview",
-        maxWidth: "650px",
-        maxHeight: "75%",
+        href: '#timeapp-pdf-preview',
+        maxWidth: '650px',
+        maxHeight: '75%',
         closeButton: false
     });
 
@@ -102,7 +102,18 @@ jQuery(document).ready(function ($) {
 
     $('.timeapp-datetime').datetimepicker({
         timeFormat: 'h:mm tt',
-        stepMinute: 15
+        stepMinute: 15,
+        firstDay: 0,
+        dateFormat: 'mm/dd/yy',
+        dayNamesMin: [
+            'Su',
+            'Mo',
+            'Tu',
+            'We',
+            'Th',
+            'Fr',
+            'Sa'
+        ]
     });
 
     $('.timeapp-select2').select2();
@@ -113,6 +124,17 @@ jQuery(document).ready(function ($) {
 
     $('#_timeapp_purchaser').select2({
         placeholder: timeapp_vars.select_purchaser
+    });
+
+    $('#_timeapp_start_date').change(function (e) {
+        var endDate = $('#_timeapp_end_date').val();
+
+        if(endDate === '') {
+            var startDate = new Date($(this).val());
+
+            endDate = moment(startDate).add(1, 'days').format('MM/DD/YY h:mm a');
+			$('#_timeapp_end_date').val(endDate);
+        }
     });
 
     $('.post-type-agent .timeapp-save').click(function (e) {
@@ -134,7 +156,7 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
-        
+
         e.preventDefault();
         $('#publish').click();
     });
@@ -154,7 +176,7 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
-        
+
         e.preventDefault();
         $('#publish').click();
     });
@@ -170,7 +192,7 @@ jQuery(document).ready(function ($) {
             errMessage = timeapp_vars.required_fields;
             alert(errMessage);
         }
-        
+
         e.preventDefault();
         $('#publish').click();
     });
