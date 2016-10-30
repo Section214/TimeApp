@@ -1,6 +1,6 @@
 /**
  * TimeApp Admin CSS
- * 
+ *
  * @package     TimeApp\Admin\CSS
  * @since       1.0.0
  */
@@ -403,6 +403,16 @@ td.commission.column-commission .timeapp-commission-unpaid,
 td.status.column-status .timeapp-contract-cancelled {
     background: #dd3d36;
     border: 1px solid #ba2018;
+}
+
+ul.cc-list {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
+ul.cc-list li {
+    list-style-type: disc;
+    margin-left: 20px;
 }
 
 

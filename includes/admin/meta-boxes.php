@@ -225,6 +225,8 @@ function timeapp_render_play_details_meta_box() {
 	$purchaser      = get_post_meta( $post_id, '_timeapp_purchaser', true );
 	$artist         = get_post_meta( $post_id, '_timeapp_artist', true );
 	$artist         = get_post( $artist );
+	$play_emails    = get_post_meta( $post_id, '_timeapp_play_emails', true );
+	$play_emails    = ( is_array( $play_emails ) ? implode( "\n", $play_emails ) : '' );
 	$contract_terms = get_post_meta( $artist->ID, '_timeapp_contract_terms', true );
 	$contract_terms = ( $contract_terms && $contract_terms != '' ? $contract_terms . ' ' . __( 'has', 'timeapp' ) : __( 'contract terms have', 'timeapp' ) );
 	$approved       = get_post_meta( $post_id, '_timeapp_approved', true ) ? true : false;
@@ -285,6 +287,13 @@ function timeapp_render_play_details_meta_box() {
 	}
 
 	echo '</select>';
+
+	// Additional contacts
+	echo '<p>';
+	echo '<strong><label for="_timeapp_play_emails">' . __( 'Additional Emails', 'timeapp' ) . '</label></strong><br />';
+	echo '<textarea name="_timeapp_play_emails" id="_timeapp_play_emails" rows="5">' . $play_emails . '</textarea><br />';
+	echo '<label for="_timeapp_play_emails">' . __( 'Enter additional emails for this play, one per line.', 'timeapp' ) . '</label>';
+	echo '</p>';
 
 	// Contract approved
 	echo '<p>';
@@ -521,6 +530,9 @@ function timeapp_colorbox_holder( $post_id ) {
 	$status          = get_post_meta( $post_id, '_timeapp_status', true );
 	$payable_to      = get_post_meta( $artist->ID, '_timeapp_payable_to', true );
 	$contact_name    = '';
+	$purchaser_cc    = get_post_meta( $purchaser->ID, '_timeapp_additional_emails', true );
+	$play_cc         = get_post_meta( $play->ID, '_timeapp_play_emails', true );
+	$cc_emails       = array_merge( $play_cc, $purchaser_cc );
 
 	// Is a contact first name specified?
 	if ( $contact_fname && $contact_fname != '' ) {
@@ -647,6 +659,22 @@ function timeapp_colorbox_holder( $post_id ) {
 					<td><?php _e( 'Event Status', 'timeapp' ); ?></td>
 					<td><?php echo '<span class="timeapp-status-' . $status . '">' . ucfirst( $status ) . '</span>'; ?></td>
 				</tr>
+				<?php if( count( $cc_emails ) > 0 ) { ?>
+					<tr>
+						<td colspan="2" style="color: #32373c; border-top: 1px solid #e1e1e1; border-bottom: 1px solid #e1e1e1"><strong><?php _e( 'Emails regarding this play will also be sent to the following address(es):', 'timeapp' ); ?></strong></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="color: #555; font-weight: normal">
+							<ul class="cc-list">
+							<?php
+							foreach( $cc_emails as $email ) {
+								echo '<li>' . $email . '</li>';
+							}
+							?>
+							</ul>
+						</td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
 		<br />
@@ -712,6 +740,7 @@ function timeapp_save_play_meta_box( $post_id ) {
 		'_timeapp_agent',
 		'_timeapp_purchaser',
 		'_timeapp_artist',
+		'_timeapp_play_emails',
 		'_timeapp_approved',
 		'_timeapp_set_reqs',
 		'_timeapp_notes',
@@ -734,10 +763,24 @@ function timeapp_save_play_meta_box( $post_id ) {
 
 	foreach ( $fields as $field ) {
 		if ( isset( $_POST[ $field ] ) ) {
-			if ( is_string( $_POST[ $field ] ) ) {
-				$new = esc_attr( $_POST[ $field ] );
+			if ( $field == '_timeapp_play_emails' ) {
+				$emails = array_map( 'trim', explode( "\n", $_POST[ $field ] ) );
+				$emails = array_unique( $emails );
+				$emails = array_map( 'sanitize_text_field', $emails );
+
+				foreach ( $emails as $id => $email ) {
+					if ( ! is_email( $email ) ) {
+						unset( $emails[ $id ] );
+					}
+				}
+
+				$new = $emails;
 			} else {
-				$new = $_POST[ $field ];
+				if ( is_string( $_POST[ $field ] ) ) {
+					$new = esc_attr( $_POST[ $field ] );
+				} else {
+					$new = $_POST[ $field ];
+				}
 			}
 
 			$new = apply_filters( 'timeapp_play_save_' . $field, $new );
@@ -760,12 +803,15 @@ add_action( 'save_post', 'timeapp_save_play_meta_box' );
 function timeapp_render_contact_info_meta_box() {
 	global $post;
 
-	$post_id      = $post->ID;
-	$first_name   = get_post_meta( $post_id, '_timeapp_first_name', true );
-	$last_name    = get_post_meta( $post_id, '_timeapp_last_name', true );
-	$email        = get_post_meta( $post_id, '_timeapp_email', true );
-	$phone_number = get_post_meta( $post_id, '_timeapp_phone_number', true );
-	$signatory    = get_post_meta( $post_id, '_timeapp_signatory', true ) ? true : false;
+	$post_id                  = $post->ID;
+	$first_name               = get_post_meta( $post_id, '_timeapp_first_name', true );
+	$last_name                = get_post_meta( $post_id, '_timeapp_last_name', true );
+	$email                    = get_post_meta( $post_id, '_timeapp_email', true );
+	$enable_additional_emails = get_post_meta( $post_id, '_timeapp_enable_additional_emails', true ) ? true : false;
+	$additional_emails        = get_post_meta( $post_id, '_timeapp_additional_emails', true );
+	$additional_emails        = ( is_array( $additional_emails ) ? implode( "\n", $additional_emails ) : '' );
+	$phone_number             = get_post_meta( $post_id, '_timeapp_phone_number', true );
+	$signatory                = get_post_meta( $post_id, '_timeapp_signatory', true ) ? true : false;
 
 	// First name
 	echo '<p>';
@@ -783,6 +829,17 @@ function timeapp_render_contact_info_meta_box() {
 	echo '<p>';
 	echo '<strong><label for="_timeapp_email">' . __( 'Email', 'timeapp' ) . '<span class="timeapp-required">*</span></label></strong><br />';
 	echo '<input type="text" class="regular-text" name="_timeapp_email" id="_timeapp_email" value="' . ( isset( $email ) && ! empty( $email ) ? $email : '' ) . '" />';
+	echo '</p>';
+
+	// Additional contacts
+	echo '<p>';
+	echo '<strong><label for="_timeapp_enable_additional_emails">' . __( 'Additional Emails?', 'timeapp' ) . '</label></strong><br />';
+	echo '<input type="checkbox" name="_timeapp_enable_additional_emails" id="_timeapp_enable_additional_emails" value="1" ' . checked( true, $enable_additional_emails, false ) . ' />';
+	echo '<label for="_timeapp_enable_additional_emails">' . __( 'Check to add additonal contact/CC email addresses for this purchaser.', 'timeapp' ) . '</label>';
+	echo '<div class="timeapp-additional-emails">';
+	echo '<textarea name="_timeapp_additional_emails" id="_timeapp_additional_emails" rows="5">' . $additional_emails . '</textarea><br />';
+	echo '<label for="_timeapp_additional_emails">' . __( 'Enter additional emails for this purchaser, one per line.', 'timeapp' ) . '</label>';
+	echo '</div>';
 	echo '</p>';
 
 	// Phone number
@@ -992,6 +1049,8 @@ function timeapp_save_purchaser_meta_box( $post_id ) {
 		'_timeapp_first_name',
 		'_timeapp_last_name',
 		'_timeapp_email',
+		'_timeapp_enable_additional_emails',
+		'_timeapp_additional_emails',
 		'_timeapp_phone_number',
 		'_timeapp_signatory',
 		'_timeapp_signatory_first_name',
@@ -1010,10 +1069,24 @@ function timeapp_save_purchaser_meta_box( $post_id ) {
 
 	foreach ( $fields as $field ) {
 		if ( isset( $_POST[ $field ] ) ) {
-			if ( is_string( $_POST[ $field ] ) ) {
-				$new = esc_attr( $_POST[ $field ] );
+			if ( $field == '_timeapp_additional_emails' ) {
+				$emails = array_map( 'trim', explode( "\n", $_POST[ $field ] ) );
+				$emails = array_unique( $emails );
+				$emails = array_map( 'sanitize_text_field', $emails );
+
+				foreach ( $emails as $id => $email ) {
+					if ( ! is_email( $email ) ) {
+						unset( $emails[ $id ] );
+					}
+				}
+
+				$new = $emails;
 			} else {
-				$new = $_POST[ $field ];
+				if ( is_string( $_POST[ $field ] ) ) {
+					$new = esc_attr( $_POST[ $field ] );
+				} else {
+					$new = $_POST[ $field ];
+				}
 			}
 
 			$new = apply_filters( 'timeapp_purchaser_save_' . $field, $new );
