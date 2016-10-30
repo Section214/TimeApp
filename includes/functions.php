@@ -473,7 +473,13 @@ function timeapp_generate_pdf() {
 	$cc_email  = get_post_meta( $artist->ID, '_timeapp_artist_email', true );
 
 	// Send the email!
-	$to = $email;
+	$to[] = $email;
+
+	// Maybe append purchaser CC emails
+	$purchaser_cc = get_post_meta( $purchaser->ID, '_timeapp_additional_emails', true );
+	$play_cc      = get_post_meta( $play->ID, '_timeapp_play_emails', true );
+
+	$to = array_merge( $to, $purchaser_cc, $play_cc );
 
 	if ( $status == 'cancelled' ) {
 		$subject = timeapp_get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
