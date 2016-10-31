@@ -531,7 +531,9 @@ function timeapp_colorbox_holder( $post_id ) {
 	$payable_to      = get_post_meta( $artist->ID, '_timeapp_payable_to', true );
 	$contact_name    = '';
 	$purchaser_cc    = get_post_meta( $purchaser->ID, '_timeapp_additional_emails', true );
+	$purchaser_cc    = ( is_array( $purchaser_cc ) ? $purchaser_cc : array() );
 	$play_cc         = get_post_meta( $play->ID, '_timeapp_play_emails', true );
+	$play_cc         = ( is_array( $play_cc ) ? $play_cc : array() );
 	$cc_emails       = array_merge( $play_cc, $purchaser_cc );
 
 	// Is a contact first name specified?
