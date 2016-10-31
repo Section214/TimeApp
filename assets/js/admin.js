@@ -132,8 +132,8 @@ jQuery(document).ready(function ($) {
         if(endDate === '') {
             var startDate = new Date($(this).val());
 
-            endDate = moment(startDate).add(1, 'days').format('MM/DD/YY h:mm a');
-            $('#_timeapp_end_date').val(endDate);
+            endDate = moment(startDate).add(1, 'days').format('MM/DD/YYYY h:mm a');
+            $('#_timeapp_end_date').datetimepicker('setDate', endDate);
         }
     });
 
