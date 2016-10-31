@@ -105,7 +105,7 @@ if ( ! class_exists( 'TimeApp' ) ) {
 		 */
 		private function setup_constants() {
 			// Plugin version
-			define( 'TIMEAPP_VER', '2.1.0' );
+			define( 'TIMEAPP_VER', '2.1.1' );
 
 			// Plugin path
 			define( 'TIMEAPP_DIR', plugin_dir_path( __FILE__ ) );
