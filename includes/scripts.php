@@ -64,7 +64,7 @@ function timeapp_admin_scripts() {
 	wp_enqueue_script( 'media-upload' );
 
 	if( timeapp()->desktop ) {
-		wp_enqueue_style( 'timeapp-desktop', TIMEAPP_URL . 'assets/css/desktop.css', array(), TIMEAPP_VER );
+		wp_enqueue_style( 'timeapp-desktop', TIMEAPP_URL . 'assets/css/desktop' . $suffix . '.css', array(), TIMEAPP_VER );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'timeapp_admin_scripts' );
