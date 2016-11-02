@@ -62,6 +62,10 @@ function timeapp_admin_scripts() {
 	wp_enqueue_style( 'thickbox' );
 	wp_enqueue_script( 'thickbox' );
 	wp_enqueue_script( 'media-upload' );
+
+	if( timeapp()->desktop ) {
+		wp_enqueue_style( 'timeapp-desktop', TIMEAPP_URL . 'assets/css/desktop.css', array(), TIMEAPP_VER );
+	}
 }
 add_action( 'admin_enqueue_scripts', 'timeapp_admin_scripts' );
 
@@ -89,7 +93,7 @@ add_action( 'login_enqueue_scripts', 'timeapp_login_scripts' );
  * @return      void
  */
 function timeapp_login_head() {
-	$logo = timeapp_get_option( 'login_logo', TIMEAPP_URL . 'assets/img/login-logo.png' );
+	$logo = timeapp()->settings->get_option( 'login_logo', TIMEAPP_URL . 'assets/img/login-logo.png' );
 
 	$css  = '<style>';
 	$css .= '.login h1 a { background: url( \'' . $logo . '\' ); }';

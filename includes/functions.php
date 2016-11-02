@@ -458,7 +458,7 @@ function timeapp_generate_pdf() {
 	$contract_log[] = current_time( 'm/d/Y g:i a' );
 	update_post_meta( $play->ID, '_timeapp_contract_sent', $contract_log );
 
-	if ( timeapp_get_option( 'enable_debugging', false ) ) {
+	if ( timeapp()->settings->get_option( 'enable_debugging', false ) ) {
 		$url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $cache_dir . $filename );
 		wp_safe_redirect( $url );
 		exit;
@@ -482,16 +482,16 @@ function timeapp_generate_pdf() {
 	$to = array_merge( $to, $purchaser_cc, $play_cc );
 
 	if ( $status == 'cancelled' ) {
-		$subject = timeapp_get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
-		$message = timeapp_get_option( 'cancelled_email_content', timeapp_get_cancelled_email_content() );
+		$subject = timeapp()->settings->get_option( 'cancelled_email_subject', __( 'Time Music Agency Contract - Cancellation Notice', 'timeapp' ) );
+		$message = timeapp()->settings->get_option( 'cancelled_email_content', timeapp_get_cancelled_email_content() );
 	} else {
-		$subject = timeapp_get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
-		$message = timeapp_get_option( 'booking_email_content', timeapp_get_booking_email_content() );
+		$subject = timeapp()->settings->get_option( 'booking_email_subject', sprintf( __( 'Time Music Agency Contract - %1$s %2$s', 'timeapp' ), '{artist_name}', '{start_date}' ) );
+		$message = timeapp()->settings->get_option( 'booking_email_content', timeapp_get_booking_email_content() );
 	}
 	$subject   = timeapp_do_tags( $subject, $play->ID );
 	$message   = timeapp_do_tags( $message, $play->ID );
-	$headers[] = 'From: ' . timeapp_get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp_get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
-	$cc_emails = timeapp_get_option( 'email_cc_addresses', false );
+	$headers[] = 'From: ' . timeapp()->settings->get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp()->settings->get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
+	$cc_emails = timeapp()->settings->get_option( 'email_cc_addresses', false );
 
 	if ( $cc_emails ) {
 		$cc_emails = explode( ',', $cc_emails );

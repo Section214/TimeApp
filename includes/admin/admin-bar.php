@@ -46,7 +46,7 @@ function timeapp_admin_bar_icon( $wp_admin_bar ) {
 		$wp_admin_bar->add_node( array(
 			'id'    => 'timeapp-logo',
 			'href'  => admin_url(),
-			'title' => '<img src="' . timeapp_get_option( 'admin_logo', TIMEAPP_URL . 'assets/img/admin-logo.png' ) . '" />',
+			'title' => '<img src="' . timeapp()->settings->get_option( 'admin_logo', TIMEAPP_URL . 'assets/img/admin-logo.png' ) . '" />',
 			'meta'  => array(
 				'class' => 'timeapp-logo',
 				'title' => __( 'TimeApp', 'timeapp' )
@@ -54,7 +54,7 @@ function timeapp_admin_bar_icon( $wp_admin_bar ) {
 		) );
 	}
 
-	if ( timeapp_get_option( 'enable_debugging', false ) ) {
+	if ( timeapp()->settings->get_option( 'enable_debugging', false ) ) {
 		$wp_admin_bar->add_node( array(
 			'id'     => 'timeapp-debugging-on',
 			'title'  => __( 'TimeApp Debugging Enabled', 'timeapp' ),

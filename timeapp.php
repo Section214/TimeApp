@@ -51,6 +51,20 @@ if ( ! class_exists( 'TimeApp' ) ) {
 
 
 		/**
+		 * @var         object $settings The settings object
+		 * @since       2.2.0
+		 */
+		public $settings;
+
+
+		/**
+		 * @var         bool $desktop Whether or not a desktop client is being used
+		 * @since       2.2.0
+		 */
+		public $desktop;
+
+
+		/**
 		 * Get active instance
 		 *
 		 * @access      public
@@ -61,6 +75,14 @@ if ( ! class_exists( 'TimeApp' ) ) {
 			if ( ! self::$instance ) {
 				self::$instance = new TimeApp();
 				self::$instance->setup_constants();
+
+				if( ! class_exists( 'Browser' ) ) {
+					require_once TIMEAPP_DIR . 'includes/libraries/s214-settings/source/modules/sysinfo/browser.php';
+				}
+				$browser = new Browser();
+				$agent   = $browser->getUserAgent();
+				self::$instance->desktop = ( stristr( $agent, 'Electron' ) ? true : false );
+
 				self::$instance->includes();
 				self::$instance->load_textdomain();
 				self::$instance->hooks();
@@ -130,7 +152,11 @@ if ( ! class_exists( 'TimeApp' ) ) {
 			global $timeapp_options;
 
 			require_once TIMEAPP_DIR . 'includes/admin/settings/register.php';
-			$timeapp_options = timeapp_get_settings();
+			if ( ! class_exists( 'S214_Settings' ) ) {
+				require_once TIMEAPP_DIR . 'includes/libraries/s214-settings/source/class.s214-settings.php';
+			}
+			$this->settings  = new S214_Settings( 'timeapp', 'general' );
+			$timeapp_options = $this->settings->get_settings();
 
 			require_once TIMEAPP_DIR . 'includes/functions.php';
 			require_once TIMEAPP_DIR . 'includes/scripts.php';
@@ -138,23 +164,21 @@ if ( ! class_exists( 'TimeApp' ) ) {
 			require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
 
 			if ( is_admin() ) {
-				require_once TIMEAPP_DIR . 'includes/admin/settings/display.php';
 				require_once TIMEAPP_DIR . 'includes/class.textualizer.php';
 				require_once TIMEAPP_DIR . 'includes/post-types.php';
 				require_once TIMEAPP_DIR . 'includes/admin/actions.php';
-				require_once TIMEAPP_DIR . 'includes/admin/pages.php';
 				require_once TIMEAPP_DIR . 'includes/admin/meta-boxes.php';
 				require_once TIMEAPP_DIR . 'includes/admin/admin-bar.php';
-				require_once TIMEAPP_DIR . 'includes/admin/dashboard.php';
+				require_once TIMEAPP_DIR . 'includes/admin/dashboard/dashboard.php';
 				require_once TIMEAPP_DIR . 'includes/admin/bulk-actions.php';
-				require_once TIMEAPP_DIR . 'includes/admin/dashboard-columns.php';
-				require_once TIMEAPP_DIR . 'includes/admin/dashboard-widgets.php';
+				require_once TIMEAPP_DIR . 'includes/admin/dashboard/dashboard-columns.php';
+				require_once TIMEAPP_DIR . 'includes/admin/dashboard/dashboard-widgets.php';
 				require_once TIMEAPP_DIR . 'includes/admin/notices.php';
 				require_once TIMEAPP_DIR . 'includes/install.php';
 			}
 
 			if ( ! class_exists( 'InGroup_Plugin_Updater' ) ) {
-				require_once TIMEAPP_DIR . 'includes/InGroup_Plugin_Updater.php';
+				require_once TIMEAPP_DIR . 'includes/libraries/InGroup_Plugin_Updater.php';
 			}
 		}
 
@@ -184,27 +208,27 @@ if ( ! class_exists( 'TimeApp' ) ) {
 		}
 
 
-	/**
-	 * Internationalization
-	 *
-	 * @access      public
-	 * @since       1.0.0
-	 * @return      void
-	 */
-	public function load_textdomain() {
-		// Set filter for language directory
-		$lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
-		$lang_dir = apply_filters( 'timeapp_lang_dir', $lang_dir );
+		/**
+		 * Internationalization
+		 *
+		 * @access      public
+		 * @since       1.0.0
+		 * @return      void
+		 */
+		public function load_textdomain() {
+			// Set filter for language directory
+			$lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
+			$lang_dir = apply_filters( 'timeapp_lang_dir', $lang_dir );
 
-		// Traditional WordPress plugin locale filter
-		$locale = apply_filters( 'plugin_locale', get_locale(), '' );
-		$mofile = sprintf( '%1$s-%2$s.mo', 'timeapp', $locale );
+			// Traditional WordPress plugin locale filter
+			$locale = apply_filters( 'plugin_locale', get_locale(), '' );
+			$mofile = sprintf( '%1$s-%2$s.mo', 'timeapp', $locale );
 
-		// Setup paths to current locale file
-		$mofile_local  = $lang_dir . $mofile;
-		$mofile_global = WP_LANG_DIR . '/timeapp/' . $locale;
+			// Setup paths to current locale file
+			$mofile_local  = $lang_dir . $mofile;
+			$mofile_global = WP_LANG_DIR . '/timeapp/' . $locale;
 
-		if ( file_exists( $mofile_global ) ) {
+			if ( file_exists( $mofile_global ) ) {
 				// Look in global /wp-content/languages/timeapp/ folder
 				load_textdomain( 'timeapp', $mofile_global );
 			} elseif ( file_exists( $mofile_local ) ) {
@@ -226,7 +250,7 @@ if ( ! class_exists( 'TimeApp' ) ) {
  * @since       1.0.0
  * @return      TimeApp The one true TimeApp instance
  */
-function TimeApp() {
+function timeapp() {
 	return TimeApp::instance();
 }
-add_action( 'plugins_loaded', 'TimeApp' );
+add_action( 'plugins_loaded', 'timeapp' );
