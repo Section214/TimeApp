@@ -21,9 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return      array $menu Our defined menu args
  */
 function timeapp_create_menu( $menu ) {
-	$menu['type']       = 'submenu';
-	$menu['page_title'] = __( 'TimeApp Settings', 'timeapp' );
-	$menu['menu_title'] = __( 'TimeApp', 'timeapp' );
+	if ( ! timeapp()->desktop ) {
+		$menu['type'] = 'submenu';
+		$menu['page_title'] = __( 'TimeApp Settings', 'timeapp' );
+		$menu['menu_title'] = __( 'TimeApp', 'timeapp' );
+	} else {
+		$menu['page_title'] = __( 'Settings', 'timeapp' );
+		$menu['menu_title'] = __( 'Settings', 'timeapp' );
+	}
+
 	$menu['capability'] = 'edit_plays';
 
 	return $menu;

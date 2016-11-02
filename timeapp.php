@@ -160,6 +160,7 @@ if ( ! class_exists( 'TimeApp' ) ) {
 
 			require_once TIMEAPP_DIR . 'includes/functions.php';
 			require_once TIMEAPP_DIR . 'includes/scripts.php';
+			require_once TIMEAPP_DIR . 'includes/actions.php';
 			require_once TIMEAPP_DIR . 'includes/class.template-tags.php';
 			require_once TIMEAPP_DIR . 'includes/class.timeapp-roles.php';
 
@@ -175,6 +176,10 @@ if ( ! class_exists( 'TimeApp' ) ) {
 				require_once TIMEAPP_DIR . 'includes/admin/dashboard/dashboard-widgets.php';
 				require_once TIMEAPP_DIR . 'includes/admin/notices.php';
 				require_once TIMEAPP_DIR . 'includes/install.php';
+			}
+
+			if ( $this->desktop ) {
+				require_once TIMEAPP_DIR . 'includes/desktop/pages.php';
 			}
 
 			if ( ! class_exists( 'InGroup_Plugin_Updater' ) ) {

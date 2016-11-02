@@ -40,7 +40,7 @@ add_filter( 'contextual_help', 'timeapp_remove_contextual_help', 999, 3 );
  */
 function timeapp_remove_screen_options( $show_screen, $screen ) {
 	if ( ! current_user_can( 'manage_options' ) ) {
-	    return false;
+		return false;
 	}
 
 	return $show_screen;

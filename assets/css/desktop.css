@@ -1,7 +1,44 @@
 html.wp-toolbar {
-	padding-top: 0;
+    padding-top: 0;
 }
 
 div#wpadminbar {
-	display: none;
+    display: none;
+}
+
+#adminmenu div.wp-menu-image {
+    float: none;
+    margin: 0 auto;
+}
+
+#adminmenu div.wp-menu-name {
+    text-align: center;
+    padding: 0 0 8px 0;
+}
+
+#adminmenuback, #adminmenuwrap, #adminmenu, #adminmenu .wp-submenu {
+    width: 125px;
+}
+
+#adminmenu li.wp-menu-separator, li#collapse-menu {
+    display: none;
+}
+
+ul.wp-submenu.wp-submenu-wrap {
+    display: none;
+}
+
+#wpcontent, #wpfooter {
+    margin-left: 125px;
+}
+
+.timeapp-debugging-enabled {
+    background: #ff0000;
+    z-index: 999;
+    position: fixed;
+    bottom: 0;
+    width: 125px;
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
 }
