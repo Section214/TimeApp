@@ -217,7 +217,9 @@ function timeapp_generate_pdf() {
 
 	// Maybe append purchaser CC emails
 	$purchaser_cc = get_post_meta( $purchaser->ID, '_timeapp_additional_emails', true );
+	$purchaser_cc = $purchaser_cc ? $purchaser_cc : array();
 	$play_cc      = get_post_meta( $play->ID, '_timeapp_play_emails', true );
+	$play_cc      = $play_cc ? $play_cc : array();
 
 	$to = array_merge( $to, $purchaser_cc, $play_cc );
 
