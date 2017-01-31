@@ -23,12 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function timeapp_remove_dashboard_widgets() {
 	global $wp_meta_boxes;
 
-	if ( ! current_user_can( 'manage_options' ) ) {
-		unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity'] );
-		unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'] );
-	}
+	unset( $wp_meta_boxes['dashboard']['normal']['core'] );
+	unset( $wp_meta_boxes['dashboard']['side']['core'] );
 }
 add_action( 'wp_dashboard_setup', 'timeapp_remove_dashboard_widgets' );
+remove_action( 'welcome_panel', 'wp_welcome_panel' );
 
 
 /**
