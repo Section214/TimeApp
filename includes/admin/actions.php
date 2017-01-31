@@ -233,10 +233,14 @@ function timeapp_generate_pdf() {
 	$subject   = timeapp_do_tags( $subject, $play->ID );
 	$message   = timeapp_do_tags( $message, $play->ID );
 	$headers[] = 'From: ' . timeapp()->settings->get_option( 'email_from_name', 'Time Music Agency, Inc' ) . ' <' . timeapp()->settings->get_option( 'email_from_address', 'contracts@timemusicagency.com' ) . '>';
+
+	// Global CCs
 	$cc_emails = timeapp()->settings->get_option( 'email_cc_addresses', false );
 
 	if ( $cc_emails ) {
-		$cc_emails = explode( ',', $cc_emails );
+		$cc_emails = array_map( 'trim', explode( "\n", $cc_emails ) );
+		$cc_emails = array_unique( $cc_emails );
+		$cc_emails = array_map( 'sanitize_text_field', $cc_emails );
 
 		foreach ( $cc_emails as $email_address ) {
 			$headers[] = 'Cc: ' . $email_address;
