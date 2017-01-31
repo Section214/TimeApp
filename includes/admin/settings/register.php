@@ -137,17 +137,15 @@ function timeapp_registered_settings( $settings ) {
 			array(
 				'id'   => 'email_cc_addresses',
 				'name' => __( 'CC Addresses', 'timeapp' ),
-				'desc' => __( 'A comma separated list of additional emails that should be CC\'d on all emails', 'timeapp' ),
+				'desc' => __( 'A list of additional emails that should be CC\'d on all emails, one per line', 'timeapp' ),
 				'type' => 'textarea',
 				'std'  => 'alyssa@timemusicagency.com'
 			),
 			array(
 				'id'     => 'email_template_tags',
 				'name'   => '',
-				'desc'   => timeapp_tags_list(),
-				'type'   => 'info',
-				'style'  => 'success',
-				'header' => __( 'The following template tags can be entered into email fields:', 'timeapp' )
+				'desc'   => __( 'The following template tags can be entered into email fields:', 'timeapp' ) . '<br />' . timeapp_tags_list(),
+				'type'   => 'descriptive_text'
 			),
 			array(
 				'id'   => 'booking_email_subject',
