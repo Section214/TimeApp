@@ -1239,7 +1239,7 @@ function timeapp_save_artist_meta_box( $post_id ) {
 		'_timeapp_contract_terms'
 	) );
 
-	if ( ! empty( $_FILES ) && isset( $_FILES['_timeapp_rider'] ) ) {
+	if ( ! empty( $_FILES ) && isset( $_FILES['_timeapp_rider'] ) && ! empty( $_FILES['_timeapp_rider']['name'] ) ) {
 		$rider = wp_upload_bits( $_FILES['_timeapp_rider']['name'], null, file_get_contents( $_FILES['_timeapp_rider']['tmp_name'] ) );
 
 		if ( $rider['error'] == false ) {
