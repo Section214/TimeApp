@@ -104,6 +104,13 @@ function timeapp_registered_settings( $settings ) {
 					'desc' => __( 'Upload a logo to display in the admin bar', 'timeapp' ),
 					'type' => 'upload',
 					'std'  => TIMEAPP_URL . 'assets/img/admin-logo.png'
+				),
+				array(
+					'id'   => 'favicon',
+					'name' => __( 'Favicon', 'timeapp' ),
+					'desc' => __( 'Upload a logo to use as the favicon', 'timeapp' ),
+					'type' => 'upload',
+					'std'  => TIMEAPP_URL . 'assets/img/favicon.png'
 				)
 			)
 		) ),

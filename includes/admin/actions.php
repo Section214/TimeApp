@@ -359,3 +359,19 @@ function timeapp_dashboard_tweaks() {
 	remove_submenu_page( 'plugins.php', 'plugin-install.php' );
 }
 add_action( 'admin_menu', 'timeapp_dashboard_tweaks', 999 );
+
+
+/**
+ * Render favicon
+ *
+ * @since       2.2.0
+ * @return      void
+ */
+function timeapp_render_favicon() {
+	$favicon = timeapp()->settings->get_option( 'favicon', false );
+
+	if ( $favicon ) {
+		echo '<link rel="icon" href="' . htmlspecialchars( $favicon ) . '" />';
+	}
+}
+add_action( 'admin_head', 'timeapp_render_favicon' );
