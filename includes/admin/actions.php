@@ -338,9 +338,21 @@ function timeapp_update_play_title( $post_title ) {
 add_filter( 'title_save_pre', 'timeapp_update_play_title' );
 
 
-function timeapp_debug_bar() {
+/**
+ * Tweak the dashboard menu
+ *
+ * @since       2.2.0
+ * @return      void
+ */
+function timeapp_dashboard_tweaks() {
 	if ( timeapp()->desktop && timeapp()->settings->get_option( 'enable_debugging', false ) ) {
 		echo '<div class="timeapp-debugging-enabled">' . __( 'Debugging<br />Enabled', 'timeapp' ) . '</div>';
 	}
+
+	remove_menu_page( 'edit.php' );
+	remove_menu_page( 'upload.php' );
+	remove_menu_page( 'edit.php?post_type=page' );
+	remove_menu_page( 'edit-comments.php' );
+	remove_menu_page( 'themes.php' );
 }
-add_action( 'admin_menu', 'timeapp_debug_bar', 999 );
+add_action( 'admin_menu', 'timeapp_dashboard_tweaks', 999 );
