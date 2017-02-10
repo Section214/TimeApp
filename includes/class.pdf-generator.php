@@ -267,7 +267,7 @@ class TimeApp_Generate_PDF {
 		$this->pdf->MultiCell( 0, 12 * $point, 'In the event Purchaser, on its own effort and without involving Time Music Agency, Inc., books Artist into any establishment owned in whole or part, booked alone or with other parties, or controlled/represented by the Purchaser within twelve (12) months after the engagement date above, Time Music Agency, Inc shall be owed and paid by Purchaser a commission of ' . $commission . '% (' . $textualizer->textualize( $commission ) . ' percent) of the total contract price that Artist and Purchaser agreed to therein and Purchaser\'s failure to honor this clause is a material breach of this contract.', 0, 1 );
 
 		if ( $this->cancelled ) {
-			$this->pdf->Image( TIMEAPP_URL . 'assets/img/cancelled.png', 14, 14, $this->pdf->w - 28 );
+			$this->pdf->Image( TIMEAPP_URL . 'assets/img/cancelled.png', 14, 14, $this->pdf->GetPageWidth() - 28 );
 		}
 
 		$this->pdf->AddPage();
@@ -369,6 +369,10 @@ class TimeApp_Generate_PDF {
 		$this->pdf->Cell( 0, 12 * $point, 'www.timemusicagency.com', 0, 1 );
 
 		$this->pdf->Cell( 0, 12 * $point, html_entity_decode( $email, ENT_QUOTES ) );
+
+		if ( $this->cancelled ) {
+			$this->pdf->Image( TIMEAPP_URL . 'assets/img/cancelled.png', 14, 14, $this->pdf->GetPageWidth() - 28 );
+		}
 
 		$this->pdf->AliasNbPages();
 		$this->pdf->last_page = true;
