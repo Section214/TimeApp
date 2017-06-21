@@ -288,8 +288,8 @@ function timeapp_get_booking_email_content() {
 	$message   .= sprintf( __( 'Thank you for booking %s. Please print, sign and return the attached PDF contract to secure and finalize your booking.', 'timeapp' ), '{artist_name}' ) . "\n\n";
 	$message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
 	$message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
-	$message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
-	$message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+	$message   .= __( 'PO Box 605', 'timeapp' ) . "\n";
+	$message   .= __( 'Mound, MN 55364', 'timeapp' ) . "\n";
 	$message   .= __( '952-448-4202', 'timeapp' );
 	$message	= apply_filters( 'timeapp_booking_email_content', $message );
 
@@ -308,8 +308,8 @@ function timeapp_get_cancelled_email_content() {
 	$message   .= __( 'This email serves as the formal cancellation for the show reflected on the attached cancelled contract.', 'timeapp' ) . "\n\n";
 	$message   .= __( 'Your business is appreciated, have a great day!', 'timeapp' ) . "\n";
 	$message   .= __( 'Time Music Agency', 'timeapp' ) . "\n";
-	$message   .= __( 'PO Box 353', 'timeapp' ) . "\n";
-	$message   .= __( 'Long Lake, MN 55356', 'timeapp' ) . "\n";
+	$message   .= __( 'PO Box 605', 'timeapp' ) . "\n";
+	$message   .= __( 'Mound, MN 55364', 'timeapp' ) . "\n";
 	$message   .= __( '952-448-4202', 'timeapp' );
 	$message	= apply_filters( 'timeapp_cancelled_email_content', $message );
 

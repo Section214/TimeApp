@@ -161,7 +161,7 @@ class TimeApp_Generate_PDF {
 		$this->pdf->Cell( 0, 22 * $point, 'TIME MUSIC AGENCY, INC', 0, 1, 'C' );
 
 		$this->pdf->SetFont( 'Times', 'BU', 12 );
-		$this->pdf->Cell( 0, 12 * $point, 'PO Box 353, Long Lake MN 55356   Office: (952) 448-4202   www.timemusicagency.com', 0, 1, 'C' );
+		$this->pdf->Cell( 0, 12 * $point, 'PO Box 605, Mound MN 55364   Office: (952) 448-4202   www.timemusicagency.com', 0, 1, 'C' );
 
 		$this->pdf->SetFont( 'Times', '', 12 );
 		$this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
@@ -352,11 +352,11 @@ class TimeApp_Generate_PDF {
 
 		$this->pdf->Cell( 0, 12 * $point, html_entity_decode( $address, ENT_QUOTES ) );
 		$this->pdf->SetX( 115 );
-		$this->pdf->Cell( 0, 12 * $point, 'PO Box 353', 0, 1 );
+		$this->pdf->Cell( 0, 12 * $point, 'PO Box 605', 0, 1 );
 
 		$this->pdf->Cell( 0, 12 * $point, html_entity_decode( $city, ENT_QUOTES ) . ', ' . html_entity_decode( $state, ENT_QUOTES ) . ( $zip_code && $zip_code != '' ? ' ' . html_entity_decode( $zip_code, ENT_QUOTES ) : '' ) );
 		$this->pdf->SetX( 115 );
-		$this->pdf->Cell( 0, 12 * $point, 'Long Lake, MN 55356', 0, 1 );
+		$this->pdf->Cell( 0, 12 * $point, 'Mound, MN 55364', 0, 1 );
 
 		$this->pdf->Cell( 0, 12 * $point, ' ', 0, 1, 'C' );
 
